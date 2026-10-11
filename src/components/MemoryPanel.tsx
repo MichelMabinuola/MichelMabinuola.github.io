@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
-import { Link2, Plus, Sparkles } from 'lucide-react'
+import { Link2, Plus, Sparkles, TriangleAlert } from 'lucide-react'
 import type { SectionDef } from '../model'
 import type { CgroupState, MaxSetting } from '../sim/cgroup'
 import { stats } from '../sim/cgroup'
@@ -8,6 +8,8 @@ import { copyText, shareUrl } from '../share/url'
 import { useUi } from '../i18n'
 import { Icon } from './Icon'
 import { CountUp } from './CountUp'
+
+const ALMOST_FULL = 0.85
 
 export function MemoryPanel({
   state,
@@ -27,6 +29,8 @@ export function MemoryPanel({
   const ui = useUi()
   const s = stats(state)
   const full = state.max === '1G'
+  // Near the limit the kernel reclaims cache; it is not an OOM, so this is a warning, not an error.
+  const almostFull = s.pct >= ALMOST_FULL
   const [copied, setCopied] = useState(false)
 
   const note = state.loading.length
@@ -87,8 +91,20 @@ export function MemoryPanel({
           aria-valuemax={s.maxMb}
           aria-valuenow={s.currentMb}
         >
-          <div className="h-full rounded-full bg-accent transition-[width] duration-500" style={{ width: `${s.pct * 100}%` }} />
+          <div
+            className={`h-full rounded-full transition-[width,background-color] duration-500 ${almostFull ? 'bg-warn' : 'bg-accent'}`}
+            style={{ width: `${s.pct * 100}%` }}
+          />
         </div>
+        {almostFull && (
+          <span
+            title={ui.almostFullHint}
+            className="inline-flex shrink-0 items-center gap-1 rounded-full bg-warn/10 px-2 py-0.5 text-xs font-medium text-warn"
+          >
+            <TriangleAlert size={12} aria-hidden="true" />
+            {ui.almostFull}
+          </span>
+        )}
         <span className="shrink-0 text-xs tabular-nums text-ink-3">{ui.used(<CountUp value={s.currentMb} />, s.maxMb)}</span>
       </div>
 
