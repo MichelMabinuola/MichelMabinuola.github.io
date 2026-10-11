@@ -8,6 +8,7 @@ import { MemoryPanel } from './components/MemoryPanel'
 import { SectionCard } from './components/SectionCard'
 import { ThemeToggle } from './components/ThemeToggle'
 import { LangSwitch } from './components/LangSwitch'
+import { ScrollTop } from './components/ScrollTop'
 import { MeasuredLink, MeasuredNote } from './components/Measured'
 
 export default function App() {
@@ -82,6 +83,7 @@ export default function App() {
           <MeasuredNote />
         </footer>
       </main>
+      <ScrollTop />
     </div>
   )
 }
