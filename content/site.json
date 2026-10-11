@@ -1,0 +1,94 @@
+{
+  "domain": "yourname.dev",
+  "url": "https://yourname.dev",
+  "cgroupPath": "/sys/fs/cgroup/portfolio.slice",
+  "agentsEnabled": false,
+  "defaultOpen": ["about", "vector"],
+  "footnote": "Sizes are illustrative; counters and behaviour mirror cgroup v2.",
+  "footnoteMeasured": "The page cache behaviour is something I measured on a real database host.",
+  "experienceHighlights": {
+    "agile-platform": [1, 2, 3, 4],
+    "starpickers": [0, 1]
+  },
+  "sections": [
+    {
+      "id": "about",
+      "title": "About",
+      "icon": "user",
+      "line": "I keep databases fast and make data searchable by meaning.",
+      "body": "I’m a database engineer in Seoul at Agile Platform, a consulting company specializing in SingleStore. I tune databases for on-premise customers, build vector search and RAG pipelines, and design Kafka pipelines for proofs of concept.",
+      "flow": [
+        { "label": "Kafka", "text": "data streams in" },
+        { "label": "Database", "text": "it is stored and analysed" },
+        { "label": "Vectors", "text": "it becomes searchable by meaning" },
+        { "label": "Agents", "text": "assistants act on top" }
+      ]
+    },
+    {
+      "id": "experience",
+      "title": "Experience",
+      "icon": "briefcase",
+      "line": "Where I’ve worked and what I did there."
+    },
+    {
+      "id": "vector",
+      "title": "Vector search",
+      "icon": "search",
+      "line": "I build search that understands meaning, not just matching words.",
+      "detail": "Matryoshka embeddings pack most of their meaning into the first dimensions. An approximate nearest neighbour (ANN) index built on only the first 128 or 64 dimensions finds 100 candidates, then the full 1024-dimension vectors rerank them to the top 5.",
+      "realWork": [
+        { "project": "matryoshka-vector-search" },
+        { "project": "hamming-distance-udf" },
+        { "writing": "high-dimension-vectors" }
+      ]
+    },
+    {
+      "id": "database",
+      "title": "Database analysis",
+      "icon": "database",
+      "line": "I find out why a database is slow and fix it.",
+      "detail": "Most slow queries read far more data than they return. The query profile shows where the time goes; on a columnstore, a sort key that matches the filter lets the engine skip whole segments instead of scanning them.",
+      "realWork": [
+        { "project": "query-profile-tool" },
+        { "project": "vast-unlimited-storage-poc" }
+      ]
+    },
+    {
+      "id": "kafka",
+      "title": "Kafka",
+      "icon": "radio-tower",
+      "line": "I move huge streams of data reliably, like a post office for events.",
+      "detail": "A topic is split into partitions. Within a consumer group each partition is read by exactly one consumer, so adding consumers (up to the partition count) spreads the work and lag drains.",
+      "realWork": [{ "text": "I build Kafka pipelines that simulate customer workloads for proofs of concept." }]
+    },
+    {
+      "id": "agents",
+      "title": "Agents",
+      "icon": "bot",
+      "line": "I build AI assistants that can look things up and take actions.",
+      "detail": "An agent is an LLM in a loop: it plans, calls a tool (SQL, search, an API), reads the result, and decides what to do next until it can answer."
+    },
+    {
+      "id": "writing",
+      "title": "Writing",
+      "icon": "pen",
+      "line": "I write up what I test, so others can repeat it.",
+      "closing": "More write-ups exist but are internal to my employer."
+    },
+    {
+      "id": "contact",
+      "title": "Contact",
+      "icon": "mail",
+      "line": "Email is best. I reply during Korean working hours (KST, UTC+9)."
+    }
+  ],
+  "measured": {
+    "caption": "The database looked like it had memory to spare. Linux was quietly doing the caching.",
+    "setup": "On an on-premise SingleStore host with 7.5 GB RAM, I dropped the Linux page cache and ran two queries against a 33,554,432-row columnstore table.",
+    "runs": [
+      { "sql": "select count(*)", "result": "grew the page cache by only 9 MiB (answered from metadata)." },
+      { "sql": "select sum(g), sum(id)", "result": "took 4.20 s and grew the page cache by 66 MiB." }
+    ],
+    "conclusion": "On-premise columnstore data is cached by the Linux page cache through buffered reads, so it never shows up in the database engine’s own memory metrics."
+  }
+}

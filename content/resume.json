@@ -1,0 +1,348 @@
+{
+  "basics": {
+    "name": "Michael Mabinuola",
+    "title": "Database Engineer",
+    "tagline": "Vector Search, Performance and Data Pipelines",
+    "location": "Seoul, South Korea",
+    "timezone": "Asia/Seoul",
+    "email": "michaelmabinuola@gmail.com",
+    "links": {
+      "linkedin": "https://www.linkedin.com/in/michael-mabinuola-031138102",
+      "github": null,
+      "portfolio": null,
+      "resumePdf": null
+    }
+  },
+  "skills": [
+    {
+      "group": "Programming",
+      "items": [
+        "Python",
+        "SQL",
+        "PL/Python",
+        "PL/SQL",
+        "Bash",
+        "R",
+        "REST API development",
+        "Rust (basic)"
+      ]
+    },
+    {
+      "group": "Databases",
+      "items": [
+        "SingleStore",
+        "MySQL",
+        "ClickHouse",
+        "MongoDB",
+        "OLAP/OLTP architecture"
+      ]
+    },
+    {
+      "group": "Linux Performance",
+      "items": [
+        "CPU",
+        "memory",
+        "page cache",
+        "filesystem"
+      ]
+    },
+    {
+      "group": "Systems",
+      "items": [
+        "Linux",
+        "Docker",
+        "high-availability clustering",
+        "distributed systems",
+        "S3 object storage"
+      ]
+    },
+    {
+      "group": "Data Pipelines",
+      "items": [
+        "Apache Kafka",
+        "Airflow",
+        "dbt",
+        "ETL design",
+        "data validation"
+      ]
+    },
+    {
+      "group": "AI & Search",
+      "items": [
+        "vector databases",
+        "semantic search",
+        "RAG pipelines",
+        "AI agents",
+        "TensorFlow",
+        "machine learning"
+      ]
+    },
+    {
+      "group": "Visualization",
+      "items": [
+        "Tableau",
+        "Streamlit",
+        "Plotly"
+      ]
+    }
+  ],
+  "experience": [
+    {
+      "id": "agile-platform",
+      "role": "Database Engineer",
+      "company": "Agile Platform",
+      "companyLocalName": "에이플랫폼",
+      "companyDescription": "IT service and consulting company specializing in SingleStore DB.",
+      "location": "Seoul, South Korea",
+      "start": "2023-12",
+      "end": null,
+      "current": true,
+      "highlights": [
+        "Perform online and offline database migrations.",
+        "Diagnose and resolve SingleStore performance bottlenecks for on-premise customers using query profiles, execution plans and OS-level metrics.",
+        "Tune SingleStore for vector data storage and retrieval; benchmark and evaluate vector index performance.",
+        "Build semantic search systems and RAG-based AI pipelines, and provide technical support for AI search and vector functions.",
+        "Design Apache Kafka data pipelines that simulate customer workloads for proofs of concept (PoC).",
+        "Write technical reports and documentation in English and Korean.",
+        "Evaluate competing database systems against SingleStore on architecture, performance, and features, and write comparison reports that support customer and internal decisions."
+      ]
+    },
+    {
+      "id": "starpickers",
+      "role": "Data Engineer / Data Analyst",
+      "company": "Starpickers",
+      "companyLocalName": "별따러가자",
+      "companyDescription": "Telematics company that fuses Inertial Measurement Unit (IMU) and GPS data to detect driving patterns.",
+      "location": "Seoul, South Korea",
+      "start": "2021-09",
+      "end": "2023-11",
+      "current": false,
+      "highlights": [
+        "Designed and implemented end-to-end ETL pipelines processing 1M+ rows daily from 300+ users.",
+        "Built an SVM model that classified road vs. sidewalk driving with 92% accuracy.",
+        "Developed algorithms to detect driving maneuvers: U-turns, rapid turns, overtaking.",
+        "Co-developed a driving behavior scoring system for usage-based insurance.",
+        "Configured real-time workflow monitoring and alerting in Apache Airflow.",
+        "Ran data quality validation to ensure accuracy and integrity, and maintained KPI monitoring dashboards."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "id": "matryoshka-vector-search",
+      "title": "Vector search with Matryoshka embeddings",
+      "year": 2026,
+      "status": "published",
+      "employer": "agile-platform",
+      "summary": "Ran the benchmarks for a co-authored study published on the SingleStore blog: two-stage search on 10M vectors cut index memory 87% and raised throughput 6.6x at 96% recall.",
+      "role": "Ran the benchmarks; co-author.",
+      "url": "https://www.singlestore.com/blog/vector-search-with-matryoshka-embeddings/",
+      "linkLabel": "Vector Search with MRL",
+      "tags": [
+        "vector-search",
+        "database"
+      ],
+      "tech": [
+        "SingleStore",
+        "IVF_FLAT",
+        "HNSW_FLAT",
+        "Matryoshka embeddings",
+        "Python"
+      ],
+      "metrics": {
+        "source": "Published blog post; all figures are public.",
+        "dataset": "10M rows, Cohere Wikipedia 2023 (English)",
+        "fullDimensions": 1024,
+        "method": "ANN index on a sub-vector retrieves candidates; full 1024-dimension vectors rerank to top 5.",
+        "results": [
+          {
+            "config": "1024-dim IVF_FLAT (baseline)",
+            "indexMemoryGB": 38.0,
+            "qps": 11.3,
+            "recallAt5": 0.978
+          },
+          {
+            "config": "128-dim IVF_FLAT, 100 candidates",
+            "indexMemoryGB": 5.0,
+            "qps": 74.9,
+            "recallAt5": 0.96
+          },
+          {
+            "config": "64-dim IVF_FLAT, 100 candidates",
+            "indexMemoryGB": 2.52,
+            "qps": 114.9,
+            "recallAt5": 0.878
+          }
+        ]
+      }
+    },
+    {
+      "id": "vast-unlimited-storage-poc",
+      "title": "Unlimited storage PoC on VAST object storage",
+      "year": null,
+      "status": "completed",
+      "employer": "agile-platform",
+      "summary": "Validated VAST as S3-compatible storage for SingleStore: lifecycle tests (backup, HA, PITR, scaling), TPC-H benchmarks on hot and cold tiers, and throughput under load.",
+      "url": null,
+      "tags": [
+        "database",
+        "storage"
+      ],
+      "tech": [
+        "SingleStore",
+        "VAST",
+        "S3",
+        "TPC-H"
+      ],
+      "confidential": "Results cannot be shared. Describe scope only; never show or invent numbers."
+    },
+    {
+      "id": "hamming-distance-udf",
+      "title": "Hamming distance for SingleStore",
+      "year": 2026,
+      "status": "published",
+      "employer": "agile-platform",
+      "summary": "Built a Rust WebAssembly UDF that adds Hamming distance over binary vectors, which SingleStore lacks natively, and published the guide on the company wiki.",
+      "url": "https://wiki.a-platform.biz/304058af-5ed4-80d3-bf40-c56a9eecef6f",
+      "linkLabel": "SingleStore Hamming Distance",
+      "tags": [
+        "vector-search",
+        "database"
+      ],
+      "tech": [
+        "Rust",
+        "WebAssembly",
+        "SingleStore"
+      ]
+    },
+    {
+      "id": "query-profile-tool",
+      "title": "Query profile analysis tool",
+      "year": 2026,
+      "status": "in-progress",
+      "employer": "agile-platform",
+      "summary": "Building an internal tool that analyzes SingleStore query profiles in on-premise environments, for use by the support team.",
+      "url": null,
+      "tags": [
+        "database"
+      ],
+      "tech": [
+        "SingleStore"
+      ]
+    }
+  ],
+  "education": [
+    {
+      "credential": "Google Career Certificate in Advanced Data Analytics",
+      "institution": "Google",
+      "start": "2023-01",
+      "end": "2023-07"
+    },
+    {
+      "credential": "MBA",
+      "institution": "Chung-Ang University",
+      "gpa": "4.16/4.5",
+      "start": "2019-09",
+      "end": "2021-08"
+    },
+    {
+      "credential": "BSc (Honors) Economics",
+      "institution": "Don State Technical University",
+      "gpa": "4.83/5.0",
+      "start": "2014-09",
+      "end": "2018-07"
+    }
+  ],
+  "certificatesAndAwards": [
+    {
+      "name": "SingleStore Certified Developer",
+      "year": 2024
+    },
+    {
+      "name": "Junction Asia Certificate",
+      "year": 2022
+    },
+    {
+      "name": "Data Analytics Certificate",
+      "year": 2020
+    },
+    {
+      "name": "Government of Korea Scholar (GKS)",
+      "year": 2018
+    },
+    {
+      "name": "Nigeria/Russia Bilateral Educational Scholarship",
+      "year": 2013
+    }
+  ],
+  "languages": [
+    {
+      "language": "English",
+      "level": "Native"
+    },
+    {
+      "language": "Russian",
+      "level": "Proficient"
+    },
+    {
+      "language": "Korean",
+      "level": "Intermediate"
+    }
+  ],
+  "writing": [
+    {
+      "id": "matryoshka-blog",
+      "title": "Vector search with Matryoshka embeddings",
+      "publisher": "SingleStore blog",
+      "year": 2026,
+      "language": "EN",
+      "summary": "Two-stage vector search on 10M vectors: 87% less index memory and 6.6x throughput at 96% recall. I ran the benchmarks; co-authored with SingleStore engineers.",
+      "url": "https://www.singlestore.com/blog/vector-search-with-matryoshka-embeddings/",
+      "tags": [
+        "vector-search"
+      ]
+    },
+    {
+      "id": "high-dimension-vectors",
+      "title": "High-dimension vectors in SingleStore",
+      "titleLocal": "SingleStore Vector의 높은 Dimension",
+      "publisher": "Agile Platform wiki",
+      "year": 2025,
+      "language": "KO",
+      "summary": "Tested indexing, inserts, and KNN/ANN search on vectors from 16K to 131K dimensions (up to 98 GB), and showed the real insert limit is max_allowed_packet, not the column type.",
+      "url": "https://wiki.a-platform.biz/304058af-5ed4-809f-ae43-ff6ce684b1b3",
+      "tags": [
+        "vector-search",
+        "database"
+      ]
+    },
+    {
+      "id": "hamming-distance",
+      "title": "Hamming distance for SingleStore",
+      "publisher": "Agile Platform wiki",
+      "year": 2026,
+      "language": "KO",
+      "summary": "A Rust WebAssembly UDF that adds Hamming distance over binary vectors, which SingleStore lacks natively.",
+      "url": "https://wiki.a-platform.biz/304058af-5ed4-80d3-bf40-c56a9eecef6f",
+      "tags": [
+        "vector-search",
+        "database"
+      ]
+    },
+    {
+      "id": "onprem-llama-rag",
+      "title": "On-premises RAG with Llama 2 and SingleStore",
+      "titleLocal": "On-Premises Llama 2 및 SingleStoreDB 를 이용한 생성형 AI 프로그램 예제",
+      "publisher": "Agile Platform wiki",
+      "year": 2026,
+      "language": "KO",
+      "summary": "A CPU-only RAG example: a quantized Llama 2 model answers from context retrieved out of a SingleStore vector store, using LangChain and llama.cpp.",
+      "url": "https://wiki.a-platform.biz/304058af-5ed4-8157-a554-df6dde6c6509",
+      "tags": [
+        "rag",
+        "vector-search"
+      ],
+      "note": "Confirm authorship before publishing: the page lists 'mike' as editor of the 2026 update, original author not stated."
+    }
+  ]
+}
