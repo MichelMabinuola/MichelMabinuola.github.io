@@ -38,6 +38,14 @@ function sectionHtml(s: SectionDef, r: Resume, site: Site): string {
     body += list(publishedWriting(r).map((w) => `${link(w.url!, w.title)} · ${esc(w.publisher)}, ${w.year} [${w.language}]<br>${esc(w.summary)}`))
     if (s.closing) body += `<p>${esc(s.closing)}</p>`
   }
+  if (s.id === 'latest') {
+    body += list(
+      r.latest.items.map(
+        (i) =>
+          `${i.kind === 'reading' ? 'Reading' : 'Learning'}: ${i.url ? link(i.url, i.title) : esc(i.title)}${i.author ? ` by ${esc(i.author)}` : ''}${i.note ? `. ${esc(i.note)}` : ''}`,
+      ),
+    )
+  }
   if (s.id === 'opensource') {
     body += r.openSource
       .map(

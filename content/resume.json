@@ -400,5 +400,23 @@
         "Streamlit"
       ]
     }
-  ]
+  ],
+  "latest": {
+    "updated": "2026-10",
+    "items": [
+      {
+        "id": "systems-performance",
+        "kind": "reading",
+        "title": "Systems Performance: Enterprise and the Cloud, 2nd Edition",
+        "author": "Brendan Gregg",
+        "url": "https://www.brendangregg.com/systems-performance-2nd-edition-book.html"
+      },
+      {
+        "id": "networking",
+        "kind": "learning",
+        "title": "Networking",
+        "note": "An area where I have less hands-on experience, so I’m building it up."
+      }
+    ]
+  }
 }

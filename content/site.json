@@ -47,6 +47,13 @@
       "sizeMb": 48
     },
     {
+      "id": "latest",
+      "title": "Latest",
+      "icon": "book",
+      "line": "What I’m reading and learning right now.",
+      "sizeMb": 32
+    },
+    {
       "id": "experience",
       "title": "Experience",
       "icon": "briefcase",
@@ -68,7 +75,7 @@
     },
     {
       "id": "writing",
-      "title": "Writing",
+      "title": "Articles",
       "icon": "pen",
       "line": "I write up what I test, so others can repeat it.",
       "closing": "More write-ups exist but are internal to my employer.",

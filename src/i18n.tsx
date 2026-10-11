@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useState } from 'react'
 import koJson from '../content/ko.json'
 import { resume, site } from './content'
-import { educationLine, languagesLine, resolveWork, type Experience, type OpenSourceEntry, type RealWorkRef, type SideProject, type ResolvedWork, type SectionDef, type WritingEntry } from './model'
+import { educationLine, languagesLine, resolveWork, type Experience, type LatestItem, type OpenSourceEntry, type RealWorkRef, type SideProject, type ResolvedWork, type SectionDef, type WritingEntry } from './model'
 
 export type Lang = 'en' | 'ko'
 
@@ -18,6 +18,7 @@ const ko = koJson as {
   writing: Record<string, { title?: string; summary?: string }>
   publishers: Record<string, string>
   coreSkills: string[]
+  latest: Record<string, { title?: string; note?: string }>
   measured: { title: string; caption: string; setup: string; runs: string[]; conclusion: string }
 }
 
@@ -42,6 +43,10 @@ const en = {
   showEverything: 'Show everything',
   goBack: 'Limit memory again',
   copyLink: 'Copy link',
+  reading: 'Reading',
+  learning: 'Learning',
+  by: (a: string) => `by ${a}`,
+  updated: (m: string) => `Updated ${m}`,
   anonLabel: 'anon 40M · always resident',
   anonCaption: 'Cache gets dropped under pressure. These don’t.',
   close: 'Close',
@@ -116,6 +121,10 @@ const koUi: typeof en = {
   showEverything: '모두 보기',
   goBack: '다시 메모리 제한하기',
   copyLink: '링크 복사',
+  reading: '읽는 중',
+  learning: '배우는 중',
+  by: (a: string) => `${a} 지음`,
+  updated: (m: string) => `${m} 업데이트`,
   anonLabel: 'anon 40M · 항상 메모리에 있음',
   anonCaption: '메모리가 부족하면 캐시는 치워지지만, 이것들은 남아 있습니다.',
   close: '닫기',
@@ -253,6 +262,14 @@ export function useL10n() {
     sideProject: (p: SideProject): SideProject => {
       const k = isKo ? ko.sideProjects[p.id] : undefined
       return k ? { ...p, title: k.title ?? p.title, summary: k.summary ?? p.summary } : p
+    },
+    latestItem: (i: LatestItem): LatestItem => {
+      const k = isKo ? ko.latest[i.id] : undefined
+      return k ? { ...i, title: k.title ?? i.title, note: k.note ?? i.note } : i
+    },
+    month: (ym: string) => {
+      const [y, m] = ym.split('-').map(Number)
+      return isKo ? `${y}년 ${ui.months[m - 1]}` : `${ui.months[m - 1]} ${y}`
     },
     coreSkills: () => (isKo ? ko.coreSkills : site.coreSkills),
     measured: () => {

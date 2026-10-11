@@ -6,6 +6,7 @@ import { AgentReplay } from '../demos/AgentReplay'
 import { DbDemo } from '../demos/DbDemo'
 import { VectorDemo } from '../demos/VectorDemo'
 import { Writing } from './Writing'
+import { Latest } from './Latest'
 import { OpenSource } from './OpenSource'
 import { SideProjects } from './SideProjects'
 import { GitHubIcon } from '../components/Icon'
@@ -15,6 +16,8 @@ export function SectionBody({ section }: { section: SectionDef }) {
   switch (section.id) {
     case 'about':
       return <About section={section} />
+    case 'latest':
+      return <Latest />
     case 'experience':
       return <Experience />
     case 'vector':

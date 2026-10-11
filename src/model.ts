@@ -41,6 +41,7 @@ export type OpenSourceEntry = {
   story: { symptom: string; cause: string; fix: string; outcome: string }
   tech: string[]
 }
+export type LatestItem = { id: string; kind: 'reading' | 'learning'; title: string; author?: string; url?: string; note?: string }
 export type SideProject = { id: string; title: string; summary: string; url: string; tech: string[] }
 export type Resume = {
   basics: {
@@ -59,6 +60,7 @@ export type Resume = {
   writing: WritingEntry[]
   openSource: OpenSourceEntry[]
   sideProjects: SideProject[]
+  latest: { updated: string; items: LatestItem[] }
 }
 
 export type RealWorkRef = { project?: string; writing?: string; text?: string }

@@ -1,4 +1,4 @@
-import { Bot, Briefcase, Bug, Database, FileText, Mail, Palette, PenLine, RadioTower, Search, User, type LucideProps } from 'lucide-react'
+import { BookOpen, Bot, Briefcase, Bug, Database, FileText, Mail, Palette, PenLine, RadioTower, Search, User, type LucideProps } from 'lucide-react'
 
 const ICONS = {
   user: User,
@@ -11,6 +11,7 @@ const ICONS = {
   pen: PenLine,
   bug: Bug,
   palette: Palette,
+  book: BookOpen,
 }
 
 export function Icon({ name, ...props }: { name: string } & LucideProps) {
