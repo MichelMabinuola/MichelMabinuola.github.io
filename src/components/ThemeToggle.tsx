@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Moon, Sun } from 'lucide-react'
+import { useUi } from '../i18n'
 
 type Theme = 'light' | 'dark'
 
@@ -11,6 +12,7 @@ function currentTheme(): Theme {
 
 export function ThemeToggle() {
   const [theme, setTheme] = useState<Theme>(currentTheme)
+  const ui = useUi()
 
   const toggle = () => {
     const next: Theme = theme === 'dark' ? 'light' : 'dark'
@@ -23,7 +25,7 @@ export function ThemeToggle() {
     setTheme(next)
   }
 
-  const label = theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'
+  const label = theme === 'dark' ? ui.themeToLight : ui.themeToDark
   return (
     <button
       type="button"

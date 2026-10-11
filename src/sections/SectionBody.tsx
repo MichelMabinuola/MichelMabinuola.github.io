@@ -1,6 +1,7 @@
 import { ArrowRight } from 'lucide-react'
 import { resume, site } from '../content'
-import { educationLine, languagesLine, period, pickHighlights, type SectionDef } from '../model'
+import type { SectionDef } from '../model'
+import { useL10n, useUi } from '../i18n'
 import { MeasuredLink } from '../components/Measured'
 import { AgentReplay } from '../demos/AgentReplay'
 import { DbDemo } from '../demos/DbDemo'
@@ -32,87 +33,95 @@ export function SectionBody({ section }: { section: SectionDef }) {
 }
 
 function About({ section }: { section: SectionDef }) {
+  const ui = useUi()
   return (
-    <div className="text-sm text-ink-2">
-      {section.body && <p>{section.body}</p>}
+    <div className="text-ink-2">
+      {section.body && <p className="max-w-3xl">{section.body}</p>}
       {section.flow && (
-        <ol className="mt-4 grid grid-cols-2 gap-1.5 sm:grid-cols-4" aria-label="How the skills connect">
+        <ol className="mt-5 flex flex-wrap items-center gap-2 text-sm" aria-label="Kafka → Database → Vectors → Agents">
           {section.flow.map((f, i) => (
-            <li key={f.label} className="rounded-lg border border-line px-2.5 py-1.5">
-              <div className="text-xs font-medium text-ink">
-                <span className="text-ink-3">{i + 1} </span>
-                {f.label}
-                {i < section.flow!.length - 1 && <ArrowRight aria-hidden="true" size={12} className="ml-1 inline text-ink-3" />}
-              </div>
-              <div className="text-xs text-ink-3">{f.text}</div>
+            <li key={f.label} className="flex items-center gap-2">
+              <span className="rounded-full bg-track px-3 py-1" title={f.text}>
+                <span className="font-medium text-ink">{f.label}</span>
+              </span>
+              {i < section.flow!.length - 1 && <ArrowRight aria-hidden="true" size={14} className="text-ink-3" />}
             </li>
           ))}
         </ol>
       )}
-      <p className="mt-3">
-        The memory idea on this page isn’t just a gimmick: <MeasuredLink>I measured it on a real database host</MeasuredLink>.
+      <p className="mt-5 text-sm">
+        {ui.aboutMeasured} <MeasuredLink>{ui.aboutMeasuredLink}</MeasuredLink>
       </p>
     </div>
   )
 }
 
 function Experience() {
+  const ui = useUi()
+  const l = useL10n()
   return (
-    <div className="text-sm">
-      <ul className="flex flex-col gap-4">
+    <div>
+      <ol className="relative flex flex-col gap-6 border-l border-line pl-6">
         {resume.experience.map((e) => (
-          <li key={e.id}>
-            <div className="flex flex-wrap items-baseline justify-between gap-x-3">
-              <span className="font-medium text-ink">
-                {e.role}{' '}
-                <span className="font-normal text-ink-3">
-                  · {e.company}
-                  {e.companyLocalName && <span lang="ko"> ({e.companyLocalName})</span>}
-                </span>
+          <li key={e.id} className="relative">
+            <span
+              aria-hidden="true"
+              className={`absolute -left-[31px] top-1.5 h-3 w-3 rounded-full border-2 border-surface ${e.current ? 'bg-accent' : 'bg-line-strong'}`}
+            />
+            <div className="text-xs text-ink-3">{l.period(e)}</div>
+            <div className="mt-0.5 font-medium text-ink">
+              {l.role(e)}{' '}
+              <span className="font-normal text-ink-2">
+                · {l.isKo && e.companyLocalName ? e.companyLocalName : e.company}
+                {!l.isKo && e.companyLocalName && (
+                  <span lang="ko" className="text-ink-3">
+                    {' '}
+                    {e.companyLocalName}
+                  </span>
+                )}
               </span>
-              <span className="font-mono text-xs text-ink-3">{period(e)}</span>
             </div>
-            <ul className="mt-1 list-disc pl-5 text-ink-2 marker:text-ink-3">
-              {pickHighlights(e, site).map((h) => (
-                <li key={h}>{h}</li>
+            <ul className="mt-2 flex flex-col gap-1 text-sm text-ink-2">
+              {(site.experienceHighlights[e.id] ?? [0]).map((i) => (
+                <li key={i}>{l.highlight(e, i)}</li>
               ))}
             </ul>
           </li>
         ))}
-      </ul>
-      <dl className="mt-4 grid grid-cols-[auto_1fr] gap-x-3 gap-y-1 border-t border-line pt-3 text-ink-2">
-        <dt className="text-ink-3">Education</dt>
-        <dd>{educationLine(resume)}</dd>
-        <dt className="text-ink-3">Languages</dt>
-        <dd>{languagesLine(resume)}</dd>
+      </ol>
+      <dl className="mt-6 grid grid-cols-[auto_1fr] gap-x-4 gap-y-1 text-sm">
+        <dt className="text-ink-3">{ui.education}</dt>
+        <dd className="text-ink-2">{l.education()}</dd>
+        <dt className="text-ink-3">{ui.languages}</dt>
+        <dd className="text-ink-2">{l.languages()}</dd>
       </dl>
     </div>
   )
 }
 
 function Contact() {
+  const ui = useUi()
   const { email, links } = resume.basics
-
   return (
-    <div className="text-sm">
-      <dl className="grid grid-cols-[5rem_1fr] gap-y-1.5">
-        <dt className="text-ink-3">Email</dt>
-        <dd className="min-w-0 truncate">
-          <a href={`mailto:${email}`} className="text-accent underline underline-offset-2 hover:no-underline">
-            {email}
-          </a>
-        </dd>
-        {links.linkedin && (
-          <>
-            <dt className="text-ink-3">LinkedIn</dt>
-            <dd className="min-w-0 truncate">
-              <a href={links.linkedin} target="_blank" rel="noopener noreferrer" className="text-accent underline underline-offset-2 hover:no-underline">
-                {links.linkedin.replace(/^https?:\/\/(www\.)?/, '')}
-              </a>
-            </dd>
-          </>
-        )}
-      </dl>
+    <div className="flex flex-wrap gap-3">
+      <a
+        href={`mailto:${email}`}
+        className="inline-flex items-center gap-2 rounded-2xl border border-line px-4 py-3 text-sm transition-colors hover:border-accent"
+      >
+        <span className="text-ink-3">{ui.email}</span>
+        <span className="font-medium text-ink">{email}</span>
+      </a>
+      {links.linkedin && (
+        <a
+          href={links.linkedin}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-2 rounded-2xl border border-line px-4 py-3 text-sm transition-colors hover:border-accent"
+        >
+          <span className="text-ink-3">LinkedIn</span>
+          <span className="font-medium text-ink">{links.linkedin.replace(/\/$/, '').split('/').pop()}</span>
+        </a>
+      )}
     </div>
   )
 }

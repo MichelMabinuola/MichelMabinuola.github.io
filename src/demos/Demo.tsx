@@ -15,7 +15,7 @@ export function Demo({
   badge?: string
 }) {
   return (
-    <div className="rounded-lg bg-track/60 p-3 sm:p-4">
+    <div className="rounded-2xl bg-track/50 p-4 sm:p-5">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div aria-live="polite">
           <div className="text-xs text-ink-3">

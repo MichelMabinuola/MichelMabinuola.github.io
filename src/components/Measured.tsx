@@ -1,4 +1,4 @@
-import { site } from '../content'
+import { useL10n } from '../i18n'
 
 export const MEASURED_ID = 'measured-for-real'
 
@@ -21,10 +21,10 @@ export function MeasuredLink({ children }: { children: React.ReactNode }) {
 }
 
 export function MeasuredNote() {
-  const m = site.measured
+  const m = useL10n().measured()
   return (
     <details id={MEASURED_ID} className="mt-3 rounded-2xl border border-line bg-surface px-5 py-4 text-sm">
-      <summary className="cursor-pointer select-none font-medium text-ink">Measured for real: where the database’s memory went</summary>
+      <summary className="cursor-pointer select-none font-medium text-ink">{m.title}</summary>
       <p className="mt-3 text-ink">{m.caption}</p>
       <p className="mt-2 text-ink-2">{m.setup}</p>
       <ul className="mt-2 flex flex-col gap-1.5 text-ink-2">
