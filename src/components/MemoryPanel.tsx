@@ -11,12 +11,14 @@ import { CountUp } from './CountUp'
 
 export function MemoryPanel({
   state,
+  visible,
   hidden,
   total,
   onLoad,
   onSetMax,
 }: {
   state: CgroupState
+  visible: SectionDef[]
   hidden: SectionDef[]
   total: number
   onLoad: (id: string) => void
@@ -90,30 +92,70 @@ export function MemoryPanel({
         <span className="shrink-0 text-xs tabular-nums text-ink-3">{ui.used(<CountUp value={s.currentMb} />, s.maxMb)}</span>
       </div>
 
-      {hidden.length > 0 && (
-        <ul className="mt-4 flex flex-wrap gap-2">
-          <AnimatePresence initial={false}>
-            {hidden.map((sec) => {
-              const busy = state.loading.includes(sec.id)
-              return (
-                <motion.li key={sec.id} layout initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.9 }}>
-                  <button
-                    type="button"
-                    onClick={() => onLoad(sec.id)}
-                    disabled={busy}
-                    aria-label={busy ? ui.loading(sec.title) : ui.show(sec.title)}
-                    className="inline-flex items-center gap-1.5 rounded-full border border-dashed border-line-strong px-3 py-1.5 text-sm text-ink-2 transition-colors hover:border-accent hover:bg-accent-soft hover:text-accent disabled:cursor-progress disabled:text-accent"
-                  >
-                    {busy ? <Icon name={sec.icon} size={14} /> : <Plus size={14} aria-hidden="true" />}
-                    {busy ? ui.loading(sec.title) : sec.title}
-                    {!busy && <span className="text-xs tabular-nums text-ink-3">{sec.sizeMb} MB</span>}
-                  </button>
-                </motion.li>
-              )
-            })}
-          </AnimatePresence>
-        </ul>
-      )}
+      <div className="mt-4 flex flex-col gap-2.5">
+        <Row label={ui.inMemory}>
+          <ul className="flex flex-wrap gap-2">
+            {visible.map((sec) => (
+              <li key={sec.id}>
+                <button
+                  type="button"
+                  onClick={() => goTo(sec.id)}
+                  aria-label={ui.goTo(sec.title)}
+                  className="inline-flex items-center gap-1.5 rounded-full bg-accent-soft px-3 py-1.5 text-sm text-accent transition-opacity hover:opacity-80"
+                >
+                  <Icon name={sec.icon} size={14} />
+                  {sec.title}
+                  <span className="text-xs tabular-nums opacity-70">{sec.sizeMb} MB</span>
+                </button>
+              </li>
+            ))}
+          </ul>
+        </Row>
+        {hidden.length > 0 && (
+          <Row label={ui.putAway}>
+            <ul className="flex flex-wrap gap-2">
+              <AnimatePresence initial={false}>
+                {hidden.map((sec) => {
+                  const busy = state.loading.includes(sec.id)
+                  return (
+                    <motion.li key={sec.id} layout initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.9 }}>
+                      <button
+                        type="button"
+                        onClick={() => onLoad(sec.id)}
+                        disabled={busy}
+                        aria-label={busy ? ui.loading(sec.title) : ui.show(sec.title)}
+                        className="inline-flex items-center gap-1.5 rounded-full border border-dashed border-line-strong px-3 py-1.5 text-sm text-ink-2 transition-colors hover:border-accent hover:bg-accent-soft hover:text-accent disabled:cursor-progress disabled:text-accent"
+                      >
+                        {busy ? <Icon name={sec.icon} size={14} /> : <Plus size={14} aria-hidden="true" />}
+                        {busy ? ui.loading(sec.title) : sec.title}
+                        {!busy && <span className="text-xs tabular-nums text-ink-3">{sec.sizeMb} MB</span>}
+                      </button>
+                    </motion.li>
+                  )
+                })}
+              </AnimatePresence>
+            </ul>
+          </Row>
+        )}
+      </div>
     </section>
   )
+}
+
+function Row({ label, children }: { label: string; children: React.ReactNode }) {
+  return (
+    <div className="flex flex-col gap-1.5 sm:flex-row sm:items-center sm:gap-3">
+      <span className="w-28 shrink-0 text-xs text-ink-3">{label}</span>
+      {children}
+    </div>
+  )
+}
+
+// Scroll to a section card and move keyboard focus there.
+function goTo(id: string) {
+  const el = document.getElementById(`sec-${id}`)
+  if (!el) return
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  el.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' })
+  el.focus({ preventScroll: true })
 }

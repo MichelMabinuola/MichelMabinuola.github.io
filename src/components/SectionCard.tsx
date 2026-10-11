@@ -29,8 +29,10 @@ export function SectionCard({ section, onTouch }: { section: SectionDef; onTouch
       transition={{ duration: 0.35 }}
       onPointerDown={() => onTouch(section.id)}
       onFocusCapture={() => onTouch(section.id)}
+      id={`sec-${section.id}`}
+      tabIndex={-1}
       aria-labelledby={`h-${section.id}`}
-      className="rounded-3xl border border-line bg-surface p-6 transition-colors hover:border-line-strong sm:p-8"
+      className="scroll-mt-6 rounded-3xl border border-line bg-surface p-6 outline-none transition-colors hover:border-line-strong sm:p-8"
     >
       <div className="flex items-center gap-3">
         <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-accent-soft text-accent">

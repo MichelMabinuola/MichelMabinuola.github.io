@@ -66,7 +66,7 @@ export default function App() {
           </header>
 
           <div className="mt-12">
-            <MemoryPanel state={state} hidden={hidden} total={sections.length} onLoad={refault} onSetMax={setMax} />
+            <MemoryPanel state={state} visible={visible} hidden={hidden} total={sections.length} onLoad={refault} onSetMax={setMax} />
           </div>
         </div>
       </div>
