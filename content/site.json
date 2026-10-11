@@ -25,7 +25,7 @@
       "title": "About",
       "icon": "user",
       "line": "I keep databases fast and make data searchable by meaning.",
-      "body": "I’m a database engineer in Seoul at Agile Platform, a consulting company specializing in SingleStore. I tune databases for on-premise customers, build vector search and RAG pipelines, and design Kafka pipelines for proofs of concept.",
+      "body": "Data has to be stored safely and come back out in milliseconds, ideally with the right answer. That’s my work, from database performance and vector search down to the systems underneath. And if there’s another layer under that, I’m going in.",
       "flow": [
         {
           "label": "Kafka",
