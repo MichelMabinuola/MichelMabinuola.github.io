@@ -28,7 +28,7 @@
       "body": "Data has to be stored safely and come back out in milliseconds, ideally with the right answer. That’s my work, from database performance and vector search down to the systems underneath. And if there’s another layer under that, I’m going in.",
       "flow": [
         {
-          "label": "Kafka",
+          "label": "Pipelines",
           "text": "data streams in"
         },
         {

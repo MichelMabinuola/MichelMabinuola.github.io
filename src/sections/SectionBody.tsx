@@ -38,7 +38,7 @@ function About({ section }: { section: SectionDef }) {
     <div className="text-ink-2">
       {section.body && <p className="max-w-3xl">{section.body}</p>}
       {section.flow && (
-        <ol className="mt-5 flex flex-wrap items-center gap-2 text-sm" aria-label="Kafka → Database → Vectors → Agents">
+        <ol className="mt-5 flex flex-wrap items-center gap-2 text-sm" aria-label={section.flow.map((f) => f.label).join(" → ")}>
           {section.flow.map((f, i) => (
             <li key={f.label} className="flex items-center gap-2">
               <span className="rounded-full bg-track px-3 py-1" title={f.text}>
