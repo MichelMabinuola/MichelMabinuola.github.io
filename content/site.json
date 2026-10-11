@@ -60,12 +60,6 @@
       "realWork": [
         {
           "project": "matryoshka-vector-search"
-        },
-        {
-          "project": "hamming-distance-udf"
-        },
-        {
-          "writing": "high-dimension-vectors"
         }
       ]
     },

@@ -66,10 +66,7 @@ export function VectorDemo() {
 
       <p className="mt-4 text-sm text-ink-2">{ui.vecCaption}</p>
       <p className="mt-2 text-xs text-ink-3">
-        {ui.vecDataset} ·{' '}
-        <a href={project.url!} target="_blank" rel="noopener noreferrer" className="text-accent underline underline-offset-2 hover:no-underline">
-          {ui.vecPublished}
-        </a>
+        {ui.vecDataset} · {ui.vecPublished}
       </p>
     </div>
   )
