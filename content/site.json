@@ -1,6 +1,6 @@
 {
-  "domain": "yourname.dev",
-  "url": "https://yourname.dev",
+  "domain": "michelmabinuola.github.io",
+  "url": "https://michelmabinuola.github.io",
   "cgroupPath": "/sys/fs/cgroup/portfolio.slice",
   "agentsEnabled": false,
   "defaultOpen": [
