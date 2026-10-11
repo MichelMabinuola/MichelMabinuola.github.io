@@ -42,7 +42,7 @@ export function SectionBody({ section }: { section: SectionDef }) {
 function About({ section }: { section: SectionDef }) {
   return (
     <div className="text-ink-2">
-      {section.body && <p className="max-w-3xl text-lg leading-relaxed">{section.body}</p>}
+      {section.body && <p className="text-lg leading-relaxed">{section.body}</p>}
       {section.flow && (
         <ol className="mt-5 flex flex-wrap items-center gap-2 text-sm" aria-label={section.flow.map((f) => f.label).join(" → ")}>
           {section.flow.map((f, i) => (
