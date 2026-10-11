@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
-import { Link2, Plus } from 'lucide-react'
+import { Link2, Plus, Sparkles } from 'lucide-react'
 import type { SectionDef } from '../model'
 import type { CgroupState, MaxSetting } from '../sim/cgroup'
 import { stats } from '../sim/cgroup'
@@ -41,6 +41,12 @@ export function MemoryPanel({
 
   return (
     <section aria-label={ui.limitedMemory} className="rounded-3xl border border-line bg-surface p-5 sm:p-6">
+      <div className="mb-5 flex gap-3 rounded-2xl bg-accent-soft px-4 py-3 text-sm">
+        <Sparkles size={18} aria-hidden="true" className="mt-0.5 shrink-0 text-accent" />
+        <p className="text-ink-2">
+          <span className="font-medium text-accent">{ui.funTag}.</span> {ui.funNote}
+        </p>
+      </div>
       <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
         <div>
           <h2 className="font-medium text-ink">{ui.limitedMemory}</h2>
