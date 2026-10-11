@@ -5,7 +5,6 @@ import { useL10n, useUi } from '../i18n'
 import { AgentReplay } from '../demos/AgentReplay'
 import { DbDemo } from '../demos/DbDemo'
 import { VectorDemo } from '../demos/VectorDemo'
-import { KafkaDemo } from '../demos/KafkaDemo'
 import { Writing } from './Writing'
 
 export function SectionBody({ section }: { section: SectionDef }) {
@@ -18,8 +17,6 @@ export function SectionBody({ section }: { section: SectionDef }) {
       return <VectorDemo />
     case 'database':
       return <DbDemo />
-    case 'kafka':
-      return <KafkaDemo />
     case 'agents':
       return <AgentReplay />
     case 'writing':

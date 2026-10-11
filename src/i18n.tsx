@@ -71,17 +71,6 @@ const en = {
   dbFast: 'Like a book’s index: jump straight to the right pages instead of reading the whole book.',
   dbParts: ['scanning everything', 'joining', 'sending results', 'reading matching rows only'],
   dbDetails: 'see the details',
-  kWaiting: 'messages waiting',
-  kAdd: 'add a worker',
-  kReset: 'reset',
-  kIncoming: 'incoming →',
-  kLane: 'lane',
-  kWorker: 'worker',
-  kSentences: [
-    'One worker can’t keep up with three busy lanes, so messages pile up.',
-    'Two workers share the lanes. The pile shrinks, slowly.',
-    'Each lane has its own worker now. Nothing is left waiting.',
-  ],
   months: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
 }
 
@@ -137,17 +126,6 @@ const koUi: typeof en = {
   dbFast: '책의 색인처럼, 책 전체를 읽는 대신 필요한 페이지로 바로 갑니다.',
   dbParts: ['전체 스캔', '조인', '결과 전송', '일치하는 행만 읽기'],
   dbDetails: '자세히 보기',
-  kWaiting: '대기 중인 메시지',
-  kAdd: '작업자 추가',
-  kReset: '초기화',
-  kIncoming: '유입 →',
-  kLane: '레인',
-  kWorker: '작업자',
-  kSentences: [
-    '작업자 한 명으로는 바쁜 레인 세 개를 감당할 수 없어서 메시지가 쌓입니다.',
-    '작업자 두 명이 레인을 나눠 맡습니다. 쌓인 메시지가 천천히 줄어듭니다.',
-    '이제 레인마다 작업자가 있습니다. 기다리는 메시지가 없습니다.',
-  ],
   months: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
 }
 

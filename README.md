@@ -37,7 +37,7 @@ Code is split by feature: `src/sim` (the model), `src/components` (layout), `src
 
 ## Share links
 
-`?max=256M&open=vector,kafka` restores the limit and which sections are resident. Unknown or disabled ids are ignored. Anything invalid falls back to the default starved state.
+`?max=256M&open=vector,database` restores the limit and which sections are resident. Unknown or disabled ids are ignored. Anything invalid falls back to the default starved state.
 
 ## Deploy (free)
 

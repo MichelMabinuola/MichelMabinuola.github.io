@@ -1,6 +1,6 @@
 import { capacity, type MaxSetting } from '../sim/cgroup'
 
-// ?max=1G&open=vector,kafka  →  validated starting state.
+// ?max=1G&open=vector,database  →  validated starting state.
 // Unknown or disabled ids are ignored; anything unusable falls back to the starved default.
 export function readShareState(
   search: string,

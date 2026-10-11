@@ -79,18 +79,6 @@
       ]
     },
     {
-      "id": "kafka",
-      "title": "Kafka",
-      "icon": "radio-tower",
-      "line": "I move huge streams of data reliably, like a post office for events.",
-      "detail": "A topic is split into partitions. Within a consumer group each partition is read by exactly one consumer, so adding consumers (up to the partition count) spreads the work and lag drains.",
-      "realWork": [
-        {
-          "text": "I build Kafka pipelines that simulate customer workloads for proofs of concept."
-        }
-      ]
-    },
-    {
       "id": "agents",
       "title": "Agents",
       "icon": "bot",
