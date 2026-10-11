@@ -6,6 +6,7 @@ import { AgentReplay } from '../demos/AgentReplay'
 import { DbDemo } from '../demos/DbDemo'
 import { VectorDemo } from '../demos/VectorDemo'
 import { Writing } from './Writing'
+import { SeoulClock } from '../components/SeoulClock'
 
 export function SectionBody({ section }: { section: SectionDef }) {
   switch (section.id) {
@@ -114,6 +115,9 @@ function Contact() {
           <span className="font-medium text-ink">{links.linkedin.replace(/\/$/, '').split('/').pop()}</span>
         </a>
       )}
+      <div className="w-full">
+        <SeoulClock />
+      </div>
     </div>
   )
 }
