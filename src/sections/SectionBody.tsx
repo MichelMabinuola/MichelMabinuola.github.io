@@ -1,4 +1,5 @@
-import { ArrowRight } from 'lucide-react'
+import { ArrowRight, FileText } from 'lucide-react'
+import { OPEN_RESUME } from '../events'
 import { resume, site } from '../content'
 import type { SectionDef } from '../model'
 import { useL10n, useUi } from '../i18n'
@@ -125,6 +126,15 @@ function Contact() {
           <span className="font-medium text-ink">{links.linkedin.replace(/\/$/, '').split('/').pop()}</span>
         </a>
       )}
+      <button
+        type="button"
+        onClick={() => window.dispatchEvent(new Event(OPEN_RESUME))}
+        aria-haspopup="dialog"
+        className="inline-flex items-center gap-2 rounded-2xl border border-line px-4 py-3 text-sm transition-colors hover:border-accent"
+      >
+        <FileText size={15} aria-hidden="true" className="text-ink-3" />
+        <span className="font-medium text-ink">{ui.resume}</span>
+      </button>
       {links.github && (
         <a
           href={links.github}

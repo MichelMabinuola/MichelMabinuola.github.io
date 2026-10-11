@@ -1,8 +1,8 @@
 {
   "basics": {
     "name": "Michael Mabinuola",
-    "title": "Database Engineer",
-    "tagline": "Vector Search, Performance and Data Pipelines",
+    "title": "Database/AI Engineer",
+    "tagline": "Performance, Vector Search and Data Pipelines",
     "location": "Seoul, South Korea",
     "timezone": "Asia/Seoul",
     "email": "michaelmabinuola@gmail.com",
@@ -341,8 +341,7 @@
       "tags": [
         "rag",
         "vector-search"
-      ],
-      "note": "Confirm authorship before publishing: the page lists 'mike' as editor of the 2026 update, original author not stated."
+      ]
     }
   ],
   "openSource": [

@@ -6,6 +6,7 @@ export type Experience = {
   role: string
   company: string
   companyLocalName?: string
+  companyDescription?: string
   start: string
   end: string | null
   current: boolean
@@ -15,6 +16,8 @@ export type MetricResult = { config: string; indexMemoryGB: number; qps: number;
 export type Project = {
   id: string
   title: string
+  year?: number | null
+  employer?: string
   status: string
   summary: string
   url: string | null
@@ -55,7 +58,9 @@ export type Resume = {
   }
   experience: Experience[]
   projects: Project[]
-  education: { credential: string; institution: string; end: string }[]
+  skills: { group: string; items: string[] }[]
+  education: { credential: string; institution: string; start: string; end: string; gpa?: string }[]
+  certificatesAndAwards: { name: string; year: number }[]
   languages: { language: string; level: string }[]
   writing: WritingEntry[]
   openSource: OpenSourceEntry[]

@@ -150,3 +150,38 @@ body {
     radial-gradient(40rem 22rem at 15% 20%, color-mix(in srgb, var(--accent) 16%, transparent), transparent 70%),
     radial-gradient(30rem 18rem at 85% 0%, color-mix(in srgb, var(--accent) 10%, transparent), transparent 70%);
 }
+
+/* Printing while the resume panel is open prints just the resume, in light colours. */
+@media print {
+  :root,
+  :root[data-theme='dark'],
+  :root:not([data-theme='light']) {
+    --bg: #fff !important;
+    --surface: #fff !important;
+    --ink: #111 !important;
+    --ink-2: #333 !important;
+    --ink-3: #666 !important;
+    --line: #ccc !important;
+    --accent: #1f3a5f !important;
+    --track: #f2f2f2 !important;
+  }
+  body[data-print='panel'] #root,
+  body[data-print='panel'] .print-hide {
+    display: none !important;
+  }
+  body[data-print='panel'] .print-panel {
+    position: static !important;
+    width: auto !important;
+    max-width: none !important;
+    min-width: 0 !important;
+    transform: none !important;
+    border: 0 !important;
+  }
+  body[data-print='panel'] .print-scroll {
+    overflow: visible !important;
+    padding: 0 !important;
+  }
+  html {
+    font-size: 11px;
+  }
+}

@@ -1,5 +1,6 @@
+import { useCallback, useEffect, useState } from 'react'
 import { AnimatePresence } from 'framer-motion'
-import { ArrowUpRight, Mail, MapPin } from 'lucide-react'
+import { ArrowUpRight, FileText, Mail, MapPin } from 'lucide-react'
 import { resume, SECTIONS } from './content'
 import { titleLine } from './model'
 import { useCgroup } from './sim/useCgroup'
@@ -12,9 +13,19 @@ import { ScrollTop } from './components/ScrollTop'
 import { MeasuredLink, MeasuredNote } from './components/Measured'
 import { GitHubIcon } from './components/Icon'
 import { HeroStats } from './components/HeroStats'
+import { ResumePanel } from './components/ResumePanel'
+import { OPEN_RESUME } from './events'
 
 export default function App() {
   const { state, refault, setMax, touch } = useCgroup()
+  // The resume opens from the hero, from Contact (via an event), or from a ?view=resume link.
+  const [resumeOpen, setResumeOpen] = useState(() => new URLSearchParams(window.location.search).get('view') === 'resume')
+  const closeResume = useCallback(() => setResumeOpen(false), [])
+  useEffect(() => {
+    const open = () => setResumeOpen(true)
+    window.addEventListener(OPEN_RESUME, open)
+    return () => window.removeEventListener(OPEN_RESUME, open)
+  }, [])
   const ui = useUi()
   const l = useL10n()
   const sections = SECTIONS.map(l.section)
@@ -54,6 +65,15 @@ export default function App() {
                 <Mail size={16} aria-hidden="true" />
                 {ui.emailMe}
               </a>
+              <button
+                type="button"
+                onClick={() => setResumeOpen(true)}
+                aria-haspopup="dialog"
+                className="inline-flex items-center gap-2 rounded-full border border-line-strong bg-surface px-5 py-2.5 text-sm font-medium text-ink transition-colors hover:border-ink"
+              >
+                <FileText size={16} aria-hidden="true" />
+                {ui.resume}
+              </button>
               {links.linkedin && (
                 <a
                   href={links.linkedin}
@@ -103,6 +123,7 @@ export default function App() {
         </footer>
       </main>
       <ScrollTop />
+      <ResumePanel open={resumeOpen} onClose={closeResume} />
     </div>
   )
 }
