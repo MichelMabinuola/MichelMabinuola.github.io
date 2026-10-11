@@ -15,17 +15,17 @@ export function readShareState(
 
   const open = [...new Set((q.get('open') ?? '').split(',').map((s) => s.trim().toLowerCase()))]
     .filter((id) => known.includes(id))
-    .slice(-capacity(max))
+    .slice(0, capacity(max))
   return { max, open: open.length ? open : fallback }
 }
 
-export function shareUrl(max: MaxSetting, open: string[], lastAccess: Record<string, number>): string {
-  const ordered = [...open].sort((a, b) => (lastAccess[a] ?? 0) - (lastAccess[b] ?? 0))
+// `open` is in display order, top first.
+export function shareUrl(max: MaxSetting, open: string[]): string {
   const url = new URL(window.location.href)
   url.search = ''
   url.hash = ''
   url.searchParams.set('max', max)
-  url.searchParams.set('open', ordered.join(','))
+  url.searchParams.set('open', open.join(','))
   return url.toString().replace(/%2C/g, ',')
 }
 

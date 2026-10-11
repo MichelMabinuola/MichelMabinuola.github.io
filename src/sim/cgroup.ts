@@ -15,7 +15,7 @@ export const capacity = (max: MaxSetting) => Math.floor((MAX_MB[max] - ANON_MB) 
 
 export type CgroupState = {
   max: MaxSetting
-  resident: string[]
+  resident: string[] // display order under the limit: most recently brought back first
   loading: string[]
   lastAccess: Record<string, number>
   clock: number
@@ -34,7 +34,8 @@ export type Action =
 
 export function initialState(max: MaxSetting, open: string[]): CgroupState {
   const lastAccess: Record<string, number> = {}
-  open.forEach((id, i) => (lastAccess[id] = i + 1))
+  // The first section listed sits on top and counts as the most recently used.
+  open.forEach((id, i) => (lastAccess[id] = open.length - i))
   return {
     max,
     resident: open,
@@ -69,7 +70,7 @@ export function reducer(s: CgroupState, a: Action): CgroupState {
       if (!s.loading.includes(a.id)) return s
       const clock = s.clock + 1
       const lastAccess = { ...s.lastAccess, [a.id]: clock }
-      let resident = [...s.resident, a.id]
+      let resident = [a.id, ...s.resident]
       const evicted: string[] = []
       while (resident.length > capacity(s.max)) {
         const victim = lru(resident.filter((id) => id !== a.id), lastAccess)
@@ -108,7 +109,7 @@ export function reducer(s: CgroupState, a: Action): CgroupState {
         ...s,
         max: a.max,
         loading: [],
-        resident: s.resident.filter((id) => keep.includes(id)),
+        resident: keep,
         lastCmd: `${cmd}   # dropped ${dropped.length} section${dropped.length === 1 ? '' : 's'} from page cache, kept the most recent`,
       }
     }

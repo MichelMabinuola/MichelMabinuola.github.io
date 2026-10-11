@@ -35,7 +35,7 @@ export function MemoryPanel({
         : ui.noteAfter
 
   const share = async () => {
-    setCopied(await copyText(shareUrl(state.max, state.resident, state.lastAccess)))
+    setCopied(await copyText(shareUrl(state.max, state.resident)))
     window.setTimeout(() => setCopied(false), 2000)
   }
 

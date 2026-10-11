@@ -16,7 +16,11 @@ export default function App() {
   const ui = useUi()
   const l = useL10n()
   const sections = SECTIONS.map(l.section)
-  const visible = sections.filter((s) => state.resident.includes(s.id))
+  // Under the limit, the section brought back most recently goes on top; with everything showing, use page order.
+  const visible =
+    state.max === '1G'
+      ? sections.filter((s) => state.resident.includes(s.id))
+      : state.resident.map((id) => sections.find((s) => s.id === id)).filter((s) => s !== undefined)
   const hidden = sections.filter((s) => !state.resident.includes(s.id))
   const about = sections.find((s) => s.id === 'about')
   const { email, links } = resume.basics
