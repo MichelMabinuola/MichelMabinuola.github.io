@@ -6,16 +6,25 @@ export type MaxSetting = '256M' | '1G'
 
 export const MAX_MB: Record<MaxSetting, number> = { '256M': 256, '1G': 1024 }
 export const ANON_MB = 40
-export const SECTION_MB = 96
 export const REFAULT_MS = 700
 // avg10 is an exponential moving average over a 10s window, sampled here every 1s.
 export const PSI_DECAY = Math.exp(-1 / 10)
 
-export const capacity = (max: MaxSetting) => Math.floor((MAX_MB[max] - ANON_MB) / SECTION_MB)
+export type Sizes = Record<string, number>
+const fileMb = (ids: string[], sizes: Sizes) => ids.reduce((t, id) => t + (sizes[id] ?? 0), 0)
+export const fits = (ids: string[], max: MaxSetting, sizes: Sizes) => ANON_MB + fileMb(ids, sizes) <= MAX_MB[max]
+
+// Keep sections in priority order (first = most wanted), dropping from the end until they fit.
+export function trimToFit(ids: string[], max: MaxSetting, sizes: Sizes): string[] {
+  const keep = [...ids]
+  while (keep.length > 1 && !fits(keep, max, sizes)) keep.pop()
+  return keep
+}
 
 export type CgroupState = {
   max: MaxSetting
   resident: string[] // display order under the limit: most recently brought back first
+  sizes: Sizes
   loading: string[]
   lastAccess: Record<string, number>
   clock: number
@@ -32,13 +41,14 @@ export type Action =
   | { type: 'set-max'; max: MaxSetting }
   | { type: 'psi-tick' }
 
-export function initialState(max: MaxSetting, open: string[]): CgroupState {
+export function initialState(max: MaxSetting, open: string[], sizes: Sizes): CgroupState {
   const lastAccess: Record<string, number> = {}
   // The first section listed sits on top and counts as the most recently used.
   open.forEach((id, i) => (lastAccess[id] = open.length - i))
   return {
     max,
     resident: open,
+    sizes,
     loading: [],
     lastAccess,
     clock: open.length,
@@ -72,7 +82,7 @@ export function reducer(s: CgroupState, a: Action): CgroupState {
       const lastAccess = { ...s.lastAccess, [a.id]: clock }
       let resident = [a.id, ...s.resident]
       const evicted: string[] = []
-      while (resident.length > capacity(s.max)) {
+      while (resident.length > 1 && !fits(resident, s.max, s.sizes)) {
         const victim = lru(resident.filter((id) => id !== a.id), lastAccess)
         resident = resident.filter((id) => id !== victim)
         evicted.push(victim)
@@ -101,9 +111,11 @@ export function reducer(s: CgroupState, a: Action): CgroupState {
       if (a.max === s.max) return { ...s, lastCmd: cmd }
       if (a.max === '1G') return { ...s, max: a.max, lastCmd: `${cmd}   # room for every section` }
       // Shrinking: reclaim least recently used file pages until we fit.
-      const keep = [...s.resident]
-        .sort((x, y) => (s.lastAccess[y] ?? 0) - (s.lastAccess[x] ?? 0))
-        .slice(0, capacity(a.max))
+      const keep = trimToFit(
+        [...s.resident].sort((x, y) => (s.lastAccess[y] ?? 0) - (s.lastAccess[x] ?? 0)),
+        a.max,
+        s.sizes,
+      )
       const dropped = s.resident.filter((id) => !keep.includes(id))
       return {
         ...s,
@@ -126,7 +138,7 @@ export function reducer(s: CgroupState, a: Action): CgroupState {
 
 export function stats(s: CgroupState) {
   const maxMb = MAX_MB[s.max]
-  const fileMb = s.resident.length * SECTION_MB
-  const currentMb = ANON_MB + fileMb
-  return { maxMb, fileMb, anonMb: ANON_MB, currentMb, pct: currentMb / maxMb }
+  const file = fileMb(s.resident, s.sizes)
+  const currentMb = ANON_MB + file
+  return { maxMb, fileMb: file, anonMb: ANON_MB, currentMb, pct: currentMb / maxMb }
 }

@@ -1,12 +1,12 @@
 import { useCallback, useEffect, useReducer, useRef } from 'react'
 import { initialState, reducer, REFAULT_MS, type MaxSetting } from './cgroup'
 import { readShareState } from '../share/url'
-import { SECTION_IDS, site } from '../content'
+import { SECTION_IDS, SECTION_SIZES, site } from '../content'
 
 export function useCgroup() {
   const [state, dispatch] = useReducer(reducer, undefined, () => {
-    const { max, open } = readShareState(window.location.search, SECTION_IDS, site.defaultOpen)
-    return initialState(max, open)
+    const { max, open } = readShareState(window.location.search, SECTION_IDS, site.defaultOpen, SECTION_SIZES)
+    return initialState(max, open, SECTION_SIZES)
   })
   const timers = useRef(new Map<string, number>())
 

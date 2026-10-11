@@ -58,6 +58,7 @@ export type SectionDef = {
   closing?: string
   flow?: { label: string; text: string }[]
   realWork?: RealWorkRef[]
+  sizeMb: number // illustrative page-cache size
 }
 export type Site = {
   domain: string

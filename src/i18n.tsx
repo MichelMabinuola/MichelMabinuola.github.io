@@ -29,7 +29,7 @@ const en = {
   funTag: 'Just for fun',
   funNote:
     'This page pretends to run on very little memory, the way Linux limits programs (cgroups). Nothing is broken and the site isn’t slow: sections are simply put away until you ask for them.',
-  used: (cur: number, max: number) => `${cur} MB of ${max} MB used`,
+  used: (cur: React.ReactNode, max: number) => <>{cur} MB of {max} MB used</>,
   noteLoading: 'Loading it back…',
   noteFull: 'Every section fits now.',
   noteStart: (n: number, total: number) => `Only ${n} of ${total} sections fit. Tap one to bring it back.`,
@@ -84,7 +84,7 @@ const koUi: typeof en = {
   funTag: '재미로 만든 기능',
   funNote:
     '리눅스가 프로그램의 메모리를 제한하는 방식(cgroup)처럼, 이 페이지는 아주 적은 메모리로 돌아가는 척합니다. 고장 난 것도, 사이트가 느린 것도 아니에요. 섹션은 필요할 때까지 잠시 치워 둔 것뿐입니다.',
-  used: (cur, max) => `${max} MB 중 ${cur} MB 사용 중`,
+  used: (cur, max) => <>{max} MB 중 {cur} MB 사용 중</>,
   noteLoading: '다시 불러오는 중…',
   noteFull: '이제 모든 섹션이 들어갑니다.',
   noteStart: (n, total) => `${total}개 중 ${n}개 섹션만 들어가요. 하나를 눌러 다시 불러오세요.`,

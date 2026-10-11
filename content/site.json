@@ -43,13 +43,15 @@
           "label": "Agents",
           "text": "assistants act on top"
         }
-      ]
+      ],
+      "sizeMb": 48
     },
     {
       "id": "experience",
       "title": "Experience",
       "icon": "briefcase",
-      "line": "Where I’ve worked and what I did there."
+      "line": "Where I’ve worked and what I did there.",
+      "sizeMb": 88
     },
     {
       "id": "vector",
@@ -61,7 +63,8 @@
         {
           "project": "matryoshka-vector-search"
         }
-      ]
+      ],
+      "sizeMb": 104
     },
     {
       "id": "database",
@@ -76,27 +79,31 @@
         {
           "project": "vast-unlimited-storage-poc"
         }
-      ]
+      ],
+      "sizeMb": 96
     },
     {
       "id": "agents",
       "title": "Agents",
       "icon": "bot",
       "line": "I build AI assistants that can look things up and take actions.",
-      "detail": "An agent is an LLM in a loop: it plans, calls a tool (SQL, search, an API), reads the result, and decides what to do next until it can answer."
+      "detail": "An agent is an LLM in a loop: it plans, calls a tool (SQL, search, an API), reads the result, and decides what to do next until it can answer.",
+      "sizeMb": 112
     },
     {
       "id": "writing",
       "title": "Writing",
       "icon": "pen",
       "line": "I write up what I test, so others can repeat it.",
-      "closing": "More write-ups exist but are internal to my employer."
+      "closing": "More write-ups exist but are internal to my employer.",
+      "sizeMb": 72
     },
     {
       "id": "contact",
       "title": "Contact",
       "icon": "mail",
-      "line": "Email is best. I reply during Korean working hours (KST, UTC+9)."
+      "line": "Email is best. I reply during Korean working hours (KST, UTC+9).",
+      "sizeMb": 24
     }
   ],
   "measured": {

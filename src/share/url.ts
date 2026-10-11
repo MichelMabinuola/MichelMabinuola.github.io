@@ -1,4 +1,4 @@
-import { capacity, type MaxSetting } from '../sim/cgroup'
+import { trimToFit, type MaxSetting, type Sizes } from '../sim/cgroup'
 
 // ?max=1G&open=vector,database  →  validated starting state.
 // Unknown or disabled ids are ignored; anything unusable falls back to the starved default.
@@ -6,16 +6,17 @@ export function readShareState(
   search: string,
   known: string[],
   defaults: string[],
+  sizes: Sizes,
 ): { max: MaxSetting; open: string[] } {
-  const fallback = defaults.filter((id) => known.includes(id)).slice(0, capacity('256M'))
+  const fallback = trimToFit(defaults.filter((id) => known.includes(id)), '256M', sizes)
   const q = new URLSearchParams(search)
   const rawMax = (q.get('max') ?? '').trim().toUpperCase()
   const max: MaxSetting = rawMax === '1G' || rawMax === '1024M' ? '1G' : '256M'
   if (max === '1G') return { max, open: [...known] }
 
-  const open = [...new Set((q.get('open') ?? '').split(',').map((s) => s.trim().toLowerCase()))]
+  const wanted = [...new Set((q.get('open') ?? '').split(',').map((s) => s.trim().toLowerCase()))]
     .filter((id) => known.includes(id))
-    .slice(0, capacity(max))
+  const open = trimToFit(wanted, max, sizes)
   return { max, open: open.length ? open : fallback }
 }
 

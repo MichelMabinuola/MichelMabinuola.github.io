@@ -17,3 +17,4 @@ export const site = siteJson as Site
 export const trace = traceJson as Trace
 export const SECTIONS = enabledSections(site)
 export const SECTION_IDS = SECTIONS.map((s) => s.id)
+export const SECTION_SIZES = Object.fromEntries(SECTIONS.map((s) => [s.id, s.sizeMb]))

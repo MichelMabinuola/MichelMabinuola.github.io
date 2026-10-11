@@ -7,6 +7,7 @@ import { stats } from '../sim/cgroup'
 import { copyText, shareUrl } from '../share/url'
 import { useUi } from '../i18n'
 import { Icon } from './Icon'
+import { CountUp } from './CountUp'
 
 export function MemoryPanel({
   state,
@@ -86,7 +87,7 @@ export function MemoryPanel({
         >
           <div className="h-full rounded-full bg-accent transition-[width] duration-500" style={{ width: `${s.pct * 100}%` }} />
         </div>
-        <span className="shrink-0 text-xs tabular-nums text-ink-3">{ui.used(s.currentMb, s.maxMb)}</span>
+        <span className="shrink-0 text-xs tabular-nums text-ink-3">{ui.used(<CountUp value={s.currentMb} />, s.maxMb)}</span>
       </div>
 
       {hidden.length > 0 && (
@@ -105,6 +106,7 @@ export function MemoryPanel({
                   >
                     {busy ? <Icon name={sec.icon} size={14} /> : <Plus size={14} aria-hidden="true" />}
                     {busy ? ui.loading(sec.title) : sec.title}
+                    {!busy && <span className="text-xs tabular-nums text-ink-3">{sec.sizeMb} MB</span>}
                   </button>
                 </motion.li>
               )

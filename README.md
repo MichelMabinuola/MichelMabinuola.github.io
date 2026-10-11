@@ -28,7 +28,7 @@ Set `url` in `site.json` to your real domain so the Open Graph tags point at the
 ## How the simulation works
 
 - `memory.max` starts at 256M, with About and Vector search resident. Anon memory is a fixed 40M and is never reclaimed.
-- Each section is about 96M of clean file cache, so `floor((256 − 40) / 96) = 2` sections fit.
+- Each section has its own made-up size (`sizeMb` in `content/site.json`, 24–112 MB), so 2 or 3 sections fit depending on which ones are open, and the memory bar moves as you open them.
 - When a reclaimed section is clicked, it is read back from disk (about 700ms). If that pushes usage over the limit, the least recently used section is dropped. Scrolling a section into view or clicking it counts as using it.
 - `workingset_refault_file` counts every refault. PSI `some avg10` only rises when a refault forces another section out (thrashing), and decays like the kernel's 10s average.
 - Sections are dropped, never "swapped": they are clean file pages.
