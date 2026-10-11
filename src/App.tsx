@@ -30,7 +30,7 @@ export default function App() {
     <div className="min-h-screen">
       <div className="relative border-b border-line">
         <div className="hero-dots pointer-events-none absolute inset-0" aria-hidden="true" />
-        <div className="relative mx-auto max-w-5xl px-4 pb-10 pt-5 sm:px-8 sm:pb-14">
+        <div className="relative mx-auto max-w-6xl px-4 pb-10 pt-5 sm:px-8 sm:pb-14">
           <nav className="flex items-center justify-end gap-2">
             <LangSwitch />
             <ThemeToggle />
@@ -83,7 +83,7 @@ export default function App() {
         </div>
       </div>
 
-      <main className="mx-auto max-w-5xl px-4 py-10 sm:px-8 sm:py-14">
+      <main className="mx-auto max-w-6xl px-4 py-10 sm:px-8 sm:py-14">
         <div className="flex flex-col gap-5">
           <AnimatePresence initial={false} mode="popLayout">
             {visible.map((s) => (
