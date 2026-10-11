@@ -1,0 +1,78 @@
+{
+  "matryoshka-blog": {
+    "original": "en",
+    "keyPoints": {
+      "en": ["87% less index memory", "6.6x throughput", "96% recall", "10M vectors"],
+      "ko": ["인덱스 메모리 87% 절감", "처리량 6.6배", "재현율 96%", "벡터 1,000만 개"]
+    },
+    "excerpt": {
+      "en": [
+        "Matryoshka Representation Learning (MRL) is named after those famous nesting dolls 🪆. Crack one open and there's a smaller one inside, and another inside that, and another. The innermost doll is a miniature version of the outermost doll.",
+        "MRL embeddings work the same way. A 1024-dimension MRL vector contains a 128-dimension vector, which contains a 64-dimension vector. Each vector is itself a complete embedding that captures much of the meaning of the original vector.",
+        "By leveraging this beautiful mathematical property, we get dramatically smaller indexes, faster searches, and recall that stays surprisingly close to the original. Combined with SingleStore's F16 vector support, MRL lets you shrink vector index memory and build better AI applications without paying for it in accuracy."
+      ],
+      "ko": [
+        "Matryoshka Representation Learning(MRL)은 유명한 러시아 인형 마트료시카 🪆에서 이름을 따왔습니다. 하나를 열면 그 안에 더 작은 인형이 있고, 그 안에 또 하나, 또 하나가 있습니다. 가장 안쪽 인형은 가장 바깥 인형의 축소판입니다.",
+        "MRL 임베딩도 같은 방식으로 동작합니다. 1024차원 MRL 벡터 안에는 128차원 벡터가 있고, 그 안에는 64차원 벡터가 있습니다. 각 벡터는 그 자체로 원래 벡터의 의미를 상당 부분 담은 완전한 임베딩입니다.",
+        "이 아름다운 수학적 성질을 활용하면 인덱스는 훨씬 작아지고, 검색은 빨라지며, 재현율은 놀라울 만큼 원래와 가깝게 유지됩니다. SingleStore의 F16 벡터 지원과 함께 사용하면, MRL로 정확도를 크게 잃지 않고 벡터 인덱스 메모리를 줄여 더 나은 AI 애플리케이션을 만들 수 있습니다."
+      ]
+    }
+  },
+  "high-dimension-vectors": {
+    "original": "ko",
+    "keyPoints": {
+      "en": ["16K–131K dimensions", "Up to 98 GB", "Real limit: max_allowed_packet"],
+      "ko": ["16K~131K 차원", "최대 98 GB", "실제 한계: max_allowed_packet"]
+    },
+    "excerpt": {
+      "ko": [
+        "RAG 시스템, 시맨틱 서치와 같은 최신 AI 애플리케이션에서는 멀티모달 임베딩이나 대규모 데이터를 High-Dimensional 벡터(높은 Dimension을 가지는 벡터)형태로 저장하고 처리하고자 하는 요구가 있습니다. 이러한 워크로드는 High-Dimensional 벡터 데이터를 오류나 장애 없이 안정적으로 저장, 인덱싱, 쿼리할 수 있는 데이터베이스 시스템에 의존합니다.",
+        "SingleStore 는 대규모 벡터 저장 및 쿼리 워크로드를 처리하도록 설계되었으며, High-Dimensional 벡터에 대해서도 빠른 인덱싱과 효율적인 쿼리를 제공합니다.",
+        "SingleStore 의 High-Dimensional 벡터에 대한 지원을 확인하기 위해, 16K 부터 128K 까지의 Dimension 을 가지는 벡터를 대상으로 테스트를 수행했습니다."
+      ],
+      "en": [
+        "Modern AI applications such as RAG systems and semantic search need to store and process multimodal embeddings and large data as high-dimensional vectors. These workloads depend on a database that can store, index and query high-dimensional vector data reliably, without errors or failures.",
+        "SingleStore is designed for large-scale vector storage and query workloads, and offers fast indexing and efficient queries for high-dimensional vectors as well.",
+        "To check SingleStore's support for high-dimensional vectors, we ran tests on vectors with 16K to 128K dimensions."
+      ]
+    }
+  },
+  "hamming-distance": {
+    "original": "ko",
+    "keyPoints": {
+      "en": ["Rust → WebAssembly UDF", "Binary vectors", "Missing in SingleStore natively"],
+      "ko": ["Rust → WebAssembly UDF", "바이너리 벡터", "SingleStore 기본 기능에 없음"]
+    },
+    "excerpt": {
+      "ko": [
+        "벡터 검색에서 검색 성능과 정확도를 최적화 하려면 적절한 distance metric을 선택하는 것이 중요합니다. Euclidean distance와 Cosine distance가 일반적으로 사용되지만, 데이터 표현 방식과 사용 사례에 따라 Hamming distance가 고유한 이점을 제공합니다.",
+        "Hamming distance는 동일한 길이를 가진 두 binary vector 간에 서로 다른 bit의 개수를 계산합니다. 이 metric은 크기 차이(numerical distance)보다 bit mismatch(비트의 불일치)가 중요한 경우에 적합합니다.",
+        "부동소수점 연산이 필요한 Euclidean distance나 cosine distance와 달리, Hamming distance는 binary 값에 대해 연산을 수행하므로 연산 비용이 더 낮습니다."
+      ],
+      "en": [
+        "To get the best speed and accuracy from vector search, choosing the right distance metric matters. Euclidean and cosine distance are the usual choices, but depending on how the data is represented and used, Hamming distance has its own advantages.",
+        "Hamming distance counts the number of bits that differ between two binary vectors of the same length. It suits cases where bit mismatches matter more than numerical distance.",
+        "Unlike Euclidean or cosine distance, which need floating-point math, Hamming distance works on binary values, so it is cheaper to compute."
+      ]
+    }
+  },
+  "onprem-llama-rag": {
+    "original": "ko",
+    "keyPoints": {
+      "en": ["CPU only, no GPU", "Quantized Llama 2", "LangChain + llama.cpp"],
+      "ko": ["GPU 없이 CPU만", "양자화된 Llama 2", "LangChain + llama.cpp"]
+    },
+    "excerpt": {
+      "ko": [
+        "이번 글에서는 On-Premises 환경에서 Llama 2 및 SingleStoreDB 를 각각 LLM 및 Vector Store 로 사용하는 간단한 예제를 소개하려고 합니다.",
+        "Llama 는 Meta 에서 공개한 Open LLM 으로 API 를 이용하는 OpenAI 의 ChatGPT 와 달리 온프레미스에서 로컬 서버에 설치가 가능해 많은 인기를 누리고 있습니다.",
+        "예제에서는 GPU 없이 CPU 만으로도 모델을 실행해 볼 수 있도록 양자화된 작은 크기의 Llama 모델을 사용할 것이며, Embedding 모델 역시 HuggingFace 에서 많이 사용하는 일반적인 모델을 이용할 것입니다."
+      ],
+      "en": [
+        "This post walks through a simple example that uses Llama 2 as the LLM and SingleStoreDB as the vector store, in an on-premises environment.",
+        "Llama is an open LLM released by Meta. Unlike OpenAI's ChatGPT, which is used through an API, it can be installed on a local server on premises, which has made it very popular.",
+        "The example uses a small quantized Llama model so it can run on a CPU without a GPU, and a common embedding model from Hugging Face."
+      ]
+    }
+  }
+}
