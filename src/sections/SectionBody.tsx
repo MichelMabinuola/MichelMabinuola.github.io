@@ -2,7 +2,6 @@ import { ArrowRight } from 'lucide-react'
 import { resume, site } from '../content'
 import type { SectionDef } from '../model'
 import { useL10n, useUi } from '../i18n'
-import { MeasuredLink } from '../components/Measured'
 import { AgentReplay } from '../demos/AgentReplay'
 import { DbDemo } from '../demos/DbDemo'
 import { VectorDemo } from '../demos/VectorDemo'
@@ -33,7 +32,6 @@ export function SectionBody({ section }: { section: SectionDef }) {
 }
 
 function About({ section }: { section: SectionDef }) {
-  const ui = useUi()
   return (
     <div className="text-ink-2">
       {section.body && <p className="max-w-3xl">{section.body}</p>}
@@ -49,9 +47,6 @@ function About({ section }: { section: SectionDef }) {
           ))}
         </ol>
       )}
-      <p className="mt-5 text-sm">
-        {ui.aboutMeasured} <MeasuredLink>{ui.aboutMeasuredLink}</MeasuredLink>
-      </p>
     </div>
   )
 }
