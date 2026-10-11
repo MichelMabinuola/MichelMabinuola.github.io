@@ -67,6 +67,14 @@
       "sizeMb": 104
     },
     {
+      "id": "writing",
+      "title": "Writing",
+      "icon": "pen",
+      "line": "I write up what I test, so others can repeat it.",
+      "closing": "More write-ups exist but are internal to my employer.",
+      "sizeMb": 72
+    },
+    {
       "id": "database",
       "title": "Database analysis",
       "icon": "database",
@@ -97,14 +105,6 @@
       "line": "I build AI assistants that can look things up and take actions.",
       "detail": "An agent is an LLM in a loop: it plans, calls a tool (SQL, search, an API), reads the result, and decides what to do next until it can answer.",
       "sizeMb": 112
-    },
-    {
-      "id": "writing",
-      "title": "Writing",
-      "icon": "pen",
-      "line": "I write up what I test, so others can repeat it.",
-      "closing": "More write-ups exist but are internal to my employer.",
-      "sizeMb": 72
     },
     {
       "id": "sideprojects",
