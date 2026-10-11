@@ -86,6 +86,7 @@ export type Site = {
   footnoteMeasured: string
   experienceHighlights: Record<string, number[]>
   sections: SectionDef[]
+  coreSkills: string[]
   measured: {
     caption: string
     setup: string

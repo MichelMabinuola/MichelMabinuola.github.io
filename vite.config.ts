@@ -83,7 +83,8 @@ function staticResume(): Plugin {
       const measured = `<section><h2>Measured for real</h2><p>${esc(m.caption)}</p><p>${esc(m.setup)}</p>${list(
         m.runs.map((x) => `<code>${esc(x.sql)}</code> ${esc(x.result)}`),
       )}<p>${esc(m.conclusion)}</p></section>`
-      const fallback = `<main class="fallback"><h1>${esc(r.basics.name)}</h1><p>${esc(titleLine(r))}</p>${enabledSections(site)
+      const skills = `<section><h2>Core skills</h2>${list(site.coreSkills.map(esc))}</section>`
+      const fallback = `<main class="fallback"><h1>${esc(r.basics.name)}</h1><p>${esc(titleLine(r))}</p>${skills}${enabledSections(site)
         .map((s) => sectionHtml(s, r, site))
         .join('')}${measured}<p><small>${esc(site.footnote)}</small></p></main>`
       return html

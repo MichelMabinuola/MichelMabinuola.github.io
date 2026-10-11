@@ -5,7 +5,7 @@ import type { SectionDef } from '../model'
 import type { CgroupState, MaxSetting } from '../sim/cgroup'
 import { stats } from '../sim/cgroup'
 import { copyText, shareUrl } from '../share/url'
-import { useUi } from '../i18n'
+import { useL10n, useUi } from '../i18n'
 import { Icon } from './Icon'
 import { CountUp } from './CountUp'
 
@@ -91,10 +91,14 @@ export function MemoryPanel({
           aria-valuemax={s.maxMb}
           aria-valuenow={s.currentMb}
         >
-          <div
-            className={`h-full rounded-full transition-[width,background-color] duration-500 ${almostFull ? 'bg-warn' : 'bg-accent'}`}
-            style={{ width: `${s.pct * 100}%` }}
-          />
+          <div className="flex h-full gap-[2px]">
+            {/* Fixed anon memory (the skills strip below), then reclaimable file cache. */}
+            <div className="h-full rounded-l-full bg-ink-3 transition-[width] duration-500" style={{ width: `${(s.anonMb / s.maxMb) * 100}%` }} />
+            <div
+              className={`h-full rounded-r-full transition-[width,background-color] duration-500 ${almostFull ? 'bg-warn' : 'bg-accent'}`}
+              style={{ width: `${(s.fileMb / s.maxMb) * 100}%` }}
+            />
+          </div>
         </div>
         {almostFull && (
           <span
@@ -107,6 +111,8 @@ export function MemoryPanel({
         )}
         <span className="shrink-0 text-xs tabular-nums text-ink-3">{ui.used(<CountUp value={s.currentMb} />, s.maxMb)}</span>
       </div>
+
+      <SkillsStrip />
 
       <div className="mt-4 flex flex-col gap-2.5">
         <Row label={ui.inMemory}>
@@ -174,4 +180,28 @@ function goTo(id: string) {
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
   el.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' })
   el.focus({ preventScroll: true })
+}
+
+// Skills are the fixed anon memory: always resident, never reclaimed, not a section.
+function SkillsStrip() {
+  const ui = useUi()
+  const skills = useL10n().coreSkills()
+  return (
+    <div className="mt-3 rounded-2xl border border-ink-3/25 bg-ink-3/5 px-3 py-2.5">
+      <div className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
+        <span className="flex items-center gap-1.5 font-mono text-[11px] text-ink-3">
+          <span aria-hidden="true" className="h-2 w-2 rounded-full bg-ink-3" />
+          {ui.anonLabel}
+        </span>
+        <span className="text-xs text-ink-3">{ui.anonCaption}</span>
+      </div>
+      <ul className="mt-2 flex flex-wrap gap-1.5">
+        {skills.map((skill) => (
+          <li key={skill} className="rounded-md bg-ink-3/10 px-2 py-0.5 text-xs text-ink-2">
+            {skill}
+          </li>
+        ))}
+      </ul>
+    </div>
+  )
 }

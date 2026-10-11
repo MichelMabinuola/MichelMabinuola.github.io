@@ -151,5 +151,17 @@
       "title": "간단한 설문",
       "summary": "Streamlit으로 만든 설문 앱입니다."
     }
-  }
+  },
+  "coreSkills": [
+    "분산 데이터베이스 아키텍처",
+    "OLAP 및 OLTP",
+    "쿼리 성능 튜닝",
+    "리눅스 성능",
+    "고가용성",
+    "S3 오브젝트 스토리지",
+    "벡터 검색 및 RAG",
+    "데이터 파이프라인 및 ETL",
+    "Python · SQL · Bash",
+    "SingleStore · MySQL · ClickHouse"
+  ]
 }

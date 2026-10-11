@@ -136,5 +136,17 @@
       }
     ],
     "conclusion": "On-premise columnstore data is cached by the Linux page cache through buffered reads, so it never shows up in the database engine’s own memory metrics."
-  }
+  },
+  "coreSkills": [
+    "Distributed database architecture",
+    "OLAP and OLTP",
+    "Query performance tuning",
+    "Linux performance",
+    "High availability",
+    "S3 object storage",
+    "Vector search and RAG",
+    "Data pipelines and ETL",
+    "Python · SQL · Bash",
+    "SingleStore · MySQL · ClickHouse"
+  ]
 }

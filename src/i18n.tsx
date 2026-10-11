@@ -17,6 +17,7 @@ const ko = koJson as {
   projects: Record<string, { title?: string; summary?: string }>
   writing: Record<string, { title?: string; summary?: string }>
   publishers: Record<string, string>
+  coreSkills: string[]
   measured: { title: string; caption: string; setup: string; runs: string[]; conclusion: string }
 }
 
@@ -41,6 +42,8 @@ const en = {
   showEverything: 'Show everything',
   goBack: 'Limit memory again',
   copyLink: 'Copy link',
+  anonLabel: 'anon 40M · always resident',
+  anonCaption: 'Cache gets dropped under pressure. These don’t.',
   close: 'Close',
   openNewTab: 'Open in new tab',
   readFullPost: 'Read the full post',
@@ -113,6 +116,8 @@ const koUi: typeof en = {
   showEverything: '모두 보기',
   goBack: '다시 메모리 제한하기',
   copyLink: '링크 복사',
+  anonLabel: 'anon 40M · 항상 메모리에 있음',
+  anonCaption: '메모리가 부족하면 캐시는 치워지지만, 이것들은 남아 있습니다.',
   close: '닫기',
   openNewTab: '새 탭에서 열기',
   readFullPost: '전체 글 읽기',
@@ -249,6 +254,7 @@ export function useL10n() {
       const k = isKo ? ko.sideProjects[p.id] : undefined
       return k ? { ...p, title: k.title ?? p.title, summary: k.summary ?? p.summary } : p
     },
+    coreSkills: () => (isKo ? ko.coreSkills : site.coreSkills),
     measured: () => {
       const m = site.measured
       if (!isKo) return { title: 'Measured for real: where the database’s memory went', ...m, runs: m.runs }
