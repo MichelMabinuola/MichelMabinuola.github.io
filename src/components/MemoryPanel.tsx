@@ -84,7 +84,7 @@ export function MemoryPanel({
 
       <div className="mt-4 flex items-center gap-3">
         <div
-          className="h-2 flex-1 overflow-hidden rounded-full bg-track"
+          className="h-3 flex-1 overflow-hidden rounded-full bg-track"
           role="meter"
           aria-label={ui.limitedMemory}
           aria-valuemin={0}

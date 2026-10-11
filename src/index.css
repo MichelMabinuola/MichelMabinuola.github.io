@@ -136,3 +136,17 @@ body {
     cursor: not-allowed;
   }
 }
+
+/* Slightly larger base type on tablets and up; everything sized in rem scales with it. */
+@media (min-width: 640px) {
+  html {
+    font-size: 17px;
+  }
+}
+
+/* Soft accent glow behind the hero. */
+.hero-glow {
+  background:
+    radial-gradient(40rem 22rem at 15% 20%, color-mix(in srgb, var(--accent) 16%, transparent), transparent 70%),
+    radial-gradient(30rem 18rem at 85% 0%, color-mix(in srgb, var(--accent) 10%, transparent), transparent 70%);
+}

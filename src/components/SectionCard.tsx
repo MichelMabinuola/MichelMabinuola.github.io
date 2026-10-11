@@ -33,21 +33,21 @@ export function SectionCard({ section, onTouch }: { section: SectionDef; onTouch
       tabIndex={-1}
       aria-labelledby={`h-${section.id}`}
       className={`scroll-mt-6 rounded-3xl border outline-none transition-colors ${
-        section.variant === 'light' ? 'border-dashed border-line-strong p-5 sm:p-6' : 'border-line bg-surface p-6 hover:border-line-strong sm:p-8'
+        section.variant === 'light' ? 'border-dashed border-line-strong p-5 sm:p-6' : 'border-line bg-surface p-6 hover:border-accent/40 sm:p-9'
       }`}
     >
       <div className="flex items-center gap-3">
         <span
-          className={`flex shrink-0 items-center justify-center rounded-2xl ${section.variant === 'light' ? 'h-8 w-8 bg-track text-ink-3' : 'h-10 w-10 bg-accent-soft text-accent'}`}
+          className={`flex shrink-0 items-center justify-center rounded-2xl ${section.variant === 'light' ? 'h-8 w-8 bg-track text-ink-3' : 'h-11 w-11 bg-accent-soft text-accent'}`}
         >
-          <Icon name={section.icon} size={18} />
+          <Icon name={section.icon} size={20} />
         </span>
-        <h2 id={`h-${section.id}`} className={`font-semibold tracking-tight text-ink ${section.variant === 'light' ? 'text-base' : 'text-xl'}`}>
+        <h2 id={`h-${section.id}`} className={`font-semibold tracking-tight text-ink ${section.variant === 'light' ? 'text-lg' : 'text-2xl'}`}>
           {section.title}
         </h2>
       </div>
       {/* About's one-liner already sits in the hero. */}
-      {section.id !== 'about' && <p className="mt-3 text-ink-2">{section.line}</p>}
+      {section.id !== 'about' && <p className="mt-3 text-lg text-ink-2">{section.line}</p>}
 
       <div className="mt-5">
         <SectionBody section={section} />

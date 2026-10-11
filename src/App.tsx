@@ -11,6 +11,7 @@ import { LangSwitch } from './components/LangSwitch'
 import { ScrollTop } from './components/ScrollTop'
 import { MeasuredLink, MeasuredNote } from './components/Measured'
 import { GitHubIcon } from './components/Icon'
+import { HeroStats } from './components/HeroStats'
 
 export default function App() {
   const { state, refault, setMax, touch } = useCgroup()
@@ -29,6 +30,7 @@ export default function App() {
   return (
     <div className="min-h-screen">
       <div className="relative border-b border-line">
+        <div className="hero-glow pointer-events-none absolute inset-0" aria-hidden="true" />
         <div className="hero-dots pointer-events-none absolute inset-0" aria-hidden="true" />
         <div className="relative mx-auto max-w-6xl px-4 pb-10 pt-5 sm:px-8 sm:pb-14">
           <nav className="flex items-center justify-end gap-2">
@@ -41,9 +43,9 @@ export default function App() {
               <MapPin size={14} aria-hidden="true" className="text-accent" />
               {ui.location}
             </p>
-            <h1 className="mt-5 text-5xl font-semibold tracking-tight text-ink sm:text-7xl">{resume.basics.name}</h1>
-            <p className="mt-4 text-lg font-medium text-accent sm:text-xl">{l.titleLine(titleLine(resume))}</p>
-            {about && <p className="mt-3 max-w-2xl text-lg text-ink-2">{about.line}</p>}
+            <h1 className="mt-6 text-5xl font-bold tracking-tight text-ink sm:text-8xl">{resume.basics.name}</h1>
+            <p className="mt-5 text-xl font-semibold text-accent sm:text-2xl">{l.titleLine(titleLine(resume))}</p>
+            {about && <p className="mt-3 max-w-2xl text-lg text-ink-2 sm:text-xl">{about.line}</p>}
             <div className="mt-8 flex flex-wrap gap-3">
               <a
                 href={`mailto:${email}`}
@@ -75,6 +77,7 @@ export default function App() {
                 </a>
               )}
             </div>
+            <HeroStats />
           </header>
 
           <div className="mt-12">
