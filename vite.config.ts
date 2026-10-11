@@ -98,6 +98,7 @@ function staticResume(): Plugin {
       return html
         .replace('<!--static-resume-->', fallback)
         .replaceAll('%SITE_URL%', esc(site.url))
+        .replaceAll('%PAGE_TITLE%', esc(site.pageTitle))
         .replaceAll('%NAME%', esc(r.basics.name))
         .replaceAll('%ROLE%', esc(r.basics.title))
         .replaceAll('%TITLE_LINE%', esc(titleLine(r)))

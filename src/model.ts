@@ -84,6 +84,7 @@ export type SectionDef = {
   variant?: 'light'
 }
 export type Site = {
+  pageTitle: string
   domain: string
   url: string
   cgroupPath: string
