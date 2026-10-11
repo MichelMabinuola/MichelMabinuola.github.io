@@ -4,3 +4,5 @@ dist
 
 # Private files kept out of the public repo
 *.pdf
+# …except the published resume, checked to contain no phone number
+!public/MICHAEL MABINUOLA.pdf
