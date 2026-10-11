@@ -95,8 +95,7 @@
       "title": "Open source",
       "icon": "bug",
       "line": "When a tool breaks, I find out why and tell the people who can fix it.",
-      "sizeMb": 64,
-      "closing": "More on GitHub"
+      "sizeMb": 64
     },
     {
       "id": "agents",
