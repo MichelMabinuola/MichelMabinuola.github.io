@@ -38,10 +38,29 @@ function sectionHtml(s: SectionDef, r: Resume, site: Site): string {
     body += list(publishedWriting(r).map((w) => `${link(w.url!, w.title)} · ${esc(w.publisher)}, ${w.year} [${w.language}]<br>${esc(w.summary)}`))
     if (s.closing) body += `<p>${esc(s.closing)}</p>`
   }
+  if (s.id === 'opensource') {
+    body += r.openSource
+      .map(
+        (e) =>
+          `<h3>${esc(e.title)}</h3>${list([
+            `Symptom: ${esc(e.story.symptom)}`,
+            `Cause: ${esc(e.story.cause)}`,
+            `Fix: ${esc(e.story.fix)}`,
+            `Outcome: ${esc(e.story.outcome)}`,
+          ])}<p>${esc(e.project)} · bug report · ${link(e.url, 'Read the issue on GitHub')}</p>`,
+      )
+      .join('')
+    if (r.basics.links.github && s.closing) body += `<p>${link(r.basics.links.github, s.closing)}</p>`
+  }
+  if (s.id === 'sideprojects') {
+    if (s.note) body += `<p><small>${esc(s.note)}</small></p>`
+    body += list(r.sideProjects.map((p) => `${link(p.url, p.title)}: ${esc(p.summary)} (${esc(p.tech.join(', '))})`))
+  }
   if (s.id === 'contact') {
     body += list([
       `Email: ${link(`mailto:${r.basics.email}`, r.basics.email)}`,
       ...(r.basics.links.linkedin ? [`LinkedIn: ${link(r.basics.links.linkedin, r.basics.links.linkedin)}`] : []),
+      ...(r.basics.links.github ? [`GitHub: ${link(r.basics.links.github, r.basics.links.github)}`] : []),
     ])
   }
   const work = (s.realWork ?? []).map((ref) => resolveWork(ref, r)).filter((w) => w !== null)

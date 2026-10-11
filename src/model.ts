@@ -30,6 +30,18 @@ export type WritingEntry = {
   summary: string
   url: string | null
 }
+export type OpenSourceEntry = {
+  id: string
+  project: string
+  projectDescription: string
+  title: string
+  year: number
+  type: string
+  url: string
+  story: { symptom: string; cause: string; fix: string; outcome: string }
+  tech: string[]
+}
+export type SideProject = { id: string; title: string; summary: string; url: string; tech: string[] }
 export type Resume = {
   basics: {
     name: string
@@ -45,6 +57,8 @@ export type Resume = {
   education: { credential: string; institution: string; end: string }[]
   languages: { language: string; level: string }[]
   writing: WritingEntry[]
+  openSource: OpenSourceEntry[]
+  sideProjects: SideProject[]
 }
 
 export type RealWorkRef = { project?: string; writing?: string; text?: string }
@@ -59,6 +73,8 @@ export type SectionDef = {
   flow?: { label: string; text: string }[]
   realWork?: RealWorkRef[]
   sizeMb: number // illustrative page-cache size
+  note?: string
+  variant?: 'light'
 }
 export type Site = {
   domain: string

@@ -10,6 +10,7 @@ import { ThemeToggle } from './components/ThemeToggle'
 import { LangSwitch } from './components/LangSwitch'
 import { ScrollTop } from './components/ScrollTop'
 import { MeasuredLink, MeasuredNote } from './components/Measured'
+import { GitHubIcon } from './components/Icon'
 
 export default function App() {
   const { state, refault, setMax, touch } = useCgroup()
@@ -60,6 +61,17 @@ export default function App() {
                 >
                   LinkedIn
                   <ArrowUpRight size={16} aria-hidden="true" />
+                </a>
+              )}
+              {links.github && (
+                <a
+                  href={links.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 rounded-full border border-line-strong bg-surface px-5 py-2.5 text-sm font-medium text-ink transition-colors hover:border-ink"
+                >
+                  <GitHubIcon size={16} />
+                  GitHub
                 </a>
               )}
             </div>

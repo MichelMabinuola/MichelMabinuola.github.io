@@ -8,7 +8,7 @@
     "email": "michaelmabinuola@gmail.com",
     "links": {
       "linkedin": "https://www.linkedin.com/in/michael-mabinuola-031138102",
-      "github": null,
+      "github": "https://github.com/MichelMabinuola",
       "portfolio": null,
       "resumePdf": null
     }
@@ -343,6 +343,62 @@
         "vector-search"
       ],
       "note": "Confirm authorship before publishing: the page lists 'mike' as editor of the 2026 update, original author not stated."
+    }
+  ],
+  "openSource": [
+    {
+      "id": "openrig-tmux-crash",
+      "project": "OpenRig",
+      "projectDescription": "A CLI and daemon that runs groups of AI agent sessions in tmux.",
+      "title": "Root-caused a startup failure on Oracle Linux 10",
+      "year": 2026,
+      "type": "bug report",
+      "status": "open; documentation fix merged",
+      "url": "https://github.com/mvschwarz/openrig/issues/980",
+      "story": {
+        "symptom": "All four agent sessions failed within a second of starting the daemon.",
+        "cause": "Oracle Linux 10 ships tmux as a pre-release snapshot (reports next-3.4). Its server crashes on capture-pane. Reproduced with plain tmux and an empty config, so OpenRig and my config were ruled out.",
+        "fix": "Built stable tmux 3.5a from source, then recovered the sessions.",
+        "outcome": "Maintainer merged the findings into the getting-started guide (PR #999)."
+      },
+      "tech": [
+        "Linux",
+        "tmux",
+        "Oracle Linux 10",
+        "Node.js"
+      ]
+    }
+  ],
+  "sideProjects": [
+    {
+      "id": "bitcoin-landing",
+      "title": "BITwallet",
+      "summary": "A landing page design for a crypto payments app.",
+      "url": "https://michelmabinuola.github.io/Bitcoin/",
+      "tech": [
+        "HTML",
+        "CSS"
+      ]
+    },
+    {
+      "id": "sayn",
+      "title": "SAYN",
+      "summary": "A photography site design concept, inspired by Rron Berisha.",
+      "url": "https://michelmabinuola.github.io/SAYN/",
+      "tech": [
+        "HTML",
+        "CSS"
+      ]
+    },
+    {
+      "id": "simple-survey",
+      "title": "Simple survey",
+      "summary": "A survey app built with Streamlit.",
+      "url": "https://simplesurvey-streamli.streamlit.app/",
+      "tech": [
+        "Python",
+        "Streamlit"
+      ]
     }
   ]
 }

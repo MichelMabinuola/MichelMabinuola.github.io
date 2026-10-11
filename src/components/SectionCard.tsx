@@ -32,13 +32,17 @@ export function SectionCard({ section, onTouch }: { section: SectionDef; onTouch
       id={`sec-${section.id}`}
       tabIndex={-1}
       aria-labelledby={`h-${section.id}`}
-      className="scroll-mt-6 rounded-3xl border border-line bg-surface p-6 outline-none transition-colors hover:border-line-strong sm:p-8"
+      className={`scroll-mt-6 rounded-3xl border outline-none transition-colors ${
+        section.variant === 'light' ? 'border-dashed border-line-strong p-5 sm:p-6' : 'border-line bg-surface p-6 hover:border-line-strong sm:p-8'
+      }`}
     >
       <div className="flex items-center gap-3">
-        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-accent-soft text-accent">
+        <span
+          className={`flex shrink-0 items-center justify-center rounded-2xl ${section.variant === 'light' ? 'h-8 w-8 bg-track text-ink-3' : 'h-10 w-10 bg-accent-soft text-accent'}`}
+        >
           <Icon name={section.icon} size={18} />
         </span>
-        <h2 id={`h-${section.id}`} className="text-xl font-semibold tracking-tight text-ink">
+        <h2 id={`h-${section.id}`} className={`font-semibold tracking-tight text-ink ${section.variant === 'light' ? 'text-base' : 'text-xl'}`}>
           {section.title}
         </h2>
       </div>

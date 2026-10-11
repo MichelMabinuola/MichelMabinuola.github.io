@@ -83,6 +83,14 @@
       "sizeMb": 96
     },
     {
+      "id": "opensource",
+      "title": "Open source",
+      "icon": "bug",
+      "line": "When a tool breaks, I find out why and tell the people who can fix it.",
+      "sizeMb": 64,
+      "closing": "More on GitHub"
+    },
+    {
       "id": "agents",
       "title": "Agents",
       "icon": "bot",
@@ -97,6 +105,15 @@
       "line": "I write up what I test, so others can repeat it.",
       "closing": "More write-ups exist but are internal to my employer.",
       "sizeMb": 72
+    },
+    {
+      "id": "sideprojects",
+      "title": "Side projects",
+      "icon": "palette",
+      "line": "Older things I built for fun, because I like making pages move.",
+      "sizeMb": 40,
+      "variant": "light",
+      "note": "From before AI wrote the CSS. Unrelated to my day job."
     },
     {
       "id": "contact",

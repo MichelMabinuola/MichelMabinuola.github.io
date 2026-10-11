@@ -6,6 +6,9 @@ import { AgentReplay } from '../demos/AgentReplay'
 import { DbDemo } from '../demos/DbDemo'
 import { VectorDemo } from '../demos/VectorDemo'
 import { Writing } from './Writing'
+import { OpenSource } from './OpenSource'
+import { SideProjects } from './SideProjects'
+import { GitHubIcon } from '../components/Icon'
 import { SeoulClock } from '../components/SeoulClock'
 
 export function SectionBody({ section }: { section: SectionDef }) {
@@ -18,6 +21,10 @@ export function SectionBody({ section }: { section: SectionDef }) {
       return <VectorDemo />
     case 'database':
       return <DbDemo />
+    case 'opensource':
+      return <OpenSource closing={section.closing} />
+    case 'sideprojects':
+      return <SideProjects note={section.note} />
     case 'agents':
       return <AgentReplay />
     case 'writing':
@@ -113,6 +120,17 @@ function Contact() {
         >
           <span className="text-ink-3">LinkedIn</span>
           <span className="font-medium text-ink">{links.linkedin.replace(/\/$/, '').split('/').pop()}</span>
+        </a>
+      )}
+      {links.github && (
+        <a
+          href={links.github}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-2 rounded-2xl border border-line px-4 py-3 text-sm transition-colors hover:border-accent"
+        >
+          <GitHubIcon size={15} className="text-ink-3" />
+          <span className="font-medium text-ink">{links.github.replace(/\/$/, '').split('/').pop()}</span>
         </a>
       )}
       <div className="w-full">

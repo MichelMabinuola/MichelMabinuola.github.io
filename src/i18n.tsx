@@ -1,13 +1,15 @@
 import { createContext, useContext, useEffect, useState } from 'react'
 import koJson from '../content/ko.json'
 import { resume, site } from './content'
-import { educationLine, languagesLine, resolveWork, type Experience, type RealWorkRef, type ResolvedWork, type SectionDef, type WritingEntry } from './model'
+import { educationLine, languagesLine, resolveWork, type Experience, type OpenSourceEntry, type RealWorkRef, type SideProject, type ResolvedWork, type SectionDef, type WritingEntry } from './model'
 
 export type Lang = 'en' | 'ko'
 
 const ko = koJson as {
   titleLine: string
   location: string
+  openSource: Record<string, { projectDescription?: string; title?: string; story?: Partial<Record<'symptom' | 'cause' | 'fix' | 'outcome', string>> }>
+  sideProjects: Record<string, { title?: string; summary?: string }>
   sections: Record<string, Partial<Omit<SectionDef, 'flow'>> & { flow?: { label: string; text: string }[]; realWorkText?: string }>
   experience: Record<string, { role?: string; highlights?: Record<string, string> }>
   education: string
@@ -53,6 +55,9 @@ const en = {
   languages: 'Languages',
   present: 'present',
   email: 'Email',
+  storyLabels: { symptom: 'Symptom', cause: 'Cause', fix: 'Fix', outcome: 'Outcome' },
+  bugReport: 'bug report',
+  readIssue: 'Read the issue on GitHub',
   seoulNow: 'Right now in Seoul',
   workingNow: 'Working hours: likely to reply soon',
   offHours: 'Outside working hours: I’ll reply next workday',
@@ -114,6 +119,9 @@ const koUi: typeof en = {
   languages: '언어',
   present: '현재',
   email: '이메일',
+  storyLabels: { symptom: '증상', cause: '원인', fix: '해결', outcome: '결과' },
+  bugReport: '버그 리포트',
+  readIssue: 'GitHub에서 이슈 읽기',
   seoulNow: '지금 서울 시각',
   workingNow: '업무 시간: 곧 답장드릴 수 있어요',
   offHours: '업무 시간 외: 다음 업무일에 답장드려요',
@@ -187,7 +195,7 @@ export function useL10n() {
     section: (s: SectionDef): SectionDef => {
       if (!isKo) return s
       const k = ko.sections[s.id] ?? {}
-      return { ...s, title: k.title ?? s.title, line: k.line ?? s.line, body: k.body ?? s.body, detail: k.detail ?? s.detail, closing: k.closing ?? s.closing, flow: k.flow ?? s.flow }
+      return { ...s, title: k.title ?? s.title, line: k.line ?? s.line, body: k.body ?? s.body, detail: k.detail ?? s.detail, closing: k.closing ?? s.closing, note: k.note ?? s.note, flow: k.flow ?? s.flow }
     },
     role: (e: Experience) => (isKo ? (ko.experience[e.id]?.role ?? e.role) : e.role),
     highlight: (e: Experience, i: number) => (isKo ? (ko.experience[e.id]?.highlights?.[i] ?? e.highlights[i]) : e.highlights[i]),
@@ -216,6 +224,15 @@ export function useL10n() {
       isKo
         ? { ...w, title: w.titleLocal ?? ko.writing[w.id]?.title ?? w.title, summary: ko.writing[w.id]?.summary ?? w.summary, publisher: ko.publishers[w.publisher] ?? w.publisher }
         : w,
+    openSource: (e: OpenSourceEntry): OpenSourceEntry => {
+      const k = isKo ? ko.openSource[e.id] : undefined
+      if (!k) return e
+      return { ...e, title: k.title ?? e.title, projectDescription: k.projectDescription ?? e.projectDescription, story: { ...e.story, ...k.story } }
+    },
+    sideProject: (p: SideProject): SideProject => {
+      const k = isKo ? ko.sideProjects[p.id] : undefined
+      return k ? { ...p, title: k.title ?? p.title, summary: k.summary ?? p.summary } : p
+    },
     measured: () => {
       const m = site.measured
       if (!isKo) return { title: 'Measured for real: where the database’s memory went', ...m, runs: m.runs }
