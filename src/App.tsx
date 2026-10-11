@@ -12,7 +12,6 @@ import { LangSwitch } from './components/LangSwitch'
 import { ScrollTop } from './components/ScrollTop'
 import { MeasuredLink, MeasuredNote } from './components/Measured'
 import { GitHubIcon } from './components/Icon'
-import { HeroStats } from './components/HeroStats'
 import { ResumePanel } from './components/ResumePanel'
 import { OPEN_RESUME } from './events'
 
@@ -97,7 +96,6 @@ export default function App() {
                 </a>
               )}
             </div>
-            <HeroStats />
           </header>
 
           <div className="mt-12">
