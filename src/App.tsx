@@ -124,6 +124,7 @@ export default function App() {
                 >
                   <GitHubIcon size={16} />
                   GitHub
+                  <ArrowUpRight size={16} aria-hidden="true" />
                 </a>
               )}
               <button

@@ -1,4 +1,5 @@
 import { Fragment } from 'react'
+import { ArrowUpRight } from 'lucide-react'
 
 // Just enough Markdown for /llms.txt: ## and ### headings, "- " lists, paragraphs,
 // **bold**, *italic*, `code` and [links](url). No HTML is ever passed through.
@@ -38,6 +39,7 @@ export function Inline({ text, linkClass }: { text: string; linkClass: string })
         return (
           <a key={i} href={href} className={linkClass} {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}>
             {m[1]}
+            {external && <ArrowUpRight size="0.9em" aria-hidden="true" className="ml-0.5 inline-block align-[-0.1em]" />}
           </a>
         )
       })}

@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react'
 import { createPortal } from 'react-dom'
 import { LLMS_TEXT } from '../llms'
+import { ArrowUpRight } from 'lucide-react'
 import { MiniMarkdown } from './MiniMarkdown'
 
 // Full-screen view of the note for AI agents, opened from the hero (or ?view=agents).
@@ -42,6 +43,7 @@ export function AgentsView({ open, onClose }: { open: boolean; onClose: () => vo
           Also at{' '}
           <a href="llms.txt" target="_blank" rel="noopener noreferrer" className="underline underline-offset-2 hover:text-accent">
             /llms.txt
+            <ArrowUpRight size={12} aria-hidden="true" className="ml-0.5 inline-block" />
           </a>
         </p>
       </div>

@@ -1,4 +1,4 @@
-import { ArrowRight, FileText } from 'lucide-react'
+import { ArrowRight, ArrowUpRight, FileText } from 'lucide-react'
 import { OPEN_RESUME } from '../events'
 import { resume } from '../content'
 import type { SectionDef } from '../model'
@@ -132,6 +132,7 @@ function Contact() {
         >
           <span className="text-ink-3">LinkedIn</span>
           <span className="font-medium text-ink">{links.linkedin.replace(/\/$/, '').split('/').pop()}</span>
+          <ArrowUpRight size={15} aria-hidden="true" className="text-ink-3" />
         </a>
       )}
       <button
@@ -152,6 +153,7 @@ function Contact() {
         >
           <GitHubIcon size={15} className="text-ink-3" />
           <span className="font-medium text-ink">{links.github.replace(/\/$/, '').split('/').pop()}</span>
+          <ArrowUpRight size={15} aria-hidden="true" className="text-ink-3" />
         </a>
       )}
       <div className="w-full">
