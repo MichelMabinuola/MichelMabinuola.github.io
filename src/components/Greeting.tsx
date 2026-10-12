@@ -23,10 +23,7 @@ export function Greeting() {
 
   return (
     <p className="mt-6 text-lg font-medium text-ink-2 sm:text-xl">
-      {ui.greeting[part]}{' '}
-      <span aria-hidden="true" className="wave inline-block origin-[70%_70%]">
-        👋
-      </span>
+      {ui.greeting[part]}
     </p>
   )
 }

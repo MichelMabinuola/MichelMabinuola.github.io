@@ -172,20 +172,3 @@ body {
     border-color: var(--accent) !important;
   }
 }
-
-/* A small wave for the greeting, played once. */
-@keyframes wave {
-  0%, 60%, 100% { transform: rotate(0deg); }
-  10%, 30% { transform: rotate(14deg); }
-  20% { transform: rotate(-8deg); }
-  40% { transform: rotate(-4deg); }
-  50% { transform: rotate(10deg); }
-}
-.wave {
-  animation: wave 1.8s ease-in-out 0.6s 1;
-}
-@media (prefers-reduced-motion: reduce) {
-  .wave {
-    animation: none;
-  }
-}
