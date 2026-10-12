@@ -66,7 +66,7 @@ function sectionHtml(s: SectionDef, r: Resume, site: Site): string {
     body += list(r.sideProjects.map((p) => `${link(p.url, p.title)}: ${esc(p.summary)} (${esc(p.tech.join(', '))})`))
   }
   if (s.id === 'contact') {
-    body += `<p>Based in Seoul (KST, UTC+9). Open to relocation.</p>`
+    body += `<p>Based in Seoul (KST, UTC+9). Open to relocation. I reply as soon as possible.</p>`
     if (r.basics.links.resumePdf) body += `<p>${link(encodeURI(r.basics.links.resumePdf), 'Resume (PDF)')}</p>`
     body += list([
       `Email: ${link(`mailto:${r.basics.email}`, r.basics.email)}`,
