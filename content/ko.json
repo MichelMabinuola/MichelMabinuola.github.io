@@ -139,12 +139,7 @@
     "Python · SQL · Bash",
     "SingleStore · MySQL · ClickHouse"
   ],
-  "latest": {
-    "networking": {
-      "title": "네트워킹",
-      "note": "리눅스 네트워킹을 직접 다뤄 보며 익히고 있습니다."
-    }
-  },
+  "latest": {},
   "title": "데이터베이스/AI 엔지니어",
   "tagline": "성능, 벡터 검색 및 데이터 파이프라인",
   "experienceShort": {

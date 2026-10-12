@@ -416,12 +416,6 @@
         "title": "Networking for System Administrators",
         "author": "Michael W. Lucas",
         "url": "https://mwl.io/nonfiction/networking"
-      },
-      {
-        "id": "networking",
-        "kind": "learning",
-        "title": "Networking",
-        "note": "Hands-on with Linux networking."
       }
     ]
   }
