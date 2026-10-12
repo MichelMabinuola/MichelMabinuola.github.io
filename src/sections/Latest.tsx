@@ -7,7 +7,7 @@ export function Latest() {
   const l = useL10n()
   return (
     <div>
-      <ul className="grid gap-3 sm:grid-cols-2">
+      <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
         {resume.latest.items.map((entry) => {
           const item = l.latestItem(entry)
           const Icon = item.kind === 'reading' ? BookOpen : Network

@@ -411,6 +411,13 @@
         "url": "https://www.brendangregg.com/systems-performance-2nd-edition-book.html"
       },
       {
+        "id": "networking-for-sysadmins",
+        "kind": "reading",
+        "title": "Networking for System Administrators",
+        "author": "Michael W. Lucas",
+        "url": "https://mwl.io/nonfiction/networking"
+      },
+      {
         "id": "networking",
         "kind": "learning",
         "title": "Networking",
