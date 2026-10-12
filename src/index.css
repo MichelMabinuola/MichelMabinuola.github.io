@@ -1,6 +1,4 @@
 @import 'tailwindcss';
-@import '@fontsource/noto-sans-kr/korean-400.css';
-@import '@fontsource/noto-sans-kr/korean-600.css';
 
 @theme {
   --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', 'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif;
@@ -149,4 +147,25 @@ body {
   background:
     radial-gradient(40rem 22rem at 15% 20%, color-mix(in srgb, var(--accent) 16%, transparent), transparent 70%),
     radial-gradient(30rem 18rem at 85% 0%, color-mix(in srgb, var(--accent) 10%, transparent), transparent 70%);
+}
+
+/* Outline a section card for a moment after it is brought back into memory. */
+@keyframes refault-pulse {
+  0% {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 35%, transparent);
+  }
+  70% {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 8px transparent;
+  }
+}
+.refault-pulse {
+  animation: refault-pulse 1s ease-out;
+}
+@media (prefers-reduced-motion: reduce) {
+  .refault-pulse {
+    animation: none;
+    border-color: var(--accent) !important;
+  }
 }

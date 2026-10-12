@@ -63,6 +63,8 @@ function About({ section }: { section: SectionDef }) {
 function Experience() {
   const ui = useUi()
   const l = useL10n()
+  // Professional certifications only; scholarships and course certificates stay in the resume PDF.
+  const certs = resume.certificatesAndAwards.filter((c) => /certified/i.test(c.name))
   return (
     <div>
       <ol className="relative flex flex-col gap-6 border-l border-line pl-6">
@@ -96,6 +98,12 @@ function Experience() {
       <dl className="mt-6 grid grid-cols-[auto_1fr] gap-x-4 gap-y-1 text-sm">
         <dt className="text-ink-3">{ui.education}</dt>
         <dd className="text-ink-2">{l.education()}</dd>
+        {certs.length > 0 && (
+          <>
+            <dt className="text-ink-3">{ui.certifications}</dt>
+            <dd className="text-ink-2">{certs.map((c) => `${c.name} (${c.year})`).join(' · ')}</dd>
+          </>
+        )}
         <dt className="text-ink-3">{ui.languages}</dt>
         <dd className="text-ink-2">{l.languages()}</dd>
       </dl>

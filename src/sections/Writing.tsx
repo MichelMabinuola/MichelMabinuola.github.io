@@ -36,7 +36,7 @@ export function Writing({ closing }: { closing?: string }) {
                 {w.title}
                 <PanelRight size={16} aria-hidden="true" className="mt-0.5 shrink-0 text-ink-3 group-hover:text-accent" />
               </span>
-              <p className="mt-1.5 line-clamp-2 text-sm text-ink-2">{w.summary}</p>
+              <p className="mt-1.5 line-clamp-3 text-sm text-ink-2">{w.summary}</p>
             </button>
           </li>
         ))}

@@ -9,7 +9,8 @@ import { useL10n, useUi } from '../i18n'
 import { Icon } from './Icon'
 import { CountUp } from './CountUp'
 
-const ALMOST_FULL = 0.85
+// High usage is normal (the kernel fills spare room with cache); thrashing shows up as memory pressure.
+const THRASHING_PSI = 10
 
 export function MemoryPanel({
   state,
@@ -29,8 +30,7 @@ export function MemoryPanel({
   const ui = useUi()
   const s = stats(state)
   const full = state.max === '1G'
-  // Near the limit the kernel reclaims cache; it is not an OOM, so this is a warning, not an error.
-  const almostFull = s.pct >= ALMOST_FULL
+  const thrashing = state.psi > THRASHING_PSI
   const [copied, setCopied] = useState(false)
 
   const note = state.loading.length
@@ -51,7 +51,7 @@ export function MemoryPanel({
       <div className="mb-5 flex gap-3 rounded-2xl bg-accent-soft px-4 py-3 text-sm">
         <Sparkles size={18} aria-hidden="true" className="mt-0.5 shrink-0 text-accent" />
         <p className="text-ink-2">
-          <span className="font-medium text-accent">{ui.funTag}.</span> {ui.funNote}
+          <span className="font-medium text-accent">{ui.funTag}</span> {ui.funNote}
         </p>
       </div>
       <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
@@ -95,22 +95,26 @@ export function MemoryPanel({
             {/* Fixed anon memory (the skills strip below), then reclaimable file cache. */}
             <div className="h-full rounded-l-full bg-ink-3 transition-[width] duration-500" style={{ width: `${(s.anonMb / s.maxMb) * 100}%` }} />
             <div
-              className={`h-full rounded-r-full transition-[width,background-color] duration-500 ${almostFull ? 'bg-warn' : 'bg-accent'}`}
+              className={`h-full rounded-r-full transition-[width,background-color] duration-500 ${thrashing ? 'bg-warn' : 'bg-accent'}`}
               style={{ width: `${(s.fileMb / s.maxMb) * 100}%` }}
             />
           </div>
         </div>
-        {almostFull && (
+        {thrashing && (
           <span
-            title={ui.almostFullHint}
+            title={ui.thrashingHint}
             className="inline-flex shrink-0 items-center gap-1 rounded-full bg-warn/10 px-2 py-0.5 text-xs font-medium text-warn"
           >
             <TriangleAlert size={12} aria-hidden="true" />
-            {ui.almostFull}
+            {ui.thrashing}
           </span>
         )}
         <span className="shrink-0 text-xs tabular-nums text-ink-3">{ui.used(<CountUp value={s.currentMb} />, s.maxMb)}</span>
       </div>
+
+      <p className="mt-2 truncate font-mono text-xs text-ink-3" title={state.lastCmd}>
+        $ {state.lastCmd}
+      </p>
 
       <SkillsStrip />
 

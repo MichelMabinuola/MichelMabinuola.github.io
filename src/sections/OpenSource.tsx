@@ -19,21 +19,25 @@ export function OpenSource({ closing }: { closing?: string }) {
         return (
           <article key={e.id} className="rounded-2xl border border-line p-4 sm:p-5">
             <h3 className="font-medium text-ink">{e.title}</h3>
-            {/* Rows appear one after another each time the section is brought back into memory. */}
-            <ol className="mt-3 flex flex-col gap-2.5">
-              {ROWS.map((row, i) => (
+            {/* Rows appear one after another the first time the card scrolls into view. */}
+            <motion.ol
+              className="mt-3 flex flex-col gap-2.5"
+              initial={reduce ? false : 'hidden'}
+              whileInView="show"
+              viewport={{ once: true, amount: 0.4 }}
+              variants={{ hidden: {}, show: { transition: { delayChildren: 0.15, staggerChildren: 0.35 } } }}
+            >
+              {ROWS.map((row) => (
                 <motion.li
                   key={row}
-                  initial={reduce ? false : { opacity: 0, x: -8 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: reduce ? 0 : 0.25 + i * 0.35, duration: 0.35 }}
+                  variants={{ hidden: { opacity: 0, x: -8 }, show: { opacity: 1, x: 0, transition: { duration: 0.35 } } }}
                   className="grid grid-cols-[5.5rem_1fr] gap-3 text-sm"
                 >
                   <span className={`font-medium ${row === 'outcome' ? 'text-accent' : 'text-ink-3'}`}>{ui.storyLabels[row]}</span>
                   <span className="text-ink-2">{e.story[row]}</span>
                 </motion.li>
               ))}
-            </ol>
+            </motion.ol>
             <div className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-2 border-t border-line pt-3 text-sm">
               <span className="font-medium text-ink" title={e.projectDescription}>
                 {e.project}

@@ -6,7 +6,8 @@ import { educationLine, languagesLine, resolveWork, type Experience, type Latest
 export type Lang = 'en' | 'ko'
 
 const ko = koJson as {
-  titleLine: string
+  title: string
+  tagline: string
   location: string
   openSource: Record<string, { projectDescription?: string; title?: string; story?: Partial<Record<'symptom' | 'cause' | 'fix' | 'outcome', string>> }>
   sideProjects: Record<string, { title?: string; summary?: string }>
@@ -24,15 +25,22 @@ const ko = koJson as {
 
 // Interface text. Korean is pre-written: nothing is translated at runtime.
 const en = {
-  location: 'Seoul, Korea',
+  location: 'Seoul, Korea · Open to relocation',
+  certified: 'SingleStore Certified Developer',
+  proofBefore: 'Ran the benchmarks for a ',
+  proofLink: 'SingleStore engineering blog post',
+  proofAfter: ': 87% less index memory, 6.6x throughput.',
+  thrashing: 'Thrashing',
+  thrashingHint: 'Sections keep pushing each other out.',
+  certifications: 'Certifications',
+  openToRelocation: 'Open to relocation',
   emailMe: 'Email me',
   langSwitch: 'Language',
   themeToDark: 'Switch to dark mode',
   themeToLight: 'Switch to light mode',
   limitedMemory: 'This page has limited memory',
-  funTag: 'Just for fun',
-  funNote:
-    'This page pretends to run on very little memory, the way Linux limits programs (cgroups). Nothing is broken and the site isn’t slow: sections are simply put away until you ask for them.',
+  funTag: 'Just for fun:',
+  funNote: 'this page runs on a tiny memory budget, like a Linux cgroup. Tap a section to load it.',
   used: (cur: React.ReactNode, max: number) => <>{cur} MB of {max} MB used</>,
   noteLoading: 'Loading it back…',
   noteFull: 'Every section fits now.',
@@ -59,8 +67,6 @@ const en = {
   excerpt: 'Excerpt',
   translatedExcerpt: 'Excerpt, translated from Korean',
   readPreview: (t: string) => `Preview ${t}`,
-  almostFull: 'Almost full',
-  almostFullHint: 'Opening another section will put an older one away.',
   inMemory: 'In memory',
   putAway: 'Put away',
   goTo: (t: string) => `Go to ${t}`,
@@ -107,14 +113,21 @@ const en = {
 
 const koUi: typeof en = {
   location: ko.location,
+  certified: 'SingleStore Certified Developer',
+  proofBefore: '',
+  proofLink: 'SingleStore 엔지니어링 블로그 글',
+  proofAfter: '의 벤치마크를 직접 수행했습니다: 인덱스 메모리 87% 절감, 처리량 6.6배.',
+  thrashing: '스래싱',
+  thrashingHint: '섹션들이 서로를 계속 밀어내고 있어요.',
+  certifications: '자격증',
+  openToRelocation: '해외 근무 가능',
   emailMe: '이메일 보내기',
   langSwitch: '언어',
   themeToDark: '다크 모드로 전환',
   themeToLight: '라이트 모드로 전환',
   limitedMemory: '이 페이지는 메모리가 제한되어 있어요',
-  funTag: '재미로 만든 기능',
-  funNote:
-    '리눅스가 프로그램의 메모리를 제한하는 방식(cgroup)처럼, 이 페이지는 아주 적은 메모리로 돌아가는 척합니다. 고장 난 것도, 사이트가 느린 것도 아니에요. 섹션은 필요할 때까지 잠시 치워 둔 것뿐입니다.',
+  funTag: '재미로 만든 기능:',
+  funNote: '이 페이지는 리눅스 cgroup처럼 아주 작은 메모리 예산으로 돌아갑니다. 섹션을 눌러 불러오세요.',
   used: (cur, max) => <>{max} MB 중 {cur} MB 사용 중</>,
   noteLoading: '다시 불러오는 중…',
   noteFull: '이제 모든 섹션이 들어갑니다.',
@@ -141,8 +154,6 @@ const koUi: typeof en = {
   excerpt: '발췌',
   translatedExcerpt: '발췌, 영어 원문을 번역',
   readPreview: (t: string) => `${t} 미리 보기`,
-  almostFull: '거의 가득 참',
-  almostFullHint: '섹션을 하나 더 열면 오래된 섹션 하나가 치워집니다.',
   inMemory: '메모리에 있음',
   putAway: '치워 둠',
   goTo: (t: string) => `${t}(으)로 이동`,
@@ -229,7 +240,8 @@ export function useL10n() {
   const ui = UI[lang]
   return {
     isKo,
-    titleLine: (en: string) => (isKo ? ko.titleLine : en),
+    title: () => (isKo ? ko.title : resume.basics.title),
+    tagline: () => (isKo ? ko.tagline : resume.basics.tagline),
     section: (s: SectionDef): SectionDef => {
       if (!isKo) return s
       const k = ko.sections[s.id] ?? {}

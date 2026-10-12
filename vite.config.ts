@@ -28,7 +28,8 @@ function sectionHtml(s: SectionDef, r: Resume, site: Site): string {
     body += r.experience
       .map((e) => `<h3>${esc(e.role)} · ${esc(e.company)}${e.companyLocalName ? ` (${esc(e.companyLocalName)})` : ''} <small>${esc(period(e))}</small></h3>${list(pickHighlights(e, site).map(esc))}`)
       .join('')
-    body += `<p>Education: ${esc(educationLine(r))}</p><p>Languages: ${esc(languagesLine(r))}</p>`
+    const certs = r.certificatesAndAwards.filter((c) => /certified/i.test(c.name)).map((c) => `${c.name} (${c.year})`)
+    body += `<p>Education: ${esc(educationLine(r))}</p><p>Certifications: ${esc(certs.join(' · '))}</p><p>Languages: ${esc(languagesLine(r))}</p>`
   }
   if (s.id === 'vector') {
     const m = r.projects.find((p) => p.id === 'matryoshka-vector-search')?.metrics
@@ -65,6 +66,8 @@ function sectionHtml(s: SectionDef, r: Resume, site: Site): string {
     body += list(r.sideProjects.map((p) => `${link(p.url, p.title)}: ${esc(p.summary)} (${esc(p.tech.join(', '))})`))
   }
   if (s.id === 'contact') {
+    body += `<p>Based in Seoul (KST, UTC+9). Open to relocation.</p>`
+    if (r.basics.links.resumePdf) body += `<p>${link(encodeURI(r.basics.links.resumePdf), 'Resume (PDF)')}</p>`
     body += list([
       `Email: ${link(`mailto:${r.basics.email}`, r.basics.email)}`,
       ...(r.basics.links.linkedin ? [`LinkedIn: ${link(r.basics.links.linkedin, r.basics.links.linkedin)}`] : []),
@@ -92,7 +95,11 @@ function staticResume(): Plugin {
         m.runs.map((x) => `<code>${esc(x.sql)}</code> ${esc(x.result)}`),
       )}<p>${esc(m.conclusion)}</p></section>`
       const skills = `<section><h2>Core skills</h2>${list(site.coreSkills.map(esc))}</section>`
-      const fallback = `<main class="fallback"><h1>${esc(r.basics.name)}</h1><p>${esc(titleLine(r))}</p>${skills}${enabledSections(site)
+      const proof = r.projects.find((p) => p.id === 'matryoshka-vector-search')
+      const intro = `<p>Seoul, Korea · Open to relocation · SingleStore Certified Developer</p>${
+        proof?.url ? `<p>Ran the benchmarks for a ${link(proof.url, 'SingleStore engineering blog post')}: 87% less index memory, 6.6x throughput.</p>` : ''
+      }`
+      const fallback = `<main class="fallback"><h1>${esc(r.basics.name)}</h1><p>${esc(titleLine(r))}</p>${intro}${skills}${enabledSections(site)
         .map((s) => sectionHtml(s, r, site))
         .join('')}${measured}<p><small>${esc(site.footnote)}</small></p></main>`
       return html

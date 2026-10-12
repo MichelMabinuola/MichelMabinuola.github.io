@@ -1,8 +1,7 @@
 import { useCallback, useEffect, useState } from 'react'
 import { AnimatePresence } from 'framer-motion'
-import { ArrowUpRight, FileText, Mail, MapPin } from 'lucide-react'
+import { ArrowUpRight, BadgeCheck, FileText, Mail, MapPin } from 'lucide-react'
 import { resume, SECTIONS } from './content'
-import { titleLine } from './model'
 import { useCgroup } from './sim/useCgroup'
 import { useL10n, useUi } from './i18n'
 import { MemoryPanel } from './components/MemoryPanel'
@@ -14,6 +13,9 @@ import { MeasuredLink, MeasuredNote } from './components/Measured'
 import { GitHubIcon } from './components/Icon'
 import { ResumePanel } from './components/ResumePanel'
 import { OPEN_RESUME } from './events'
+
+// The proof line links to the published benchmark behind the vector search numbers.
+const PROOF_URL = resume.projects.find((p) => p.id === 'matryoshka-vector-search')?.url ?? undefined
 
 export default function App() {
   const { state, refault, setMax, touch } = useCgroup()
@@ -27,6 +29,23 @@ export default function App() {
   }, [])
   const ui = useUi()
   const l = useL10n()
+
+  // When a visitor brings a section back, take them to it and briefly outline it.
+  useEffect(() => {
+    const id = state.lastRefault?.id
+    if (!id) return
+    const raf = requestAnimationFrame(() => {
+      const el = document.getElementById(`sec-${id}`)
+      if (!el) return
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+      el.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' })
+      el.classList.remove('refault-pulse')
+      void el.offsetWidth // restart the animation if it is still running
+      el.classList.add('refault-pulse')
+      window.setTimeout(() => el.classList.remove('refault-pulse'), 1100)
+    })
+    return () => cancelAnimationFrame(raf)
+  }, [state.lastRefault])
   const sections = SECTIONS.map(l.section)
   // Under the limit, the section brought back most recently goes on top; with everything showing, use page order.
   const visible =
@@ -49,13 +68,30 @@ export default function App() {
           </nav>
 
           <header className="fade-up mt-10 sm:mt-16">
-            <p className="inline-flex items-center gap-1.5 rounded-full border border-line bg-surface px-3 py-1 text-sm text-ink-2">
-              <MapPin size={14} aria-hidden="true" className="text-accent" />
-              {ui.location}
-            </p>
+            <div className="flex flex-wrap gap-2">
+              <p className="inline-flex items-center gap-1.5 rounded-full border border-line bg-surface px-3 py-1 text-sm text-ink-2">
+                <MapPin size={14} aria-hidden="true" className="text-accent" />
+                {ui.location}
+              </p>
+              <p className="inline-flex items-center gap-1.5 rounded-full border border-line bg-surface px-3 py-1 text-sm text-ink-2">
+                <BadgeCheck size={14} aria-hidden="true" className="text-accent" />
+                {ui.certified}
+              </p>
+            </div>
             <h1 className="mt-6 text-5xl font-bold tracking-tight text-ink sm:text-8xl">{resume.basics.name}</h1>
-            <p className="mt-5 text-xl font-semibold text-accent sm:text-2xl">{l.titleLine(titleLine(resume))}</p>
+            <p className="mt-5 text-xl font-semibold text-accent sm:text-2xl">
+              {l.title()}
+              {/* The specialities only fit on wider screens. */}
+              <span className="hidden sm:inline"> | {l.tagline()}</span>
+            </p>
             {about && <p className="mt-3 max-w-2xl text-lg text-ink-2 sm:text-xl">{about.line}</p>}
+            <p className="mt-2 max-w-2xl text-sm text-ink-3 sm:text-base">
+              {ui.proofBefore}
+              <a href={PROOF_URL} target="_blank" rel="noopener noreferrer" className="text-accent underline underline-offset-2 hover:no-underline">
+                {ui.proofLink}
+              </a>
+              {ui.proofAfter}
+            </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <a
                 href={`mailto:${email}`}

@@ -32,12 +32,15 @@ export function SeoulClock() {
           <time dateTime={now.toISOString()}>{time}</time> <span className="text-sm font-normal text-ink-3">KST · {day}</span>
         </div>
       </div>
-      <span
-        className={`ml-auto inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs ${working ? 'bg-accent-soft text-accent' : 'bg-surface text-ink-2'}`}
-      >
-        <span aria-hidden="true" className={`h-2 w-2 rounded-full ${working ? 'bg-accent' : 'bg-line-strong'}`} />
-        {working ? ui.workingNow : ui.offHours}
-      </span>
+      <div className="ml-auto flex flex-wrap items-center gap-2">
+        <span className="inline-flex items-center rounded-full border border-accent/30 px-3 py-1 text-xs text-accent">{ui.openToRelocation}</span>
+        <span
+          className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs ${working ? 'bg-accent-soft text-accent' : 'bg-surface text-ink-2'}`}
+        >
+          <span aria-hidden="true" className={`h-2 w-2 rounded-full ${working ? 'bg-accent' : 'bg-line-strong'}`} />
+          {working ? ui.workingNow : ui.offHours}
+        </span>
+      </div>
     </div>
   )
 }

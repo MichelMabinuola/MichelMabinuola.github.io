@@ -13,10 +13,13 @@
     "agile-platform": [
       1,
       2,
-      3
+      3,
+      6,
+      0
     ],
     "starpickers": [
-      0
+      0,
+      1
     ]
   },
   "sections": [
@@ -26,29 +29,11 @@
       "icon": "user",
       "line": "I keep databases fast and make data searchable by meaning.",
       "body": "Data has to be stored safely and come back out in milliseconds, ideally with the right answer. That’s my work, from database performance and vector search down to the systems underneath. And if there’s another layer under that, I’m going in.",
-      "flow": [
-        {
-          "label": "Pipelines",
-          "text": "data streams in"
-        },
-        {
-          "label": "Database",
-          "text": "it is stored and analysed"
-        },
-        {
-          "label": "Vectors",
-          "text": "it becomes searchable by meaning"
-        },
-        {
-          "label": "Agents",
-          "text": "assistants act on top"
-        }
-      ],
       "sizeMb": 48
     },
     {
       "id": "latest",
-      "title": "Latest",
+      "title": "Learning",
       "icon": "book",
       "line": "What I’m reading and learning right now.",
       "sizeMb": 32
