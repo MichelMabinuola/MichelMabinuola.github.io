@@ -1,9 +1,9 @@
 import { useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
-import { Link2, Plus, Sparkles, TriangleAlert } from 'lucide-react'
+import { Link2, Maximize2, Minimize2, Plus, Sparkles, TriangleAlert } from 'lucide-react'
 import type { SectionDef } from '../model'
 import type { CgroupState, MaxSetting } from '../sim/cgroup'
-import { stats } from '../sim/cgroup'
+import { REFAULT_MS, stats } from '../sim/cgroup'
 import { copyText, shareUrl } from '../share/url'
 import { useL10n, useUi } from '../i18n'
 import { Icon } from './Icon'
@@ -72,13 +72,33 @@ export function MemoryPanel({
             <Link2 size={15} aria-hidden="true" />
             <span className="hidden sm:inline">{copied ? ui.linkCopied : ui.copyLink}</span>
           </button>
-          <button
+          <motion.button
             type="button"
             onClick={() => onSetMax(full ? '256M' : '1G')}
-            className="h-9 rounded-full bg-ink px-4 text-sm font-medium text-surface transition-opacity hover:opacity-85"
+            whileHover={{ scale: 1.03 }}
+            whileTap={{ scale: 0.95 }}
+            transition={{ type: 'spring', stiffness: 400, damping: 22 }}
+            className="group relative h-9 overflow-hidden rounded-full bg-ink px-4 text-sm font-medium text-surface"
           >
-            {full ? ui.goBack : ui.showEverything}
-          </button>
+            {/* A light sweep crosses the button on hover. */}
+            <span
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-y-0 -left-1/2 w-1/2 -skew-x-12 bg-gradient-to-r from-transparent via-white/35 to-transparent transition-transform duration-700 ease-out group-hover:translate-x-[300%] motion-reduce:hidden"
+            />
+            <AnimatePresence mode="wait" initial={false}>
+              <motion.span
+                key={full ? 'back' : 'all'}
+                className="relative inline-flex items-center gap-1.5"
+                initial={{ y: 14, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                exit={{ y: -14, opacity: 0 }}
+                transition={{ duration: 0.22 }}
+              >
+                {full ? <Minimize2 size={14} aria-hidden="true" /> : <Maximize2 size={14} aria-hidden="true" />}
+                {full ? ui.goBack : ui.showEverything}
+              </motion.span>
+            </AnimatePresence>
+          </motion.button>
         </div>
       </div>
 
@@ -121,20 +141,31 @@ export function MemoryPanel({
       <div className="mt-4 flex flex-col gap-2.5">
         <Row label={ui.inMemory}>
           <ul className="flex flex-wrap gap-2">
+            <AnimatePresence initial={false}>
             {visible.map((sec) => (
-              <li key={sec.id}>
-                <button
+              <motion.li
+                key={sec.id}
+                layout
+                initial={{ opacity: 0, scale: 0.6 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.6 }}
+                transition={{ type: 'spring', stiffness: 500, damping: 26 }}
+              >
+                <motion.button
+                  whileHover={{ y: -2 }}
+                  whileTap={{ scale: 0.95 }}
                   type="button"
                   onClick={() => goTo(sec.id)}
                   aria-label={ui.goTo(sec.title)}
-                  className="inline-flex items-center gap-1.5 rounded-full bg-accent-soft px-3 py-1.5 text-sm text-accent transition-opacity hover:opacity-80"
+                  className="inline-flex items-center gap-1.5 rounded-full bg-accent-soft px-3 py-1.5 text-sm text-accent"
                 >
                   <Icon name={sec.icon} size={14} />
                   {sec.title}
                   <span className="text-xs tabular-nums opacity-70">{sec.sizeMb} MB</span>
-                </button>
-              </li>
+                </motion.button>
+              </motion.li>
             ))}
+            </AnimatePresence>
           </ul>
         </Row>
         {hidden.length > 0 && (
@@ -144,18 +175,43 @@ export function MemoryPanel({
                 {hidden.map((sec) => {
                   const busy = state.loading.includes(sec.id)
                   return (
-                    <motion.li key={sec.id} layout initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.9 }}>
-                      <button
+                    <motion.li
+                      key={sec.id}
+                      layout
+                      initial={{ opacity: 0, scale: 0.6 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.6, transition: { duration: 0.18 } }}
+                      transition={{ type: 'spring', stiffness: 500, damping: 26 }}
+                    >
+                      <motion.button
+                        whileHover={busy ? undefined : { y: -2 }}
+                        whileTap={busy ? undefined : { scale: 0.94 }}
                         type="button"
                         onClick={() => onLoad(sec.id)}
                         disabled={busy}
                         aria-label={busy ? ui.loading(sec.title) : ui.show(sec.title)}
-                        className="inline-flex items-center gap-1.5 rounded-full border border-dashed border-line-strong px-3 py-1.5 text-sm text-ink-2 transition-colors hover:border-accent hover:bg-accent-soft hover:text-accent disabled:cursor-progress disabled:text-accent"
+                        className="group relative inline-flex items-center gap-1.5 overflow-hidden rounded-full border border-dashed border-line-strong px-3 py-1.5 text-sm text-ink-2 transition-colors hover:border-solid hover:border-accent hover:bg-accent-soft hover:text-accent disabled:cursor-progress disabled:border-solid disabled:border-accent disabled:text-accent"
                       >
-                        {busy ? <Icon name={sec.icon} size={14} /> : <Plus size={14} aria-hidden="true" />}
-                        {busy ? ui.loading(sec.title) : sec.title}
-                        {!busy && <span className="text-xs tabular-nums text-ink-3">{sec.sizeMb} MB</span>}
-                      </button>
+                        {/* While "reading from disk", a fill runs across the chip for exactly the refault time. */}
+                        {busy && (
+                          <motion.span
+                            aria-hidden="true"
+                            className="absolute inset-0 origin-left bg-accent/15"
+                            initial={{ scaleX: 0 }}
+                            animate={{ scaleX: 1 }}
+                            transition={{ duration: REFAULT_MS / 1000, ease: 'linear' }}
+                          />
+                        )}
+                        <span className="relative inline-flex items-center gap-1.5">
+                          {busy ? (
+                            <Icon name={sec.icon} size={14} />
+                          ) : (
+                            <Plus size={14} aria-hidden="true" className="transition-transform duration-300 group-hover:rotate-90" />
+                          )}
+                          {busy ? ui.loading(sec.title) : sec.title}
+                          {!busy && <span className="text-xs tabular-nums text-ink-3">{sec.sizeMb} MB</span>}
+                        </span>
+                      </motion.button>
                     </motion.li>
                   )
                 })}
