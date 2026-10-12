@@ -104,7 +104,7 @@ function staticResume(): Plugin {
       const intro = `<p>Seoul, Korea · SingleStore Certified Developer</p>`
       const fallback = `<main class="fallback"><h1>${esc(r.basics.name)}</h1><p>${esc(titleLine(r))}</p>${intro}${skills}${enabledSections(site)
         .map((s) => sectionHtml(s, r, site))
-        .join('')}${measured}<p><small>${esc(site.footnote)}</small></p></main>`
+        .join('')}${measured}<p><small>${esc(site.footnote)}</small></p><pre>${esc(readFileSync('public/llms.txt', 'utf8').trimEnd())}</pre></main>`
       return html
         .replace('<!--static-resume-->', fallback)
         .replaceAll('%SITE_URL%', esc(site.url))

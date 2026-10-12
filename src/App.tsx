@@ -13,6 +13,7 @@ import { MeasuredLink, MeasuredNote } from './components/Measured'
 import { GitHubIcon } from './components/Icon'
 import { ResumePanel } from './components/ResumePanel'
 import { Greeting } from './components/Greeting'
+import { LlmsCard } from './components/LlmsCard'
 import { OPEN_RESUME } from './events'
 
 export default function App() {
@@ -147,6 +148,7 @@ export default function App() {
           </p>
           <MeasuredNote />
         </footer>
+        <LlmsCard />
       </main>
       <ScrollTop />
       <ResumePanel open={resumeOpen} onClose={closeResume} />
