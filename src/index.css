@@ -2,6 +2,7 @@
 
 @theme {
   --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', 'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif;
+  --font-display: ui-serif, 'New York', 'Iowan Old Style', Georgia, 'AppleMyungjo', 'Nanum Myeongjo', serif;
   --font-mono: ui-monospace, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;
 }
 
@@ -186,4 +187,44 @@ body {
 }
 .border-accent-gradient {
   border-image: linear-gradient(var(--accent), var(--accent-2)) 1;
+}
+
+/* --- Editorial exploration --------------------------------------------- */
+html {
+  scroll-behavior: smooth;
+}
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* Skills ticker */
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+.marquee-track {
+  animation: marquee 40s linear infinite;
+}
+.marquee {
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+  mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+}
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
+    flex-wrap: wrap;
+    width: auto;
+  }
+  .marquee-track > ul[aria-hidden] {
+    display: none;
+  }
+}
+
+/* A soft light that follows the pointer across the hero. */
+.spotlight {
+  background: radial-gradient(28rem circle at var(--mx, 50%) var(--my, 30%), color-mix(in srgb, var(--accent) 9%, transparent), transparent 70%);
+  transition: opacity 0.4s;
 }

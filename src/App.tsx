@@ -6,14 +6,15 @@ import { useCgroup } from './sim/useCgroup'
 import { useL10n, useUi } from './i18n'
 import { MemoryPanel } from './components/MemoryPanel'
 import { SectionCard } from './components/SectionCard'
-import { ThemeToggle } from './components/ThemeToggle'
-import { LangSwitch } from './components/LangSwitch'
 import { ScrollTop } from './components/ScrollTop'
 import { MeasuredLink, MeasuredNote } from './components/Measured'
 import { GitHubIcon } from './components/Icon'
 import { ResumePanel } from './components/ResumePanel'
 import { Greeting } from './components/Greeting'
 import { AgentsView } from './components/AgentsView'
+import { Masthead } from './components/Masthead'
+import { Marquee } from './components/Marquee'
+import { ContactTab } from './components/ContactTab'
 import { OPEN_RESUME } from './events'
 
 export default function App() {
@@ -59,12 +60,17 @@ export default function App() {
 
   return (
     <div className="min-h-screen">
-      <div className="relative border-b border-line">
+      <div
+        className="relative border-b border-line"
+        onPointerMove={(e) => {
+          const r = e.currentTarget.getBoundingClientRect()
+          e.currentTarget.style.setProperty('--mx', `${e.clientX - r.left}px`)
+          e.currentTarget.style.setProperty('--my', `${e.clientY - r.top}px`)
+        }}
+      >
+        <div className="spotlight pointer-events-none absolute inset-0 motion-reduce:hidden" aria-hidden="true" />
         <div className="relative mx-auto max-w-6xl px-4 pb-10 pt-5 sm:px-8 sm:pb-14">
-          <nav className="flex items-center justify-end gap-2">
-            <LangSwitch />
-            <ThemeToggle />
-          </nav>
+          <Masthead />
 
           <header className="fade-up mt-10 sm:mt-16">
             <div className="flex flex-wrap gap-2">
@@ -78,13 +84,20 @@ export default function App() {
               </p>
             </div>
             <Greeting />
-            <h1 className="mt-1 text-5xl font-bold tracking-tight text-ink sm:text-8xl">{resume.basics.name}</h1>
-            <p className="text-accent-gradient mt-5 text-xl font-semibold sm:text-2xl">
+            <h1 className="mt-2 font-display text-6xl font-semibold tracking-tight text-ink sm:text-[7.5rem] sm:leading-[0.95]">{resume.basics.name}</h1>
+            <p className="mt-5 font-mono text-xs uppercase tracking-[0.2em] text-ink-3 sm:text-sm">
               {l.title()}
               {/* The specialities only fit on wider screens. */}
-              <span className="hidden sm:inline"> | {l.tagline()}</span>
+              <span className="hidden sm:inline"> — {l.tagline()}</span>
             </p>
-            {about && <p className="mt-3 max-w-2xl text-lg text-ink-2 sm:text-xl">{about.line}</p>}
+            <p className="mt-6 font-display text-3xl leading-tight text-ink sm:text-5xl">
+              {ui.statement.map((line, i) => (
+                <span key={line} className={`block ${i === ui.statement.length - 1 ? 'text-accent-gradient italic' : ''}`}>
+                  {line}
+                </span>
+              ))}
+            </p>
+            {about && <p className="sr-only">{about.line}</p>}
             <div className="mt-8 flex flex-wrap gap-3">
               <a
                 href={`mailto:${email}`}
@@ -138,6 +151,10 @@ export default function App() {
           </header>
 
           <div className="mt-12">
+            <Marquee />
+          </div>
+
+          <div className="mt-12">
             <MemoryPanel state={state} visible={visible} hidden={hidden} total={sections.length} onLoad={refault} onSetMax={setMax} />
           </div>
         </div>
@@ -147,7 +164,7 @@ export default function App() {
         <div className="flex flex-col gap-5">
           <AnimatePresence initial={false} mode="popLayout">
             {visible.map((s) => (
-              <SectionCard key={s.id} section={s} onTouch={touch} />
+              <SectionCard key={s.id} section={s} number={SECTIONS.findIndex((x) => x.id === s.id) + 1} onTouch={touch} />
             ))}
           </AnimatePresence>
         </div>
@@ -160,6 +177,7 @@ export default function App() {
         </footer>
       </main>
       <ScrollTop />
+      <ContactTab />
       <ResumePanel open={resumeOpen} onClose={closeResume} />
       <AgentsView open={agentsOpen} onClose={closeAgents} />
     </div>

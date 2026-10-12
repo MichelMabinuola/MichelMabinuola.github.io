@@ -6,7 +6,7 @@ import { useL10n, useUi } from '../i18n'
 import { Icon } from './Icon'
 import { SectionBody } from '../sections/SectionBody'
 
-export function SectionCard({ section, onTouch }: { section: SectionDef; onTouch: (id: string) => void }) {
+export function SectionCard({ section, number, onTouch }: { section: SectionDef; number: number; onTouch: (id: string) => void }) {
   const ref = useRef<HTMLElement>(null)
   const ui = useUi()
 
@@ -23,10 +23,11 @@ export function SectionCard({ section, onTouch }: { section: SectionDef; onTouch
     <motion.section
       ref={ref}
       layout
-      initial={{ opacity: 0, y: 12 }}
-      animate={{ opacity: 1, y: 0 }}
+      initial={{ opacity: 0, y: 28 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.12 }}
       exit={{ opacity: 0, scale: 0.98, transition: { duration: 0.2 } }}
-      transition={{ duration: 0.35 }}
+      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
       onPointerDown={() => onTouch(section.id)}
       onFocusCapture={() => onTouch(section.id)}
       id={`sec-${section.id}`}
@@ -42,9 +43,12 @@ export function SectionCard({ section, onTouch }: { section: SectionDef; onTouch
         >
           <Icon name={section.icon} size={20} />
         </span>
-        <h2 id={`h-${section.id}`} className={`font-semibold tracking-tight text-ink ${section.variant === 'light' ? 'text-lg' : 'text-2xl'}`}>
-          {section.title}
-        </h2>
+        <div className="min-w-0">
+          <div className="font-mono text-[11px] uppercase tracking-[0.2em] text-ink-3">No. {String(number).padStart(2, '0')}</div>
+          <h2 id={`h-${section.id}`} className={`font-display font-semibold tracking-tight text-ink ${section.variant === 'light' ? 'text-xl' : 'text-3xl'}`}>
+            {section.title}
+          </h2>
+        </div>
       </div>
       {/* About's one-liner already sits in the hero. */}
       {section.id !== 'about' && <p className="mt-3 text-lg text-ink-2">{section.line}</p>}
