@@ -206,7 +206,7 @@ html {
   }
 }
 .marquee-track {
-  animation: marquee 40s linear infinite;
+  animation: marquee 120s linear infinite;
 }
 .marquee {
   -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
