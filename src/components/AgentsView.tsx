@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react'
 import { createPortal } from 'react-dom'
-import { LLMS_TEXT } from './LlmsCard'
+import { LLMS_TEXT } from '../llms'
 import { MiniMarkdown } from './MiniMarkdown'
 
 // Full-screen view of the note for AI agents, opened from the hero (or ?view=agents).
