@@ -1,23 +1,9 @@
-import { Fragment } from 'react'
 import { ArrowUpRight } from 'lucide-react'
 import llms from '../../public/llms.txt?raw'
+import { MiniMarkdown } from './MiniMarkdown'
 
-// Same text as /llms.txt, shown as-is. It's addressed to AI agents, so it stays in English.
-const LINK = /(https?:\/\/[^\s]+|[\w.+-]+@[\w-]+\.[\w.]+)/g
-
-export const LLMS_TEXT = llms.trimEnd()
-
-export function linkify(line: string) {
-  return line.split(LINK).map((part, i) => {
-    if (i % 2 === 0) return <Fragment key={i}>{part}</Fragment>
-    const href = part.includes('@') && !part.startsWith('http') ? `mailto:${part}` : part
-    return (
-      <a key={i} href={href} target={href.startsWith('mailto:') ? undefined : '_blank'} rel="noopener noreferrer" className="break-all text-accent underline underline-offset-2">
-        {part}
-      </a>
-    )
-  })
-}
+// Same text as /llms.txt. It's addressed to AI agents, so it stays in English.
+export const LLMS_TEXT = llms.trim()
 
 export function LlmsCard() {
   return (
@@ -29,14 +15,13 @@ export function LlmsCard() {
           <ArrowUpRight size={12} aria-hidden="true" />
         </a>
       </div>
-      <pre className="whitespace-pre-wrap break-words px-5 py-5 font-mono text-[13px] leading-relaxed text-ink-2 sm:px-6 sm:text-sm">
-        {LLMS_TEXT.split('\n').map((line, i, all) => (
-          <Fragment key={i}>
-            {linkify(line)}
-            {i < all.length - 1 && '\n'}
-          </Fragment>
-        ))}
-      </pre>
+      <MiniMarkdown
+        md={LLMS_TEXT}
+        className="flex flex-col gap-3 px-5 py-5 font-mono text-[13px] leading-relaxed text-ink-2 sm:px-6 sm:text-sm [&_strong]:text-ink"
+        h2Class="text-base font-semibold text-ink"
+        h3Class="mt-2 font-semibold text-ink"
+        linkClass="break-all text-accent underline underline-offset-2"
+      />
     </section>
   )
 }

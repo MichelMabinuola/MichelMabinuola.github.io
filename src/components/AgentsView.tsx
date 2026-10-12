@@ -1,18 +1,7 @@
 import { useEffect, useRef } from 'react'
 import { createPortal } from 'react-dom'
-import { LLMS_TEXT, linkify } from './LlmsCard'
-
-// The text is hard-wrapped for /llms.txt; at this size, re-flow it into paragraphs and bullets.
-const PARAGRAPHS = LLMS_TEXT.split(/\n\s*\n/).map((block) => {
-  const lines = block.split('\n')
-  if (!lines[0].startsWith('- ')) return { bullets: false, lines: lines.map((l) => l.trim()) }
-  const items: string[] = []
-  for (const l of lines) {
-    if (l.startsWith('- ')) items.push(l.slice(2).trim())
-    else items[items.length - 1] += ' ' + l.trim()
-  }
-  return { bullets: true, lines: items }
-})
+import { LLMS_TEXT } from './LlmsCard'
+import { MiniMarkdown } from './MiniMarkdown'
 
 // Full-screen view of the note for AI agents, opened from the hero (or ?view=agents).
 export function AgentsView({ open, onClose }: { open: boolean; onClose: () => void }) {
@@ -42,23 +31,13 @@ export function AgentsView({ open, onClose }: { open: boolean; onClose: () => vo
             back
           </button>
         </div>
-        <div className="mt-8 flex flex-col gap-6 text-lg font-semibold leading-relaxed text-ink sm:text-2xl sm:leading-relaxed">
-          {PARAGRAPHS.map((p, i) =>
-            p.bullets ? (
-              <ul key={i} className="flex list-disc flex-col gap-2 pl-6 marker:text-accent">
-                {p.lines.map((line, j) => (
-                  <li key={j} className="break-words">
-                    {linkify(line)}
-                  </li>
-                ))}
-              </ul>
-            ) : (
-              <p key={i} className="break-words">
-                {linkify(p.lines.join(' '))}
-              </p>
-            ),
-          )}
-        </div>
+        <MiniMarkdown
+          md={LLMS_TEXT}
+          className="mt-8 flex flex-col gap-5 text-lg leading-relaxed text-ink-2 sm:text-xl sm:leading-relaxed [&_strong]:text-ink"
+          h2Class="text-3xl font-bold tracking-tight text-ink sm:text-5xl"
+          h3Class="mt-4 text-xl font-semibold text-ink sm:text-2xl"
+          linkClass="text-accent underline underline-offset-4 hover:no-underline"
+        />
         <p className="mt-10 font-mono text-xs text-ink-3">
           Also at{' '}
           <a href="llms.txt" target="_blank" rel="noopener noreferrer" className="underline underline-offset-2 hover:text-accent">
