@@ -8,7 +8,7 @@ export function ContactTab() {
   return (
     <a
       href={`mailto:${resume.basics.email}`}
-      className="bg-accent-gradient fixed right-0 top-1/2 z-40 hidden -translate-y-1/2 items-center gap-2 rounded-l-xl px-2.5 py-5 font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-white shadow-lg shadow-black/10 transition-[padding] hover:pr-4 lg:flex"
+      className="bg-accent-gradient fixed right-0 top-1/2 z-40 hidden -translate-y-1/2 items-center gap-2 rounded-l-xl px-2.5 py-5 font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-surface shadow-lg shadow-black/10 transition-[padding] hover:pr-4 lg:flex"
       style={{ writingMode: 'vertical-rl' }}
     >
       {ui.contactTab}
