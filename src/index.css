@@ -262,26 +262,30 @@ html {
   }
 }
 
-/* Language switch: old text blurs up and out, new text settles in. */
-@keyframes lang-out {
-  to {
-    opacity: 0;
-    filter: blur(6px);
-    transform: translateY(-6px);
+/* Language switch: the new language wipes across the old page, which holds still. */
+@keyframes wipe-from-left {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+}
+@keyframes wipe-from-right {
+  from {
+    clip-path: inset(0 0 0 100%);
   }
 }
 @keyframes lang-in {
   from {
     opacity: 0;
-    filter: blur(6px);
-    transform: translateY(6px);
   }
 }
-html[data-vt='lang']::view-transition-old(root) {
-  animation: lang-out 0.28s ease-in both;
+html[data-vt^='lang']::view-transition-old(root) {
+  animation: none;
 }
-html[data-vt='lang']::view-transition-new(root) {
-  animation: lang-in 0.45s cubic-bezier(0.22, 1, 0.36, 1) 0.1s both;
+html[data-vt='lang-ko']::view-transition-new(root) {
+  animation: wipe-from-left 0.65s cubic-bezier(0.65, 0, 0.35, 1) both;
+}
+html[data-vt='lang-en']::view-transition-new(root) {
+  animation: wipe-from-right 0.65s cubic-bezier(0.65, 0, 0.35, 1) both;
 }
 /* Fallback without view transitions. */
 .lang-fade #root {
