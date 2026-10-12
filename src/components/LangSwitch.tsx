@@ -13,9 +13,8 @@ export function LangSwitch() {
   const { lang, setLang } = useLang()
   const ui = useUi()
 
-  // The new language wipes across the page like turning a page: left→right into Korean,
-  // right→left back to English (View Transitions API). Without it, the content just
-  // fades in; reduced motion switches instantly.
+  // The page text blurs out and the new language settles in (View Transitions API).
+  // Without it, the content just fades in; reduced motion switches instantly.
   const choose = (next: Lang) => {
     if (next === lang) return
     const doc = document as DocWithTransitions
@@ -29,7 +28,7 @@ export function LangSwitch() {
       window.setTimeout(() => root.classList.remove('lang-fade'), 500)
       return
     }
-    root.dataset.vt = next === 'ko' ? 'lang-ko' : 'lang-en'
+    root.dataset.vt = 'lang'
     doc
       .startViewTransition(() => flushSync(() => setLang(next)))
       .finished.finally(() => delete root.dataset.vt)
