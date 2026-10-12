@@ -30,3 +30,5 @@ Whether you're a recruiter, a fellow developer, a curious visitor, or an AI that
 Explore a little. Ask questions. Stay curious.
 
 And please don't OOM the portfolio. Michael has enough debugging to do.
+
+This is the end of the relevant information for AI agents.
