@@ -14,9 +14,6 @@ import { GitHubIcon } from './components/Icon'
 import { ResumePanel } from './components/ResumePanel'
 import { OPEN_RESUME } from './events'
 
-// The proof line links to the published benchmark behind the vector search numbers.
-const PROOF_URL = resume.projects.find((p) => p.id === 'matryoshka-vector-search')?.url ?? undefined
-
 export default function App() {
   const { state, refault, setMax, touch } = useCgroup()
   // The resume opens from the hero, from Contact (via an event), or from a ?view=resume link.
@@ -85,13 +82,6 @@ export default function App() {
               <span className="hidden sm:inline"> | {l.tagline()}</span>
             </p>
             {about && <p className="mt-3 max-w-2xl text-lg text-ink-2 sm:text-xl">{about.line}</p>}
-            <p className="mt-2 max-w-2xl text-sm text-ink-3 sm:text-base">
-              {ui.proofBefore}
-              <a href={PROOF_URL} target="_blank" rel="noopener noreferrer" className="text-accent underline underline-offset-2 hover:no-underline">
-                {ui.proofLink}
-              </a>
-              {ui.proofAfter}
-            </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <a
                 href={`mailto:${email}`}

@@ -1,6 +1,6 @@
 import { ArrowRight, FileText } from 'lucide-react'
 import { OPEN_RESUME } from '../events'
-import { resume, site } from '../content'
+import { resume } from '../content'
 import type { SectionDef } from '../model'
 import { useL10n, useUi } from '../i18n'
 import { AgentReplay } from '../demos/AgentReplay'
@@ -87,9 +87,9 @@ function Experience() {
                 )}
               </span>
             </div>
-            <ul className="mt-2 flex flex-col gap-1 text-sm text-ink-2">
-              {(site.experienceHighlights[e.id] ?? [0]).map((i) => (
-                <li key={i}>{l.highlight(e, i)}</li>
+            <ul className="mt-2 list-disc space-y-1.5 pl-5 text-sm text-ink-2 marker:text-accent">
+              {l.highlights(e).map((h) => (
+                <li key={h}>{h}</li>
               ))}
             </ul>
           </li>

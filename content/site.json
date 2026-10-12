@@ -9,19 +9,6 @@
   ],
   "footnote": "Sizes are illustrative; counters and behaviour mirror cgroup v2.",
   "footnoteMeasured": "The page cache behaviour is something I measured on a real database host.",
-  "experienceHighlights": {
-    "agile-platform": [
-      1,
-      2,
-      3,
-      6,
-      0
-    ],
-    "starpickers": [
-      0,
-      1
-    ]
-  },
   "sections": [
     {
       "id": "about",
@@ -110,7 +97,7 @@
       "id": "contact",
       "title": "Contact",
       "icon": "mail",
-      "line": "Email is best. I reply as soon as I can.",
+      "line": "Email is the best way to reach me.",
       "sizeMb": 24
     }
   ],
@@ -141,5 +128,18 @@
     "Python · SQL · Bash",
     "SingleStore · MySQL · ClickHouse"
   ],
-  "pageTitle": "Michael Mabinuola | Database / AI Engineer"
+  "pageTitle": "Michael Mabinuola | Database / AI Engineer",
+  "experienceShort": {
+    "agile-platform": [
+      "Diagnose and fix SingleStore performance issues with query profiles and OS metrics",
+      "Tune and benchmark vector indexes",
+      "Build semantic search and RAG pipelines",
+      "Compare other databases against SingleStore and write the evaluation reports",
+      "Run online and offline database migrations"
+    ],
+    "starpickers": [
+      "Built ETL pipelines processing 1M+ rows a day",
+      "Trained an SVM model that told road from sidewalk driving with 92% accuracy"
+    ]
+  }
 }

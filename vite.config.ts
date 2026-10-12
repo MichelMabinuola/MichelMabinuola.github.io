@@ -95,10 +95,7 @@ function staticResume(): Plugin {
         m.runs.map((x) => `<code>${esc(x.sql)}</code> ${esc(x.result)}`),
       )}<p>${esc(m.conclusion)}</p></section>`
       const skills = `<section><h2>Core skills</h2>${list(site.coreSkills.map(esc))}</section>`
-      const proof = r.projects.find((p) => p.id === 'matryoshka-vector-search')
-      const intro = `<p>Seoul, Korea · Open to relocation · SingleStore Certified Developer</p>${
-        proof?.url ? `<p>Ran the benchmarks for a ${link(proof.url, 'SingleStore engineering blog post')}: 87% less index memory, 6.6x throughput.</p>` : ''
-      }`
+      const intro = `<p>Seoul, Korea · SingleStore Certified Developer</p>`
       const fallback = `<main class="fallback"><h1>${esc(r.basics.name)}</h1><p>${esc(titleLine(r))}</p>${intro}${skills}${enabledSections(site)
         .map((s) => sectionHtml(s, r, site))
         .join('')}${measured}<p><small>${esc(site.footnote)}</small></p></main>`

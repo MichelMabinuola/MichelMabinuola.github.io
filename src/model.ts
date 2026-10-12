@@ -92,7 +92,7 @@ export type Site = {
   defaultOpen: string[]
   footnote: string
   footnoteMeasured: string
-  experienceHighlights: Record<string, number[]>
+  experienceShort: Record<string, string[]> // short site bullets; the PDF keeps the long resume sentences
   sections: SectionDef[]
   coreSkills: string[]
   measured: {
@@ -114,8 +114,7 @@ export const fmtMonth = (ym: string) => {
 }
 export const period = (e: Experience) => `${fmtMonth(e.start)} – ${e.current || !e.end ? 'present' : fmtMonth(e.end)}`
 
-export const pickHighlights = (e: Experience, site: Site) =>
-  (site.experienceHighlights[e.id] ?? [0, 1]).map((i) => e.highlights[i]).filter(Boolean)
+export const pickHighlights = (e: Experience, site: Site) => site.experienceShort[e.id] ?? e.highlights.slice(0, 2)
 
 export const educationLine = (r: Resume) =>
   r.education

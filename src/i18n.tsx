@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useState } from 'react'
 import koJson from '../content/ko.json'
 import { resume, site } from './content'
-import { educationLine, languagesLine, resolveWork, type Experience, type LatestItem, type OpenSourceEntry, type RealWorkRef, type SideProject, type ResolvedWork, type SectionDef, type WritingEntry } from './model'
+import { educationLine, languagesLine, pickHighlights, resolveWork, type Experience, type LatestItem, type OpenSourceEntry, type RealWorkRef, type SideProject, type ResolvedWork, type SectionDef, type WritingEntry } from './model'
 
 export type Lang = 'en' | 'ko'
 
@@ -12,7 +12,8 @@ const ko = koJson as {
   openSource: Record<string, { projectDescription?: string; title?: string; story?: Partial<Record<'symptom' | 'cause' | 'fix' | 'outcome', string>> }>
   sideProjects: Record<string, { title?: string; summary?: string }>
   sections: Record<string, Partial<Omit<SectionDef, 'flow'>> & { flow?: { label: string; text: string }[]; realWorkText?: string }>
-  experience: Record<string, { role?: string; highlights?: Record<string, string> }>
+  experience: Record<string, { role?: string }>
+  experienceShort: Record<string, string[]>
   education: string
   languages: string
   projects: Record<string, { title?: string; summary?: string }>
@@ -25,11 +26,8 @@ const ko = koJson as {
 
 // Interface text. Korean is pre-written: nothing is translated at runtime.
 const en = {
-  location: 'Seoul, Korea · Open to relocation',
+  location: 'Seoul, Korea',
   certified: 'SingleStore Certified Developer',
-  proofBefore: 'Ran the benchmarks for a ',
-  proofLink: 'SingleStore engineering blog post',
-  proofAfter: ': 87% less index memory, 6.6x throughput.',
   thrashing: 'Thrashing',
   thrashingHint: 'Sections keep pushing each other out.',
   certifications: 'Certifications',
@@ -113,9 +111,6 @@ const en = {
 const koUi: typeof en = {
   location: ko.location,
   certified: 'SingleStore Certified Developer',
-  proofBefore: '',
-  proofLink: 'SingleStore 엔지니어링 블로그 글',
-  proofAfter: '의 벤치마크를 직접 수행했습니다: 인덱스 메모리 87% 절감, 처리량 6.6배.',
   thrashing: '스래싱',
   thrashingHint: '섹션들이 서로를 계속 밀어내고 있어요.',
   certifications: '자격증',
@@ -246,7 +241,7 @@ export function useL10n() {
       return { ...s, title: k.title ?? s.title, line: k.line ?? s.line, body: k.body ?? s.body, detail: k.detail ?? s.detail, closing: k.closing ?? s.closing, note: k.note ?? s.note, flow: k.flow ?? s.flow }
     },
     role: (e: Experience) => (isKo ? (ko.experience[e.id]?.role ?? e.role) : e.role),
-    highlight: (e: Experience, i: number) => (isKo ? (ko.experience[e.id]?.highlights?.[i] ?? e.highlights[i]) : e.highlights[i]),
+    highlights: (e: Experience) => (isKo ? (ko.experienceShort[e.id] ?? pickHighlights(e, site)) : pickHighlights(e, site)),
     period: (e: Experience) => {
       const fmt = (ym: string) => {
         const [y, m] = ym.split('-').map(Number)
