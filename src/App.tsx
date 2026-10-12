@@ -10,7 +10,6 @@ import { ScrollTop } from './components/ScrollTop'
 import { MeasuredLink, MeasuredNote } from './components/Measured'
 import { GitHubIcon } from './components/Icon'
 import { ResumePanel } from './components/ResumePanel'
-import { Greeting } from './components/Greeting'
 import { AgentsView } from './components/AgentsView'
 import { Masthead } from './components/Masthead'
 import { Marquee } from './components/Marquee'
@@ -83,8 +82,7 @@ export default function App() {
                 {ui.certified}
               </p>
             </div>
-            <Greeting />
-            <h1 className="mt-2 font-display text-6xl font-bold tracking-tight text-ink sm:text-[7.5rem] sm:leading-[0.95]">{resume.basics.name}</h1>
+            <h1 className="mt-6 font-display text-6xl font-bold tracking-tight text-ink sm:text-[7.5rem] sm:leading-[0.95]">{resume.basics.name}</h1>
             <p className="mt-5 font-mono text-xs uppercase tracking-[0.2em] text-ink-3 sm:text-sm">
               {l.title()}
               {/* The specialities only fit on wider screens. */}
