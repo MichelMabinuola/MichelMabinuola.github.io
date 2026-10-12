@@ -84,7 +84,7 @@ export default function App() {
               </p>
             </div>
             <Greeting />
-            <h1 className="mt-2 font-display text-6xl font-semibold tracking-tight text-ink sm:text-[7.5rem] sm:leading-[0.95]">{resume.basics.name}</h1>
+            <h1 className="mt-2 font-display text-6xl font-bold tracking-tight text-ink sm:text-[7.5rem] sm:leading-[0.95]">{resume.basics.name}</h1>
             <p className="mt-5 font-mono text-xs uppercase tracking-[0.2em] text-ink-3 sm:text-sm">
               {l.title()}
               {/* The specialities only fit on wider screens. */}

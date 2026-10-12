@@ -2,7 +2,7 @@
 
 @theme {
   --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', 'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif;
-  --font-display: ui-serif, 'New York', 'Iowan Old Style', Georgia, 'AppleMyungjo', 'Nanum Myeongjo', serif;
+  --font-display: var(--font-sans); /* headings use the same sans font as the body */
   --font-mono: ui-monospace, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;
 }
 
