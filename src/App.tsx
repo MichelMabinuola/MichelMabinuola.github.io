@@ -3,6 +3,7 @@ import { AnimatePresence } from 'framer-motion'
 import { ArrowUpRight, BadgeCheck, Bot, FileText, Mail } from 'lucide-react'
 import { resume, SECTIONS } from './content'
 import { useCgroup } from './sim/useCgroup'
+import { REFAULT_MS, type MaxSetting } from './sim/cgroup'
 import { useL10n, useUi } from './i18n'
 import { MemoryPanel } from './components/MemoryPanel'
 import { SectionCard } from './components/SectionCard'
@@ -30,6 +31,23 @@ export default function App() {
   }, [])
   const ui = useUi()
   const l = useL10n()
+
+  // "Show everything" also takes the visitor down to the first section.
+  const showAllOrLimit = useCallback(
+    (m: MaxSetting) => {
+      setMax(m)
+      if (m !== '1G') return
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+      const go = () => document.getElementById('sections')?.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' })
+      requestAnimationFrame(go)
+      // The panel above grows while the other sections load in; settle on the right spot afterwards.
+      window.setTimeout(() => {
+        const top = document.getElementById('sections')?.getBoundingClientRect().top ?? 24
+        if (Math.abs(top - 24) > 4) go()
+      }, REFAULT_MS + 150)
+    },
+    [setMax],
+  )
 
   // When a visitor brings a section back, take them to it and briefly outline it.
   useEffect(() => {
@@ -149,13 +167,13 @@ export default function App() {
           </div>
 
           <div className="mt-12">
-            <MemoryPanel state={state} visible={visible} hidden={hidden} total={sections.length} onLoad={refault} onSetMax={setMax} />
+            <MemoryPanel state={state} visible={visible} hidden={hidden} total={sections.length} onLoad={refault} onSetMax={showAllOrLimit} />
           </div>
         </div>
       </div>
 
       <main className="mx-auto max-w-6xl px-4 py-10 sm:px-8 sm:py-14">
-        <div className="flex flex-col gap-5">
+        <div id="sections" className="flex scroll-mt-6 flex-col gap-5">
           <AnimatePresence initial={false} mode="popLayout">
             {visible.map((s) => (
               <SectionCard key={s.id} section={s} number={SECTIONS.findIndex((x) => x.id === s.id) + 1} onTouch={touch} />
