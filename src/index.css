@@ -111,13 +111,6 @@ body {
   color: var(--accent);
 }
 
-/* Faint dot grid behind the hero. */
-.hero-dots {
-  background-image: radial-gradient(var(--line-strong) 1px, transparent 1px);
-  background-size: 22px 22px;
-  -webkit-mask-image: linear-gradient(to bottom, #000 30%, transparent);
-  mask-image: linear-gradient(to bottom, #000 30%, transparent);
-}
 
 @keyframes fade-up {
   from {
@@ -155,12 +148,6 @@ body {
   }
 }
 
-/* Soft accent glow behind the hero. */
-.hero-glow {
-  background:
-    radial-gradient(40rem 22rem at 15% 20%, color-mix(in srgb, var(--accent) 14%, transparent), transparent 70%),
-    radial-gradient(30rem 18rem at 85% 0%, color-mix(in srgb, var(--accent-2) 14%, transparent), transparent 70%);
-}
 
 /* Outline a section card for a moment after it is brought back into memory. */
 @keyframes refault-pulse {
