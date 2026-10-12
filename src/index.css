@@ -18,6 +18,7 @@
   --color-accent-2: var(--accent-2);
   --color-ok: var(--ok);
   --color-ok-ink: var(--ok-ink);
+  --color-alert: var(--alert);
   --color-warn: var(--warn);
   --color-track: var(--track);
 }
@@ -36,6 +37,7 @@
   --accent-soft: #e8effd;
   --ok: #16a34a; /* dots only */
   --ok-ink: #15803d; /* green text */
+  --alert: #dc2626; /* red text, 4.8:1 on white */
   --warn: #b45309;
   --track: #f0f0ee;
   color-scheme: light;
@@ -55,6 +57,8 @@
     --accent-soft: #14213a;
     --ok: #22c55e;
     --ok-ink: #4ade80;
+  --alert: #f87171;
+    --alert: #f87171;
     --warn: #f0a33a;
     --track: #222225;
     color-scheme: dark;

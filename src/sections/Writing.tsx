@@ -41,7 +41,7 @@ export function Writing({ closing }: { closing?: string }) {
           </li>
         ))}
       </ul>
-      {closing && <p className="mt-3 text-xs text-ink-3">{closing}</p>}
+      {closing && <p className="mt-3 text-xs font-medium text-alert">{closing}</p>}
       <Reader entry={entries.find((e) => e.id === openId) ?? null} onClose={close} />
     </div>
   )
