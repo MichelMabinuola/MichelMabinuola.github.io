@@ -30,8 +30,8 @@ export function SeoulClock() {
       </div>
       <div className="ml-auto flex flex-wrap items-center gap-2">
         <span className="inline-flex items-center rounded-full border border-accent/30 px-3 py-1 text-xs text-accent">{ui.openToRelocation}</span>
-        <span className="inline-flex items-center gap-1.5 rounded-full bg-accent-soft px-3 py-1 text-xs text-accent">
-          <span aria-hidden="true" className="h-2 w-2 animate-pulse rounded-full bg-accent motion-reduce:animate-none" />
+        <span className="inline-flex items-center gap-1.5 rounded-full bg-ok/10 px-3 py-1 text-xs text-ok-ink">
+          <span aria-hidden="true" className="h-2 w-2 animate-pulse rounded-full bg-ok motion-reduce:animate-none" />
           {ui.replyFast}
         </span>
       </div>

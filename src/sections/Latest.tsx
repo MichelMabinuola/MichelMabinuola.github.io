@@ -17,8 +17,8 @@ export function Latest() {
               <div className="min-w-0">
                 <div className="flex items-center gap-2 text-xs text-ink-3">
                   {item.kind === 'reading' ? ui.reading : ui.learning}
-                  <span className="inline-flex items-center gap-1 rounded-full bg-accent-soft px-2 py-0.5 text-accent">
-                    <span aria-hidden="true" className="h-1.5 w-1.5 animate-pulse rounded-full bg-accent motion-reduce:animate-none" />
+                  <span className="inline-flex items-center gap-1 rounded-full bg-ok/10 px-2 py-0.5 text-ok-ink">
+                    <span aria-hidden="true" className="h-1.5 w-1.5 animate-pulse rounded-full bg-ok motion-reduce:animate-none" />
                     {ui.inProgress}
                   </span>
                 </div>

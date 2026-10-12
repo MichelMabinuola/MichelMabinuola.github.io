@@ -67,7 +67,7 @@ function Experience() {
   const certs = resume.certificatesAndAwards.filter((c) => /certified/i.test(c.name))
   return (
     <div>
-      <ol className="relative flex flex-col gap-6 border-l border-line pl-6">
+      <ol className="border-accent-gradient relative flex flex-col gap-6 border-l pl-6">
         {resume.experience.map((e) => (
           <li key={e.id} className="relative">
             <span

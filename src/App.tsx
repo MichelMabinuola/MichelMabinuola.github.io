@@ -78,7 +78,7 @@ export default function App() {
             </div>
             <Greeting />
             <h1 className="mt-1 text-5xl font-bold tracking-tight text-ink sm:text-8xl">{resume.basics.name}</h1>
-            <p className="mt-5 text-xl font-semibold text-accent sm:text-2xl">
+            <p className="text-accent-gradient mt-5 text-xl font-semibold sm:text-2xl">
               {l.title()}
               {/* The specialities only fit on wider screens. */}
               <span className="hidden sm:inline"> | {l.tagline()}</span>

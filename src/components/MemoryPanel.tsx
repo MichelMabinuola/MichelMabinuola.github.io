@@ -95,7 +95,7 @@ export function MemoryPanel({
             {/* Fixed anon memory (the skills strip below), then reclaimable file cache. */}
             <div className="h-full rounded-l-full bg-ink-3 transition-[width] duration-500" style={{ width: `${(s.anonMb / s.maxMb) * 100}%` }} />
             <div
-              className={`h-full rounded-r-full transition-[width,background-color] duration-500 ${thrashing ? 'bg-warn' : 'bg-accent'}`}
+              className={`h-full rounded-r-full transition-[width,background-color] duration-500 ${thrashing ? 'bg-warn' : 'bg-accent-gradient'}`}
               style={{ width: `${(s.fileMb / s.maxMb) * 100}%` }}
             />
           </div>

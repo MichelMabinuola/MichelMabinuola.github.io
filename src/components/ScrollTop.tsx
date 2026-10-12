@@ -31,7 +31,7 @@ export function ScrollTop() {
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: 12 }}
-          className="fixed bottom-5 right-5 z-50 flex h-12 w-12 items-center justify-center rounded-full bg-accent text-surface shadow-lg shadow-black/10 transition-opacity hover:opacity-90 sm:bottom-8 sm:right-8"
+          className="fixed bottom-5 right-5 z-50 flex h-12 w-12 items-center justify-center rounded-full bg-accent-gradient text-surface shadow-lg shadow-black/10 transition-opacity hover:opacity-90 sm:bottom-8 sm:right-8"
         >
           <ArrowUp size={20} aria-hidden="true" />
         </motion.button>
