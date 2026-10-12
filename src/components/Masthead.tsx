@@ -1,11 +1,9 @@
 import { useEffect, useState } from 'react'
-import { resume } from '../content'
 import { useLang, useUi } from '../i18n'
 import { LangSwitch } from './LangSwitch'
 import { ThemeToggle } from './ThemeToggle'
 
-// Newspaper-style strip across the top: where, since when, today's date.
-const since = resume.experience.map((e) => e.start).sort()[0].slice(0, 4)
+// Newspaper-style strip across the top: where, this year, today's date (Seoul time).
 
 export function Masthead() {
   const ui = useUi()
@@ -21,11 +19,12 @@ export function Masthead() {
     month: 'long',
     day: 'numeric',
   }).format(now)
+  const year = new Intl.DateTimeFormat('en-US', { timeZone: 'Asia/Seoul', year: 'numeric' }).format(now)
 
   return (
     <div className="border-b-4 border-double border-line-strong pb-2">
       <div className="flex items-center gap-3 font-mono text-[11px] uppercase tracking-[0.18em] text-ink-3">
-        <span className="shrink-0">{ui.mastheadPlace(since)}</span>
+        <span className="shrink-0">{ui.mastheadPlace(year)}</span>
         <span className="ml-auto hidden shrink-0 sm:block">{date}</span>
         <span className="flex shrink-0 items-center gap-2 normal-case tracking-normal">
           <LangSwitch />
