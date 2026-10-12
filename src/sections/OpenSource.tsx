@@ -1,10 +1,13 @@
 import { motion, useReducedMotion } from 'framer-motion'
-import { ArrowUpRight } from 'lucide-react'
+import { ArrowUpRight, Star } from 'lucide-react'
+import githubStats from '../../content/github-stats.json'
 import { resume } from '../content'
 import { useL10n, useUi } from '../i18n'
 import { GitHubIcon } from '../components/Icon'
 
 const ROWS = ['symptom', 'cause', 'fix', 'outcome'] as const
+const STATS = githubStats as Record<string, { stars: number; fetchedAt: string }>
+const repoOf = (url: string) => url.match(/^https:\/\/github\.com\/([^/]+\/[^/]+)/)?.[1] ?? ''
 
 export function OpenSource({ closing }: { closing?: string }) {
   const ui = useUi()
@@ -42,6 +45,18 @@ export function OpenSource({ closing }: { closing?: string }) {
               <span className="font-medium text-ink" title={e.projectDescription}>
                 {e.project}
               </span>
+              {(() => {
+                const s = STATS[repoOf(e.url)]
+                if (!s) return null
+                const n = s.stars.toLocaleString('en-US')
+                const label = ui.githubStars(n, s.fetchedAt)
+                return (
+                  <span title={label} aria-label={label} className="inline-flex items-center gap-1 rounded-full bg-accent-soft px-2 py-0.5 text-xs font-medium text-accent">
+                    <Star size={12} aria-hidden="true" className="fill-current" />
+                    {n}
+                  </span>
+                )
+              })()}
               <span className="rounded-full bg-track px-2 py-0.5 text-xs text-ink-2">{ui.bugReport}</span>
               <a
                 href={e.url}

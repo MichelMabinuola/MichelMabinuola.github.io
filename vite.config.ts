@@ -19,6 +19,12 @@ import {
 const readJson = (p: string) => JSON.parse(readFileSync(p, 'utf8'))
 const esc = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
 const link = (href: string, text: string) => `<a href="${esc(href)}">${esc(text)}</a>`
+// Star counts saved at build time by scripts/fetch-github-stats.mjs.
+const stars = (url: string) => {
+  const repo = url.match(/^https:\/\/github\.com\/([^/]+\/[^/]+)/)?.[1] ?? ''
+  const s = (readJson('content/github-stats.json') as Record<string, { stars: number }>)[repo]
+  return s ? ` (${s.stars.toLocaleString('en-US')} GitHub stars)` : ''
+}
 const list = (items: string[]) => (items.length ? `<ul>${items.map((i) => `<li>${i}</li>`).join('')}</ul>` : '')
 
 function sectionHtml(s: SectionDef, r: Resume, site: Site): string {
@@ -56,7 +62,7 @@ function sectionHtml(s: SectionDef, r: Resume, site: Site): string {
             `Cause: ${esc(e.story.cause)}`,
             `Fix: ${esc(e.story.fix)}`,
             `Outcome: ${esc(e.story.outcome)}`,
-          ])}<p>${esc(e.project)} · bug report · ${link(e.url, 'Read the issue on GitHub')}</p>`,
+          ])}<p>${esc(e.project)}${stars(e.url)} · bug report · ${link(e.url, 'Read the issue on GitHub')}</p>`,
       )
       .join('')
     if (r.basics.links.github && s.closing) body += `<p>${link(r.basics.links.github, s.closing)}</p>`

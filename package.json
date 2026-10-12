@@ -4,7 +4,7 @@
   "description": "A portfolio that runs inside a memory-limited cgroup",
   "scripts": {
     "dev": "vite",
-    "build": "tsc --noEmit && vite build",
+    "build": "node scripts/fetch-github-stats.mjs && tsc --noEmit && vite build",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit"
   },
