@@ -131,7 +131,7 @@ export default function App() {
                 type="button"
                 onClick={() => setAgentsOpen(true)}
                 aria-haspopup="dialog"
-                className="inline-flex items-center gap-2 rounded-full border border-dashed border-line-strong px-5 py-2.5 text-sm text-ink-2 transition-colors hover:border-accent hover:text-accent"
+                className="inline-flex items-center gap-2 rounded-full border border-dashed border-red-500 px-5 py-2.5 text-sm text-ink-2 transition-colors hover:bg-red-500/10 hover:text-red-500"
               >
                 <Bot size={16} aria-hidden="true" />
                 {ui.forAgents}

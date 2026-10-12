@@ -1,7 +1,7 @@
 import { Fragment } from 'react'
 
 // Just enough Markdown for /llms.txt: ## and ### headings, "- " lists, paragraphs,
-// **bold**, `code` and [links](url). No HTML is ever passed through.
+// **bold**, *italic*, `code` and [links](url). No HTML is ever passed through.
 type Block = { kind: 'h2' | 'h3' | 'p'; text: string } | { kind: 'ul'; items: string[] }
 
 export function parseBlocks(md: string): Block[] {
@@ -22,7 +22,7 @@ export function parseBlocks(md: string): Block[] {
   return blocks
 }
 
-const TOKEN = /(\*\*[^*]+\*\*|`[^`]+`|\[[^\]]+\]\([^)\s]+\))/g
+const TOKEN = /(\*\*[^*]+\*\*|\*[^*\s][^*]*\*|`[^`]+`|\[[^\]]+\]\([^)\s]+\))/g
 
 export function Inline({ text, linkClass }: { text: string; linkClass: string }) {
   return (
@@ -30,6 +30,7 @@ export function Inline({ text, linkClass }: { text: string; linkClass: string })
       {text.split(TOKEN).map((part, i) => {
         if (i % 2 === 0) return <Fragment key={i}>{part}</Fragment>
         if (part.startsWith('**')) return <strong key={i}>{part.slice(2, -2)}</strong>
+        if (part.startsWith('*')) return <em key={i}>{part.slice(1, -1)}</em>
         if (part.startsWith('`')) return <code key={i} className="rounded bg-track px-1 font-mono text-[0.9em]">{part.slice(1, -1)}</code>
         const m = part.match(/^\[([^\]]+)\]\(([^)\s]+)\)$/)!
         const href = m[2]
