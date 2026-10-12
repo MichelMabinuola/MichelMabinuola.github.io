@@ -5,7 +5,9 @@ import llms from '../../public/llms.txt?raw'
 // Same text as /llms.txt, shown as-is. It's addressed to AI agents, so it stays in English.
 const LINK = /(https?:\/\/[^\s]+|[\w.+-]+@[\w-]+\.[\w.]+)/g
 
-function linkify(line: string) {
+export const LLMS_TEXT = llms.trimEnd()
+
+export function linkify(line: string) {
   return line.split(LINK).map((part, i) => {
     if (i % 2 === 0) return <Fragment key={i}>{part}</Fragment>
     const href = part.includes('@') && !part.startsWith('http') ? `mailto:${part}` : part
@@ -28,7 +30,7 @@ export function LlmsCard() {
         </a>
       </div>
       <pre className="whitespace-pre-wrap break-words px-5 py-5 font-mono text-[13px] leading-relaxed text-ink-2 sm:px-6 sm:text-sm">
-        {llms.trimEnd().split('\n').map((line, i, all) => (
+        {LLMS_TEXT.split('\n').map((line, i, all) => (
           <Fragment key={i}>
             {linkify(line)}
             {i < all.length - 1 && '\n'}

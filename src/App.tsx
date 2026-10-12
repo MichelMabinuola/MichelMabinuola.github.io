@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
 import { AnimatePresence } from 'framer-motion'
-import { ArrowUpRight, BadgeCheck, FileText, Mail, MapPin } from 'lucide-react'
+import { ArrowUpRight, BadgeCheck, Bot, FileText, Mail, MapPin } from 'lucide-react'
 import { resume, SECTIONS } from './content'
 import { useCgroup } from './sim/useCgroup'
 import { useL10n, useUi } from './i18n'
@@ -14,6 +14,7 @@ import { GitHubIcon } from './components/Icon'
 import { ResumePanel } from './components/ResumePanel'
 import { Greeting } from './components/Greeting'
 import { LlmsCard } from './components/LlmsCard'
+import { AgentsView } from './components/AgentsView'
 import { OPEN_RESUME } from './events'
 
 export default function App() {
@@ -21,6 +22,8 @@ export default function App() {
   // The resume opens from the hero, from Contact (via an event), or from a ?view=resume link.
   const [resumeOpen, setResumeOpen] = useState(() => new URLSearchParams(window.location.search).get('view') === 'resume')
   const closeResume = useCallback(() => setResumeOpen(false), [])
+  const [agentsOpen, setAgentsOpen] = useState(() => new URLSearchParams(window.location.search).get('view') === 'agents')
+  const closeAgents = useCallback(() => setAgentsOpen(false), [])
   useEffect(() => {
     const open = () => setResumeOpen(true)
     window.addEventListener(OPEN_RESUME, open)
@@ -124,6 +127,15 @@ export default function App() {
                   GitHub
                 </a>
               )}
+              <button
+                type="button"
+                onClick={() => setAgentsOpen(true)}
+                aria-haspopup="dialog"
+                className="inline-flex items-center gap-2 rounded-full border border-dashed border-line-strong px-5 py-2.5 text-sm text-ink-2 transition-colors hover:border-accent hover:text-accent"
+              >
+                <Bot size={16} aria-hidden="true" />
+                {ui.forAgents}
+              </button>
             </div>
           </header>
 
@@ -152,6 +164,7 @@ export default function App() {
       </main>
       <ScrollTop />
       <ResumePanel open={resumeOpen} onClose={closeResume} />
+      <AgentsView open={agentsOpen} onClose={closeAgents} />
     </div>
   )
 }
