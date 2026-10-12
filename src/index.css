@@ -27,8 +27,9 @@
   --ink-3: #8a8a93;
   --line: #e4e4e7;
   --line-strong: #d4d4d8;
-  --accent: #1f3a5f;
-  --accent-soft: #e6ebf2;
+  --accent: #0a7d52; /* green, 5.2:1 on white */
+  --accent-soft: #e3f3eb;
+  --accent-2: #3182f6; /* blue, used only in the hero glow */
   --warn: #b45309;
   --track: #f0f0ee;
   color-scheme: light;
@@ -43,8 +44,9 @@
     --ink-3: #71717a;
     --line: #27272a;
     --line-strong: #3f3f46;
-    --accent: #9db8dd;
-    --accent-soft: #1b2636;
+    --accent: #34d399;
+    --accent-soft: #10291f;
+    --accent-2: #60a5fa;
     --warn: #f0a33a;
     --track: #222225;
     color-scheme: dark;
@@ -59,8 +61,9 @@
   --ink-3: #71717a;
   --line: #27272a;
   --line-strong: #3f3f46;
-  --accent: #9db8dd;
-  --accent-soft: #1b2636;
+  --accent: #34d399;
+  --accent-soft: #10291f;
+  --accent-2: #60a5fa;
   --warn: #f0a33a;
   --track: #222225;
   color-scheme: dark;
@@ -146,7 +149,7 @@ body {
 .hero-glow {
   background:
     radial-gradient(40rem 22rem at 15% 20%, color-mix(in srgb, var(--accent) 16%, transparent), transparent 70%),
-    radial-gradient(30rem 18rem at 85% 0%, color-mix(in srgb, var(--accent) 10%, transparent), transparent 70%);
+    radial-gradient(30rem 18rem at 85% 0%, color-mix(in srgb, var(--accent-2) 12%, transparent), transparent 70%);
 }
 
 /* Outline a section card for a moment after it is brought back into memory. */
@@ -167,5 +170,22 @@ body {
   .refault-pulse {
     animation: none;
     border-color: var(--accent) !important;
+  }
+}
+
+/* A small wave for the greeting, played once. */
+@keyframes wave {
+  0%, 60%, 100% { transform: rotate(0deg); }
+  10%, 30% { transform: rotate(14deg); }
+  20% { transform: rotate(-8deg); }
+  40% { transform: rotate(-4deg); }
+  50% { transform: rotate(10deg); }
+}
+.wave {
+  animation: wave 1.8s ease-in-out 0.6s 1;
+}
+@media (prefers-reduced-motion: reduce) {
+  .wave {
+    animation: none;
   }
 }

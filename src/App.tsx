@@ -12,6 +12,7 @@ import { ScrollTop } from './components/ScrollTop'
 import { MeasuredLink, MeasuredNote } from './components/Measured'
 import { GitHubIcon } from './components/Icon'
 import { ResumePanel } from './components/ResumePanel'
+import { Greeting } from './components/Greeting'
 import { OPEN_RESUME } from './events'
 
 export default function App() {
@@ -75,7 +76,8 @@ export default function App() {
                 {ui.certified}
               </p>
             </div>
-            <h1 className="mt-6 text-5xl font-bold tracking-tight text-ink sm:text-8xl">{resume.basics.name}</h1>
+            <Greeting />
+            <h1 className="mt-1 text-5xl font-bold tracking-tight text-ink sm:text-8xl">{resume.basics.name}</h1>
             <p className="mt-5 text-xl font-semibold text-accent sm:text-2xl">
               {l.title()}
               {/* The specialities only fit on wider screens. */}
