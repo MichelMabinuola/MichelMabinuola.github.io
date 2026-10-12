@@ -26,7 +26,6 @@ export function Masthead() {
     <div className="border-b-4 border-double border-line-strong pb-2">
       <div className="flex items-center gap-3 font-mono text-[11px] uppercase tracking-[0.18em] text-ink-3">
         <span className="shrink-0">{ui.mastheadPlace(since)}</span>
-        <span className="hidden flex-1 text-center md:block">{ui.mastheadEdition}</span>
         <span className="ml-auto hidden shrink-0 sm:block">{date}</span>
         <span className="flex shrink-0 items-center gap-2 normal-case tracking-normal">
           <LangSwitch />

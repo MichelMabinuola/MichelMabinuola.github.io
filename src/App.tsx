@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
 import { AnimatePresence } from 'framer-motion'
-import { ArrowUpRight, BadgeCheck, Bot, FileText, Mail, MapPin } from 'lucide-react'
+import { ArrowUpRight, BadgeCheck, Bot, FileText, Mail } from 'lucide-react'
 import { resume, SECTIONS } from './content'
 import { useCgroup } from './sim/useCgroup'
 import { useL10n, useUi } from './i18n'
@@ -73,10 +73,6 @@ export default function App() {
 
           <header className="fade-up mt-10 sm:mt-16">
             <div className="flex flex-wrap gap-2">
-              <p className="inline-flex items-center gap-1.5 rounded-full border border-line bg-surface px-3 py-1 text-sm text-ink-2">
-                <MapPin size={14} aria-hidden="true" className="text-accent" />
-                {ui.location}
-              </p>
               <p className="inline-flex items-center gap-1.5 rounded-full border border-line bg-surface px-3 py-1 text-sm text-ink-2">
                 <BadgeCheck size={14} aria-hidden="true" className="text-accent" />
                 {ui.certified}
