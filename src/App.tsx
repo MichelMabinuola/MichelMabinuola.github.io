@@ -104,7 +104,7 @@ export default function App() {
             </p>
             <p className="mt-6 font-display text-3xl leading-tight text-ink sm:text-5xl">
               {ui.statement.map((line, i) => (
-                <span key={line} className={`block ${i === ui.statement.length - 1 ? 'text-hot italic' : ''}`}>
+                <span key={line} className={`block ${i === ui.statement.length - 1 ? 'text-hot-lg italic' : ''}`}>
                   {line}
                 </span>
               ))}

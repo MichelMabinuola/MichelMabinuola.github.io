@@ -21,30 +21,32 @@
   --color-ok-ink: var(--ok-ink);
   --color-alert: var(--alert);
   --color-hot: var(--hot);
+  --color-hot-lg: var(--hot-lg);
   --color-key: var(--key);
   --color-warn: var(--warn);
   --color-track: var(--track);
 }
 
 :root {
-  /* Palette after neonnuri.com: cool slate + electric blue by day, warm black + gold by night. */
-  --bg: #f8fafc;
-  --surface: #ffffff;
-  --ink: #0f172a;
-  --ink-2: #475569;
-  --ink-3: #64748b;
-  --line: #e2e8f0;
-  --line-strong: #cbd5e1;
-  --accent: #0039e6; /* 7.7:1 on white */
-  --accent-2: #0039e6; /* one accent: the gradient helpers render solid */
-  --accent-soft: #e6ecfd;
-  --ok: #16a34a;
-  --ok-ink: #15803d;
-  --alert: #dc2626;
-  --hot: #0039e6;
-  --key: #0f172a;
-  --warn: #b45309;
-  --track: #f1f5f9;
+  /* Experiment: steel grey with charcoal text and orange highlights. Text colours pass 4.5:1. */
+  --bg: #c3cad1;
+  --surface: #dde2e7;
+  --ink: #23292e; /* charcoal */
+  --ink-2: #3a444c;
+  --ink-3: #4a555e;
+  --line: #b4bcc4;
+  --line-strong: #98a2ab;
+  --accent: #23292e;
+  --accent-2: #23292e; /* one accent: the gradient helpers render solid */
+  --accent-soft: #c9d0d7;
+  --ok: #c2500a; /* orange "live" dots */
+  --ok-ink: #23292e;
+  --alert: #8f3900;
+  --hot: #8f3900; /* burnt orange: readable as small text on steel */
+  --hot-lg: #b34700; /* brighter orange for large display text only */
+  --key: #8f3900;
+  --warn: #a32a00;
+  --track: #c9d0d7;
   color-scheme: light;
 }
 
@@ -64,6 +66,7 @@
     --ok-ink: #d1d5db;
     --alert: #ff4d4f;
     --hot: #ff4d4f; /* red for important text */
+    --hot-lg: #ff4d4f;
     --key: #ff4d4f;
     --warn: #ff8a5c; /* coral, so thrashing stands out from the silver bar */
     --track: #11110e;
@@ -86,6 +89,7 @@
   --ok-ink: #d1d5db;
   --alert: #ff4d4f;
   --hot: #ff4d4f; /* red for important text */
+  --hot-lg: #ff4d4f;
   --key: #ff4d4f;
   --warn: #ff8a5c; /* coral, so thrashing stands out from the silver bar */
   --track: #11110e;
