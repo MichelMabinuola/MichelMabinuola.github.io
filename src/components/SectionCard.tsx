@@ -6,7 +6,17 @@ import { useL10n, useUi } from '../i18n'
 import { Icon } from './Icon'
 import { SectionBody } from '../sections/SectionBody'
 
-export function SectionCard({ section, number, onTouch }: { section: SectionDef; number: number; onTouch: (id: string) => void }) {
+export function SectionCard({
+  section,
+  number,
+  skipEntrance,
+  onTouch,
+}: {
+  section: SectionDef
+  number: number
+  skipEntrance: boolean
+  onTouch: (id: string) => void
+}) {
   const ref = useRef<HTMLElement>(null)
   const ui = useUi()
 
@@ -23,7 +33,7 @@ export function SectionCard({ section, number, onTouch }: { section: SectionDef;
     <motion.section
       ref={ref}
       layout
-      initial={{ opacity: 0, y: 28 }}
+      initial={skipEntrance ? false : { opacity: 0, y: 28 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.12 }}
       exit={{ opacity: 0, scale: 0.98, transition: { duration: 0.2 } }}

@@ -32,13 +32,13 @@ export type CgroupState = {
   psi: number // memory "some" avg10, percent
   stallMs: number // stall time accumulated since the last PSI sample
   lastCmd: string
-  lastRefault: { id: string; n: number } | null // the section a visitor just brought back
+  lastRefault: { id: string; n: number; fast?: boolean } | null // the section a visitor just brought back
 }
 
 export type Action =
   | { type: 'touch'; id: string }
   | { type: 'refault-start'; id: string; quiet?: boolean }
-  | { type: 'refault-done'; id: string; quiet?: boolean }
+  | { type: 'refault-done'; id: string; quiet?: boolean; fast?: boolean }
   | { type: 'set-max'; max: MaxSetting }
   | { type: 'psi-tick' }
 
@@ -99,7 +99,7 @@ export function reducer(s: CgroupState, a: Action): CgroupState {
         resident,
         loading: s.loading.filter((id) => id !== a.id),
         refaults: s.refaults + 1,
-        lastRefault: a.quiet ? s.lastRefault : { id: a.id, n: s.refaults + 1 },
+        lastRefault: a.quiet ? s.lastRefault : { id: a.id, n: s.refaults + 1, fast: a.fast },
         stallMs: s.stallMs + (thrashing ? REFAULT_MS : 0),
         lastCmd: a.quiet
           ? s.lastCmd

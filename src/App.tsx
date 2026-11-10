@@ -52,17 +52,19 @@ export default function App() {
   // When a visitor brings a section back, take them to it and briefly outline it.
   useEffect(() => {
     const id = state.lastRefault?.id
+    const fast = state.lastRefault?.fast
     if (!id) return
     let settle = 0
     const raf = requestAnimationFrame(() => {
       const el = document.getElementById(`sec-${id}`)
       if (!el) return
       const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-      el.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' })
+      el.scrollIntoView({ behavior: fast ? 'instant' : reduce ? 'auto' : 'smooth', block: 'start' })
       el.classList.remove('refault-pulse')
       void el.offsetWidth // restart the animation if it is still running
       el.classList.add('refault-pulse')
       window.setTimeout(() => el.classList.remove('refault-pulse'), 1100)
+      if (fast) return
       // The card was still sliding in when the scroll was measured; settle on the right spot.
       settle = window.setTimeout(() => {
         const offset = parseFloat(getComputedStyle(el).scrollMarginTop) || 0
@@ -86,9 +88,8 @@ export default function App() {
 
   // Outline links: scroll to a section that's open, or load it first (the refault effect then scrolls to it).
   const navigate = (id: string) => {
-    if (!state.resident.includes(id)) return refault(id)
-    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    document.getElementById(`sec-${id}`)?.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' })
+    if (!state.resident.includes(id)) return refault(id, false, true)
+    document.getElementById(`sec-${id}`)?.scrollIntoView({ behavior: 'instant', block: 'start' })
   }
 
   return (
@@ -193,7 +194,13 @@ export default function App() {
         <div id="sections" className="flex scroll-mt-6 flex-col gap-5">
           <AnimatePresence initial={false} mode="popLayout">
             {visible.map((s) => (
-              <SectionCard key={s.id} section={s} number={SECTIONS.findIndex((x) => x.id === s.id) + 1} onTouch={touch} />
+              <SectionCard
+                key={s.id}
+                section={s}
+                number={SECTIONS.findIndex((x) => x.id === s.id) + 1}
+                skipEntrance={state.lastRefault?.fast === true && state.lastRefault.id === s.id}
+                onTouch={touch}
+              />
             ))}
           </AnimatePresence>
         </div>

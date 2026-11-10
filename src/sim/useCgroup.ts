@@ -19,9 +19,11 @@ export function useCgroup() {
     }
   }, [])
 
-  const refault = useCallback((id: string, quiet = false) => {
+  // `fast` skips the pretend disk read (used by the Sections list).
+  const refault = useCallback((id: string, quiet = false, fast = false) => {
     if (timers.current.has(id)) return
     dispatch({ type: 'refault-start', id, quiet })
+    if (fast) return dispatch({ type: 'refault-done', id, quiet, fast })
     const t = window.setTimeout(() => {
       timers.current.delete(id)
       dispatch({ type: 'refault-done', id, quiet })
