@@ -14,7 +14,7 @@ import { ResumePanel } from './components/ResumePanel'
 import { AgentsView } from './components/AgentsView'
 import { Masthead } from './components/Masthead'
 import { Marquee } from './components/Marquee'
-import { ContactTab } from './components/ContactTab'
+import { OnThisPage } from './components/OnThisPage'
 import { OPEN_RESUME } from './events'
 
 export default function App() {
@@ -53,6 +53,7 @@ export default function App() {
   useEffect(() => {
     const id = state.lastRefault?.id
     if (!id) return
+    let settle = 0
     const raf = requestAnimationFrame(() => {
       const el = document.getElementById(`sec-${id}`)
       if (!el) return
@@ -62,8 +63,16 @@ export default function App() {
       void el.offsetWidth // restart the animation if it is still running
       el.classList.add('refault-pulse')
       window.setTimeout(() => el.classList.remove('refault-pulse'), 1100)
+      // The card was still sliding in when the scroll was measured; settle on the right spot.
+      settle = window.setTimeout(() => {
+        const offset = parseFloat(getComputedStyle(el).scrollMarginTop) || 0
+        if (Math.abs(el.getBoundingClientRect().top - offset) > 4) el.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' })
+      }, 750)
     })
-    return () => cancelAnimationFrame(raf)
+    return () => {
+      cancelAnimationFrame(raf)
+      window.clearTimeout(settle)
+    }
   }, [state.lastRefault])
   const sections = SECTIONS.map(l.section)
   // Under the limit, the section brought back most recently goes on top; with everything showing, use page order.
@@ -75,8 +84,16 @@ export default function App() {
   const about = sections.find((s) => s.id === 'about')
   const { email, links } = resume.basics
 
+  // Outline links: scroll to a section that's open, or load it first (the refault effect then scrolls to it).
+  const navigate = (id: string) => {
+    if (!state.resident.includes(id)) return refault(id)
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    document.getElementById(`sec-${id}`)?.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' })
+  }
+
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen xl:pr-[260px]">
+      <OnThisPage sections={sections} resident={state.resident} loading={state.loading} onNavigate={navigate} />
       <div
         className="relative border-b border-line"
         onPointerMove={(e) => {
@@ -189,7 +206,6 @@ export default function App() {
         </footer>
       </main>
       <ScrollTop />
-      <ContactTab />
       <ResumePanel open={resumeOpen} onClose={closeResume} />
       <AgentsView open={agentsOpen} onClose={closeAgents} />
     </div>
