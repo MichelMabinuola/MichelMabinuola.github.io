@@ -124,10 +124,7 @@ export function OnThisPage({
               <li key={s.id} style={{ height: ROW }}>
                 <button
                   type="button"
-                  onClick={() => {
-                    setOpen(false)
-                    onNavigate(s.id)
-                  }}
+                  onClick={() => onNavigate(s.id)}
                   aria-current={i === first && active ? 'location' : undefined}
                   aria-label={isOpen ? ui.goTo(s.title) : ui.show(s.title)}
                   className={`relative flex h-full w-full items-center gap-2.5 px-1.5 text-left transition-colors duration-150 ${active ? 'font-medium text-ink' : isOpen ? 'text-ink-2 hover:text-ink' : 'text-ink-3 hover:text-ink'}`}
