@@ -36,7 +36,7 @@ export function OpenSource({ closing }: { closing?: string }) {
                   variants={{ hidden: { opacity: 0, x: -8 }, show: { opacity: 1, x: 0, transition: { duration: 0.35 } } }}
                   className="grid grid-cols-[5.5rem_1fr] gap-3 text-sm"
                 >
-                  <span className={`font-medium ${row === 'outcome' ? 'text-accent' : 'text-ink-3'}`}>{ui.storyLabels[row]}</span>
+                  <span className={`font-medium ${row === 'outcome' ? 'text-hot' : 'text-ink-3'}`}>{ui.storyLabels[row]}</span>
                   <span className="text-ink-2">{e.story[row]}</span>
                 </motion.li>
               ))}

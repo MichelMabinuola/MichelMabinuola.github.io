@@ -20,6 +20,8 @@
   --color-ok: var(--ok);
   --color-ok-ink: var(--ok-ink);
   --color-alert: var(--alert);
+  --color-hot: var(--hot);
+  --color-key: var(--key);
   --color-warn: var(--warn);
   --color-track: var(--track);
 }
@@ -39,6 +41,8 @@
   --ok: #16a34a;
   --ok-ink: #15803d;
   --alert: #dc2626;
+  --hot: #0039e6;
+  --key: #0f172a;
   --warn: #b45309;
   --track: #f1f5f9;
   color-scheme: light;
@@ -48,18 +52,20 @@
   :root:not([data-theme='light']) {
     --bg: #0b0b09;
     --surface: #16150f;
-    --ink: #f3f0e7;
-    --ink-2: #c9c3b6;
-    --ink-3: #a59f92;
+    --ink: #d1d5db; /* silver */
+    --ink-2: #a8adb5;
+    --ink-3: #8d9299;
     --line: #35342d;
     --line-strong: #54524b;
-    --accent: #f3c74f; /* gold, 11.4:1 on the card colour */
-    --accent-2: #f3c74f;
-    --accent-soft: #302a17;
-    --ok: #22c55e;
-    --ok-ink: #4ade80;
-    --alert: #f87171;
-    --warn: #ff8a5c; /* coral, so thrashing never looks like the gold accent */
+    --accent: #c0c0c0; /* silver */
+    --accent-2: #c0c0c0;
+    --accent-soft: #2a2a28;
+    --ok: #ff4d4f; /* red "live" dots */
+    --ok-ink: #d1d5db;
+    --alert: #ff4d4f;
+    --hot: #ff4d4f; /* red for important text */
+    --key: #ff4d4f;
+    --warn: #ff8a5c; /* coral, so thrashing stands out from the silver bar */
     --track: #11110e;
     color-scheme: dark;
   }
@@ -68,18 +74,20 @@
 :root[data-theme='dark'] {
   --bg: #0b0b09;
   --surface: #16150f;
-  --ink: #f3f0e7;
-  --ink-2: #c9c3b6;
-  --ink-3: #a59f92;
+  --ink: #d1d5db; /* silver */
+  --ink-2: #a8adb5;
+  --ink-3: #8d9299;
   --line: #35342d;
   --line-strong: #54524b;
-  --accent: #f3c74f; /* gold, 11.4:1 on the card colour */
-  --accent-2: #f3c74f;
-  --accent-soft: #302a17;
-  --ok: #22c55e;
-  --ok-ink: #4ade80;
-  --alert: #f87171;
-  --warn: #ff8a5c; /* coral, so thrashing never looks like the gold accent */
+  --accent: #c0c0c0; /* silver */
+  --accent-2: #c0c0c0;
+  --accent-soft: #2a2a28;
+  --ok: #ff4d4f; /* red "live" dots */
+  --ok-ink: #d1d5db;
+  --alert: #ff4d4f;
+  --hot: #ff4d4f; /* red for important text */
+  --key: #ff4d4f;
+  --warn: #ff8a5c; /* coral, so thrashing stands out from the silver bar */
   --track: #11110e;
   color-scheme: dark;
 }

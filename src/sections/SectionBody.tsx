@@ -76,7 +76,7 @@ function Experience() {
             />
             <div className="text-xs text-ink-3">{l.period(e)}</div>
             <div className="mt-0.5 font-medium text-ink">
-              {l.role(e)}{' '}
+              <span className="text-key">{l.role(e)}</span>{' '}
               <span className="font-normal text-ink-2">
                 · {l.isKo && e.companyLocalName ? e.companyLocalName : e.company}
                 {!l.isKo && e.companyLocalName && (
