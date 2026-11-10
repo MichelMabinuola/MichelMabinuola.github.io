@@ -28,25 +28,25 @@
 }
 
 :root {
-  /* Experiment: steel grey with charcoal text and orange highlights. Text colours pass 4.5:1. */
-  --bg: #c3cad1;
-  --surface: #dde2e7;
+  /* Experiment: white with charcoal text and orange highlights. Text colours pass 4.5:1. */
+  --bg: #ffffff;
+  --surface: #ffffff;
   --ink: #23292e; /* charcoal */
   --ink-2: #3a444c;
-  --ink-3: #4a555e;
-  --line: #b4bcc4;
-  --line-strong: #98a2ab;
+  --ink-3: #5a646d;
+  --line: #e2e5e9;
+  --line-strong: #c9ced4;
   --accent: #23292e;
   --accent-2: #23292e; /* one accent: the gradient helpers render solid */
-  --accent-soft: #c9d0d7;
-  --ok: #c2500a; /* orange "live" dots */
+  --accent-soft: #eef0f2;
+  --ok: #ea580c; /* orange "live" dots */
   --ok-ink: #23292e;
-  --alert: #8f3900;
-  --hot: #8f3900; /* burnt orange: readable as small text on steel */
-  --hot-lg: #b34700; /* brighter orange for large display text only */
-  --key: #8f3900;
+  --alert: #c2410c;
+  --hot: #c2410c; /* orange, readable as small text on white */
+  --hot-lg: #ea580c; /* brighter orange for large display text only */
+  --key: #c2410c;
   --warn: #a32a00;
-  --track: #c9d0d7;
+  --track: #f1f3f5;
   color-scheme: light;
 }
 
@@ -272,4 +272,9 @@ html {
   .theme-icon {
     animation: none;
   }
+}
+
+/* Keep the light theme's background pure white: no pointer spotlight. */
+[data-theme='light'] .spotlight {
+  display: none;
 }
