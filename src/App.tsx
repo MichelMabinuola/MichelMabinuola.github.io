@@ -92,7 +92,7 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen xl:pr-[260px]">
+    <div className="min-h-screen">
       <OnThisPage sections={sections} resident={state.resident} loading={state.loading} onNavigate={navigate} />
       <div
         className="relative border-b border-line"
